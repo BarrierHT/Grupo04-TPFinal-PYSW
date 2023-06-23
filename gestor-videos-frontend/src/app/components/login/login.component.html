@@ -1,0 +1,29 @@
+<form class="login-form" action="/login" method="POST">
+    <div class="title-box">
+        <h3>Log in</h3>
+    </div>
+
+
+    <div class="form-control">
+        <label for="email">Email</label>
+        <br>
+        <input type="email" name="email" placeholder="Write the email" id="email">
+    </div>
+    <div class="form-control">
+        <label for="email">Password</label>
+        <br>
+        <input type="password" name="password" placeholder="Write the password" id="password" value="">
+    </div>
+
+    <input type="hidden" name="_csrf" value="">
+    <button class="btn" type="submit">Log in</button>
+    <br>
+    <a class="google" href="/auth/google">Log in with Google</a>
+    <br>
+    <a class="fb" href="/auth/facebook">Log in with Facebook</a>
+    <br>
+
+</form>
+<div class="title-box">
+    <a href="/reset-password">Forgot your password?</a>
+</div>
