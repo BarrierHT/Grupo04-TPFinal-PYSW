@@ -1,10 +1,10 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 let adminSchema = new Schema(
-  {},
-  {
-    versionKey: false,
-  }
+	{},
+	{
+		versionKey: false,
+	}
 );
 
-export default model("adminSchema", adminSchema);
+export default model('adminSchema', adminSchema);
