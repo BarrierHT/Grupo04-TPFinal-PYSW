@@ -10,6 +10,11 @@ import { HomeComponent } from './components/home/home.component';
 
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { ChannelComponent } from './components/channel/channel.component';
+import { ListVideoComponent } from './components/list-video/list-video.component';
+import { ShowVideoComponent } from './components/show-video/show-video.component';
+import { FormVideoComponent } from './components/form-video/form-video.component';
 
 @NgModule({
   declarations: [
@@ -20,9 +25,13 @@ import { SignupComponent } from './components/signup/signup.component';
 
     LoginComponent,
     SignupComponent,
+    ChannelComponent,
+    ListVideoComponent,
+    ShowVideoComponent,
+    FormVideoComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
