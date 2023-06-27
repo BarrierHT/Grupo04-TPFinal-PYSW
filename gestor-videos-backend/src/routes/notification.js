@@ -3,9 +3,11 @@ import notificationController from '../controllers/notification.js';
 
 const router = express.Router();
 
-router.get('/get-notifications/', notificationController.getNotifications);
+router.get(
+	'/get-notifications/:userId',
+	notificationController.getNotifications
+);
 router.post('/add-notification', notificationController.sendNotification);
-
 
 //exportamos el modulo de rutas
 
