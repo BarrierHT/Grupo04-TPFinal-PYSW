@@ -1,27 +1,79 @@
 <section>
     <div class="form-box">
         <div class="form-value">
-            <form class="signup-form" action="/signup" method="POST">
-                <h2>Sign Up</h2>
+            <form class="signup-form" action="/signup" method="POST" #signUpForm="ngForm">
+                <h2 class="pb-2">Sign Up</h2>
                 <div class="inputbox">
-                    <input type="email" name="email" placeholder=" " id="email" required>
+                    <input type="name" name="name" placeholder=" " id="name" value="" [(ngModel)]="usuario.nombre"
+                        #nombre="ngModel" required>
+                    <label for="name">Full name <i class="bi bi-person"></i></label>
+                </div>
+                <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                    <div *ngIf="nombre.errors?.['required']" class="alerta text-center">
+                        Please, enter a full name!
+                    </div>
+                </div>
+                <div class="inputbox">
+                    <input type="email" name="email" placeholder=" " id="email" [(ngModel)]="usuario.correo"
+                        #correo="ngModel" required>
                     <label for="email">Email <i class="bi bi-envelope"></i></label>
                 </div>
-                <div class="inputbox">
-                    <input type="name" name="name" placeholder=" " id="name" value="" required>
-                    <label for="name">Name <i class="bi bi-person"></i></label>
+                <div *ngIf="correo.invalid && (correo.dirty || correo.touched)">
+                    <div *ngIf="correo.errors?.['required']" class="alerta text-center">
+                        Please, enter a email!
+                    </div>
                 </div>
                 <div class="inputbox">
-                    <input type="password" name="password" placeholder=" " id="password" value="" required>
+                    <input type="tel" name="telefono" placeholder=" " id="telefono" value=""
+                        [(ngModel)]="usuario.telefono" #telefono="ngModel" required>
+                    <label for="telefono">Phone number <i class="bi bi-telephone-fill"></i></label>
+                </div>
+                <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)">
+                    <div *ngIf="telefono.errors?.['required']" class="alerta text-center">
+                        Please, enter a phone number!
+                    </div>
+                </div>
+                <div class="inputbox">
+                    <input type="name" name="username" placeholder=" " id="username" [(ngModel)]="usuario.username"
+                        #username="ngModel" required>
+                    <label for="username">Username <i class="bi bi-person-fill"></i></label>
+                </div>
+                <div *ngIf="username.invalid && (username.dirty || username.touched)">
+                    <div *ngIf="username.errors?.['required']" class="alerta text-center">
+                        Please, enter a username!
+                    </div>
+                </div>
+                <div class="inputbox">
+                    <input type="password" name="password" placeholder=" " id="password" value=""
+                        [(ngModel)]="usuario.password" #password="ngModel" required>
                     <label for="password">Password <i class="bi bi-lock-fill"></i></label>
+
+                </div>
+                <div *ngIf="password.invalid && (password.dirty || password.touched)">
+                    <div *ngIf="password.errors?.['required']" class="alerta text-center">
+                        Please, enter a password!
+                    </div>
                 </div>
                 <div class="inputbox">
-                    <input type="password" name="confirmPassword" placeholder=" " id="confirmPassword" value=""
-                        required>
-                    <label for="confirmPassword">Confirm Password <i class="bi bi-lock-fill"></i></label>
+                    <input type="password" name="newPsw" placeholder=" " id="newPsw" value="" [(ngModel)]="newPassword"
+                        #newPsw="ngModel" required>
+                    <label for="newPsw">Confirm Password <i class="bi bi-lock-fill"></i></label>
                 </div>
+                <div *ngIf="newPsw.invalid && (newPsw.dirty || newPsw.touched)">
+                    <div *ngIf="newPsw.errors?.['required']" class="alerta text-center">
+                        Please, enter a password!
+                    </div>
+                </div>
+                <!-- <div class="rolbox">
+                    <label for="selectRol">Select Rol</label>
+                    <select id="selectRol" name="selectRol">
+                        <option value="1">Administrador</option>
+                        <option value="2">Gestor</option>
+                        <option value="3">Normal</option>
+                    </select>
+                </div> -->
                 <input type="hidden" name="_csrf" value="">
-                <button type="submit">Sign up</button>
+                <button type="submit" [disabled]="signUpForm.invalid">Sign up</button>
                 <div class="register">
                     <p><a class="google" href="/auth/google">Sign up with Google <i class="bi bi-google"></i></a></p>
                     <p><a class="fb" href="/auth/facebook">Sign up with Facebook <i class="bi bi-facebook"></i></a></p>

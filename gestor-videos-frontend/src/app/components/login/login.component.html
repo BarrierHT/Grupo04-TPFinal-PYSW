@@ -1,22 +1,35 @@
 <section>
     <div class="form-box">
         <div class="form-value">
-            <form class="login-form" action="/login" method="POST">
-                <h2>Login</h2>
+            <form class="login-form" action="/login" method="POST" #loginForm="ngForm">
+                <h2 class="pb-2">Login</h2>
                 <div class="inputbox">
-                    <input type="email" name="email" placeholder=" " id="email" required>
-                    <label for="email">Email <i class="bi bi-envelope"></i></label>
+                    <input type="name" name="username" placeholder=" " id="username" [(ngModel)]="usuario.username"
+                        #username="ngModel" required>
+                    <label for="username">Username <i class="bi bi-person-fill"></i></label>
+                </div>
+                <div *ngIf="username.invalid && (username.dirty || username.touched)">
+                    <div *ngIf="username.errors?.['required']" class="alerta text-center">
+                        Please, enter a username!
+                    </div>
                 </div>
                 <div class="inputbox">
-                    <input type="password" name="password" placeholder=" " id="password" value="" required>
+                    <input type="password" name="password" placeholder=" " id="password" value=""
+                        [(ngModel)]="usuario.password" #password="ngModel" required>
                     <label for="password">Password <i class="bi bi-lock-fill"></i></label>
+
+                </div>
+                <div *ngIf="password.invalid && (password.dirty || password.touched)">
+                    <div *ngIf="password.errors?.['required']" class="alerta text-center">
+                        Please, enter a password!
+                    </div>
                 </div>
                 <input type="hidden" name="_csrf" value="">
-                <button type="submit">Log in</button>
+                <button type="submit" [disabled]="loginForm.invalid">Log in</button>
                 <div class="register">
                     <p><a href="/reset-password">Forgot your password?</a></p>
                     <p>Don't have an account? <a [routerLink]="['/signup']">Sign up!</a></p>
-                    <hr class="mt-1 mb-1">
+                    <hr class="mt-2 mb-2">
                     <p><a class="google" href="/auth/google">Log in with Google <i class="bi bi-google"></i></a></p>
                     <p><a class="fb" href="/auth/facebook">Log in with Facebook <i class="bi bi-facebook"></i></a></p>
                 </div>
