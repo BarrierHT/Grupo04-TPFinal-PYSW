@@ -3,8 +3,8 @@ import ratingController from '../controllers/rating.js';
 
 const router = express.Router();
 
-router.get('/get-rating', ratingController.getRating);
-router.get('/add-rating', ratingController.postRating);
+router.get('/get-rating/:id', ratingController.getRating);
+router.post('/add-rating', ratingController.postRating);
 
 //exportamos el modulo de rutas
 

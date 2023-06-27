@@ -16,8 +16,8 @@ import notificationRoutes from './routes/notification.js';
 
 /* Initializations */
 
-const morganFormat =
-	':body :remote-addr :remote-user :method :url HTTP/:http-version :status :res[content-length] - :response-time ms';
+// const morganFormat =
+// 	':body :remote-addr :remote-user :method :url HTTP/:http-version :status :res[content-length] - :response-time ms';
 
 const app = express();
 
@@ -26,18 +26,18 @@ app.set('port', process.env.PORT || 8080);
 /* Middlewares */
 
 app.use(express.json());
-app.use(morgan(morganFormat));
+app.use(morgan("dev"));
 
 /* Routes */
 
 app.use('/auth', authRoutes);
 
-app.use('/users', userRoutes);
+app.use('/user', userRoutes);
 app.use('/group', groupRoutes);
 app.use('/channel', channelRoutes);
-app.use('/notifications', notificationRoutes);
+app.use('/notification', notificationRoutes);
 
-app.use('/videos', videoRoutes);
+app.use('/video', videoRoutes);
 app.use('/rating', ratingRoutes);
 app.use('/report', reportRoutes);
 app.use('/playlist', playlistRoutes);

@@ -3,8 +3,8 @@ import reportController from '../controllers/report.js';
 
 const router = express.Router();
 
-router.get('/get-report', reportController.getReport);
-router.get('/add-report', reportController.postReport);
+router.get('/get-report/:id', reportController.getReport);
+router.post('/add-report', reportController.postReport);
 
 //exportamos el modulo de rutas
 
