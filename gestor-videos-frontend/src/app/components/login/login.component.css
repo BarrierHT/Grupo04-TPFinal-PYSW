@@ -35,7 +35,7 @@ h2{
 }
 .inputbox{
     position: relative;
-    margin: 40px 0px 40px;
+    margin: 40px 0px 0px;
     width: 310px;
     border-bottom: 2px solid #fff;
 }
@@ -52,7 +52,6 @@ h2{
 input:focus ~ label, input:not(:placeholder-shown) ~ label{
 top: -10px;
 }
-
 .inputbox input {
     width: 100%;
     height: 30px;
@@ -63,27 +62,21 @@ top: -10px;
     padding:0 35px 0 5px;
     color: #fff;
 }
-
 /* Estilo base para el campo de entrada autocompletado */
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px transparent inset;
     transition: background-color 1s ease-in-out 0s;
 }
-
 /* Estilo cuando el campo de entrada autocompletado está enfocado */
 input:-webkit-autofill:focus {
     -webkit-box-shadow: 0 0 0px 1000px transparent inset;
     transition: background-color 1s ease-in-out 0s;
 }
-
 /* Estilo cuando el cursor pasa por encima del campo de entrada autocompletado */
 input:-webkit-autofill:hover {
     -webkit-box-shadow: 0 0 0px 1000px transparent inset;
     transition: background-color 1s ease-in-out 0s;
 }
-
-
-
 button{
     width: 100%;
     height: 40px;
@@ -94,10 +87,14 @@ button{
     cursor: pointer;
     font-size: 1em;
     font-weight: 600;
+    margin-top: 40px;
 }
-
-button:hover{
+button[disabled]:hover {
+    cursor: default;
+  }
+button:not([disabled]):hover {
     background-color: orange;
+
 }
 .register{
     font-size: .9em;
@@ -114,5 +111,15 @@ button:hover{
     text-decoration: underline;
 }
 hr{
-    border-bottom: 2px solid #ffffff;
+    background-color: rgb(255, 255, 255);
+    height: 2px;
+    border: none;
+}
+.alerta {
+    color:#fff;
+    font-size: 12px;
+    margin-top: 2px;
+    background-color: red;
+    border-radius: 0 0 20px 20px;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
