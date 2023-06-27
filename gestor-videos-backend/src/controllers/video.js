@@ -1,4 +1,4 @@
-//Controller para gestionar videos
+//Controller para gestionar videos (funciones CRUD y similares)
 
 const getVideos = (req, res, next) => {};
 

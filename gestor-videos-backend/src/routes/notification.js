@@ -1,9 +1,9 @@
 import express from 'express';
-import notificaionController from '../controllers/notification.js';
+import notificationController from '../controllers/notification.js';
 
 const router = express.Router();
 
-router.get('/get-notifications', notificaionController.getNotifications);
+router.get('/get-notifications', notificationController.getNotifications);
 
 //exportamos el modulo de rutas
 
