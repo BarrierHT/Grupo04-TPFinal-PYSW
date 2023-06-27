@@ -1,39 +1,32 @@
-<form class="login-form" action="/signup" method="POST">
-    <div class="title-box">
-        <h3>Sign up</h3>
+<section>
+    <div class="form-box">
+        <div class="form-value">
+            <form class="signup-form" action="/signup" method="POST">
+                <h2>Sign Up</h2>
+                <div class="inputbox">
+                    <input type="email" name="email" placeholder=" " id="email" required>
+                    <label for="email">Email <i class="bi bi-envelope"></i></label>
+                </div>
+                <div class="inputbox">
+                    <input type="name" name="name" placeholder=" " id="name" value="" required>
+                    <label for="name">Name <i class="bi bi-person"></i></label>
+                </div>
+                <div class="inputbox">
+                    <input type="password" name="password" placeholder=" " id="password" value="" required>
+                    <label for="password">Password <i class="bi bi-lock-fill"></i></label>
+                </div>
+                <div class="inputbox">
+                    <input type="password" name="confirmPassword" placeholder=" " id="confirmPassword" value=""
+                        required>
+                    <label for="confirmPassword">Confirm Password <i class="bi bi-lock-fill"></i></label>
+                </div>
+                <input type="hidden" name="_csrf" value="">
+                <button type="submit">Sign up</button>
+                <div class="register">
+                    <p><a class="google" href="/auth/google">Sign up with Google <i class="bi bi-google"></i></a></p>
+                    <p><a class="fb" href="/auth/facebook">Sign up with Facebook <i class="bi bi-facebook"></i></a></p>
+                </div>
+            </form>
+        </div>
     </div>
-
-
-
-    <div class="form-control">
-        <label for="email">Email</label>
-        <br>
-        <input type="email" name="email" placeholder="Write the email" id="email" value="">
-    </div>
-
-    <div class="form-control">
-        <label for="name">Name</label>
-        <br>
-        <input type="name" name="name" placeholder="Write your name" id="name" value="">
-    </div>
-
-    <div class="form-control">
-        <label for="password">Password</label>
-        <br>
-        <input type="password" name="password" placeholder="Write the password" id="password" value="">
-    </div>
-
-    <div class="form-control">
-        <label for="confirmPassword">Confirm Password</label>
-        <br>
-        <input type="password" name="confirmPassword" placeholder="Write the password again" id="confirmPassword"
-            value="">
-    </div>
-
-    <input type="hidden" name="_csrf" value="">
-    <button class="btn" type="submit">Sign up</button>
-    <br>
-    <a class="google" href="/auth/google">Sign up with Google</a>
-    <br>
-    <a class="fb" href="/auth/facebook">Sign up with Facebook</a>
-</form>
+</section>
