@@ -1,3 +1,5 @@
+//middleware para gestionar LogIn (validar si esta autenticado en las routes)
+
 import jwt from 'jsonwebtoken';
 import { errorHandler } from '../utils/errorHandler.js';
 

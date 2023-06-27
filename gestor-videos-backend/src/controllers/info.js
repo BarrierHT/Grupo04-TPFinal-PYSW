@@ -1,4 +1,4 @@
-//Controller para gestionar informacion
+//Controller para gestionar informacion sobre el sistema
 
 const infoController = {};
 
