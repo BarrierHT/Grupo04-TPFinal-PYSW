@@ -1,0 +1,53 @@
+<div class="container">
+    <h1>Resultados de búsqueda</h1>
+    <div class="row">
+        <div class="col-12">
+            <div class="video-card rounded-4" *ngFor="let video of videos" (mouseenter)="onMouseEnter(video)"
+                (mouseleave)="onMouseLeave()">
+                <div class="video-thumbnail rounded-4">
+                    <div class="thumbnail-overlay">
+                        <div class="overlay-content">
+                            <div class="views p-1 rounded-2">
+                                <i class="bi bi-eye-fill"></i>
+                                {{ video.views | abbreviateNumber }}
+                            </div>
+                            <div class="duration p-1 rounded-2">
+                                {{ video.duration }}
+                            </div>
+                        </div>
+                    </div>
+                    <img src="{{ video.thumbnail }}" alt="{{ video.title }}" (mouseenter)="zoomInThumbnail($event)"
+                        (mouseleave)="zoomOutThumbnail($event)">
+                    <div class="playlist-icon rounded-2" *ngIf="showOptions && video === selectedVideo">
+                        <i class="bi bi-plus-circle-fill"></i>
+                    </div>
+                </div>
+                <div class="video-details">
+                    <h2 class="video-title">{{ video.title }}</h2>
+                    <div class="channel">
+                        <div class="channel-image">
+                            <img src="{{ video.channelImage }}" alt="{{ video.channelName }}">
+                        </div>
+                        <div class="channel-name">
+                            {{ video.channelName }}
+                        </div>
+                    </div>
+                    <div class="video-description">{{ video.description }}</div>
+                    <div class="video-options" *ngIf="showOptions && video === selectedVideo">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

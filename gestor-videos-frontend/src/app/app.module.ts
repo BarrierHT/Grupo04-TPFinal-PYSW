@@ -15,6 +15,8 @@ import { ChannelComponent } from './components/channel/channel.component';
 import { ListVideoComponent } from './components/list-video/list-video.component';
 import { ShowVideoComponent } from './components/show-video/show-video.component';
 import { FormVideoComponent } from './components/form-video/form-video.component';
+import { SearchedVideosComponent } from './components/searched-videos/searched-videos.component';
+import { AbbreviateNumberPipe } from './pipes/abbreviate-number.pipe';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { FormVideoComponent } from './components/form-video/form-video.component
     ListVideoComponent,
     ShowVideoComponent,
     FormVideoComponent,
+    SearchedVideosComponent,
+    AbbreviateNumberPipe
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [],

@@ -1,0 +1,153 @@
+.container {
+    margin-top: 20px;
+}
+
+.video-card {
+    display: flex;
+    margin-bottom: 20px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.video-card:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.video-thumbnail {
+    width: 320px;
+    height: 200px;
+    margin-right: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.thumbnail-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    color: #fff;
+    padding: 5px;
+    z-index: 2;
+}
+
+.overlay-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.views {
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.views i {
+    margin-right: 3px;
+}
+
+.duration {
+    font-size: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.video-thumbnail:hover img {
+    transform: scale(1.1);
+}
+
+.playlist-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+.playlist-icon:hover {
+ cursor: pointer;
+}
+
+.video-details {
+    flex: 1;
+    z-index: 1;
+}
+
+.video-title {
+    font-size: 20px;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.channel {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.channel-image {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 5px;
+}
+
+.channel-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.channel-name {
+    font-size: 16px;
+}
+
+.video-description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.video-options {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+.dropdown-toggle:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+.dropdown-menu {
+    min-width: auto;
+    right: 0;
+    z-index: 3;
+    position: absolute;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+}
