@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { catchError, pipe } from 'rxjs';
 import { Usuario } from 'src/app/models/usuario';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -17,6 +18,33 @@ export class LoginComponent {
   login(loginForm: any) {
     console.log(loginForm);
     const { email, password } = loginForm;
-    this.authService.postLogin(email, password);
+    this.authService
+      .postLogin(email, password)
+      .pipe(
+        catchError((error) => {
+          //console.log('Error en el observable: ', error);
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            // throw new Error('');
+          }
+          return [];
+        })
+      )
+      .subscribe((result) => {
+        try {
+          console.log(result);
+
+          localStorage.setItem('token', result.token);
+          localStorage.setItem('userId', result.userId);
+
+          const remainingMilliseconds = 60 * 60 * 1000;
+          const expiryDate = new Date(
+            new Date().getTime() + remainingMilliseconds
+          );
+          localStorage.setItem('expiryDate', expiryDate.toISOString());
+        } catch (err) {
+          console.log(err);
+        }
+      });
   }
 }
