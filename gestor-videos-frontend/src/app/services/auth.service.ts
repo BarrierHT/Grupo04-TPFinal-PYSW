@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class AuthService {
   constructor(private _http: HttpClient) {}
 
-  postLogin(userCredential: any): Observable<any> {
+  postLogin(email: string, password: string): Observable<any> {
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
@@ -16,7 +16,7 @@ export class AuthService {
     };
     return this._http.post(
       `http://localhost:8080/auth/login`,
-      userCredential,
+      { email, password },
       httpOption
     );
   }

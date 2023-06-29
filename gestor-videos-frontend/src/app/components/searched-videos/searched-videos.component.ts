@@ -1,36 +1,40 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-searched-videos',
   templateUrl: './searched-videos.component.html',
-  styleUrls: ['./searched-videos.component.css']
+  styleUrls: ['./searched-videos.component.css'],
 })
 export class SearchedVideosComponent {
   videos: any[] = [
     {
       title: 'Video 1',
-      description: 'Descripción del video 1 Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      description:
+        'Descripción del video 1 Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
       thumbnail: 'assets/img/image-not-found.jpg',
       views: 1234567,
       duration: '10:23',
       channelName: 'Canal 1',
-      channelImage: 'assets/img/image-not-found.jpg'
+      channelImage: 'assets/img/image-not-found.jpg',
+      _id: 'a',
     },
     {
       title: 'Video 2',
-      description: 'Descripción del video 2 Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      description:
+        'Descripción del video 2 Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       thumbnail: 'assets/img/image-not-found.jpg',
       views: 9876543,
       duration: '5:42',
       channelName: 'Canal 2',
-      channelImage: 'assets/img/image-not-found.jpg'
-    }
+      channelImage: 'assets/img/image-not-found.jpg',
+      _id: 'b',
+    },
   ];
   showOptions: boolean = false;
   selectedVideo: any;
-  
-  constructor() {
-  }
+
+  constructor(private router: Router) {}
 
   onMouseEnter(video: any) {
     this.showOptions = true;
@@ -42,6 +46,10 @@ export class SearchedVideosComponent {
     this.selectedVideo = null;
   }
 
+  watchVideo(video: any) {
+    this.router.navigate(['watch', video._id]);
+  }
+
   zoomInThumbnail(event: any) {
     event.target.style.transform = 'scale(1.1)';
   }
@@ -49,5 +57,4 @@ export class SearchedVideosComponent {
   zoomOutThumbnail(event: any) {
     event.target.style.transform = 'scale(1)';
   }
-
 }

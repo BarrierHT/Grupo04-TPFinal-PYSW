@@ -4,10 +4,10 @@ let userSchema = new Schema(
 	{
 		nombre: { type: String, required: true },
 		password: { type: String, required: true },
-		correo: { type: String, required: true },
+		email: { type: String, required: true },
 		telefono: { type: String, required: true },
 		username: { type: String, required: true },
-		rol: { type: String, required: true, default: "Usuario" },
+		rol: { type: String, required: true, default: 'Usuario' },
 	},
 	{
 		versionKey: false,
