@@ -49,4 +49,5 @@ export class SearchedVideosComponent {
   zoomOutThumbnail(event: any) {
     event.target.style.transform = 'scale(1)';
   }
+
 }
