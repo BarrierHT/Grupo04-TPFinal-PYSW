@@ -1,1 +1,85 @@
-<p>list-video works!</p>
+<body class="container-fluid">
+    <div class="row">
+
+        <!-- Add a new playlist -->
+        <div class="col-6 col-sm-4 col-lg-4 p-4" data-bs-toggle="modal" data-bs-target="#newPlaylistModal">
+            <div class="cards new-playlist">
+                <div class="img-holder">
+                    <img src="https://www.gstatic.com/youtube/media/ytm/images/pbg/create-playlist-@210.png"
+                        class="image">
+                </div>
+                <div class="text">
+                    <h2>Add a new playlist!</h2>
+                    <p>Click on this card to add a new playlist</p>
+                </div>
+            </div>
+        </div>
+        <!-- Add a new playlist -->
+
+        <!--  New Playlist Modal  -->
+        <div class="modal fade" id="newPlaylistModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content p-2">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">New Playlist</h1>
+                    </div>
+                    <div class="modal-body">
+                        <form #playlistForm="ngForm">
+                            <div class="inputbox ">
+                                <input type="name" name="nombre" placeholder=" " id="nombre"
+                                    [(ngModel)]="newPlaylist.nombre" #nombre="ngModel" required>
+                                <label for="nombre">Name <i class="bi bi-music-note-beamed"></i></label>
+                            </div>
+                            <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                                <div *ngIf="nombre.errors?.['required']" class="alerta text-center">
+                                    Please, enter a playlist name!
+                                </div>
+                            </div>
+                            <div class="inputbox ">
+                                <input type="text" name="descripcion" placeholder=" " id="descripcion"
+                                    [(ngModel)]="newPlaylist.descripcion" #descripcion="ngModel" required>
+                                <label for="descripcion">Description <i class="bi bi-music-note-beamed"></i></label>
+                            </div>
+                            <div *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)">
+                                <div *ngIf="descripcion.errors?.['required']" class="alerta text-center">
+                                    Please, enter a playlist description!
+                                </div>
+                            </div>
+                            <div class="row text-center mt-4">
+                                <div class="col-12 col-sm-6 mb-2"><button type="submit"
+                                        [disabled]="playlistForm.invalid">Add
+                                        playlist</button></div>
+                                <div class="col-12 col-sm-6"><button type="button" data-bs-dismiss="modal"
+                                        (click)="resetModal()">Close</button></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  New Playlist Modal  -->
+
+
+        <!-- Show all playlist -->
+        <div class="col-6 col-sm-4 col-lg-4 p-4" *ngFor="let playlist of playlists">
+            <div class="cards">
+                <div class="img-holder">
+                    <img src="https://yt3.ggpht.com/yuot-V_LxACsyOGYhDarVl60X90wN1TH6qFPj6xBSFJqJ7YzXzlI6V66jEdHIW5AVoPbbXBi5to=s576"
+                        class="image">
+                </div>
+                <div class="text">
+                    <h2>{{playlist.nombre}}</h2>
+                    <p>{{playlist.descripcion}}</p>
+                </div>
+                <div class="play-icon d-flex justify-content-center align-items-center">
+                    <div class="circle" (click)="showPlaylistVideos()">
+                        <div class="triangle">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Show all playlist -->
+    </div>
+</body>
