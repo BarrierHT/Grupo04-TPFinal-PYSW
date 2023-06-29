@@ -1,12 +1,13 @@
 <section>
     <div class="form-box col-11 col-sm-8 col-lg-4 m-5">
         <div class="form-value p-2 col-10">
-            <form class="login-form col-12" action="/login" method="POST" #loginForm="ngForm">
+            <form class="login-form col-12" action="/login" method="POST" #loginForm="ngForm"
+                (submit)="login(loginForm.value)">
                 <h2 class="pb-2">Login</h2>
                 <div class="inputbox ">
                     <input type="name" name="username" placeholder=" " id="username" [(ngModel)]="usuario.username"
                         #username="ngModel" required>
-                    <label for="username">Username <i class="bi bi-person-fill"></i></label>
+                    <label for="username">Email <i class="bi bi-person-fill"></i></label>
                 </div>
                 <div *ngIf="username.invalid && (username.dirty || username.touched)">
                     <div *ngIf="username.errors?.['required']" class="alerta text-center">

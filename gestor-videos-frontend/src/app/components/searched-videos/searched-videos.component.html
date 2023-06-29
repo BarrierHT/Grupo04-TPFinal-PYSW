@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-12">
             <div class="video-card rounded-4" *ngFor="let video of videos" (mouseenter)="onMouseEnter(video)"
-                (mouseleave)="onMouseLeave()">
+                (mouseleave)="onMouseLeave()" (click)="watchVideo(video)">
                 <div class="video-thumbnail rounded-4">
                     <div class="thumbnail-overlay">
                         <div class="overlay-content">
