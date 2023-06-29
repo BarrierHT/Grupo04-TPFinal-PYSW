@@ -6,8 +6,8 @@
 }
 section{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; 
+    align-items: center; 
     min-height: 140vh;
     width: 100%;
     
@@ -17,8 +17,8 @@ section{
 }
 .form-box{
     position: relative;
-    width: 500px;
-    height: 950px;
+    /* width: 500px;
+    height: 950px; */
     background: transparent;
     border: 2px solid rgba(255,255,255,0.5);
     border-radius: 20px;
@@ -26,17 +26,17 @@ section{
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
 h2{
     font-size: 2em;
     color: #fff;
     text-align: center;
+    margin-top: 30px;
 }
 .inputbox, .rolbox{
     position: relative;
     margin: 40px 0px 0px;
-    width: 370px;
+    /* width: 370px; */
     border-bottom: 2px solid #fff;
 }
 .rolbox label{
@@ -74,7 +74,7 @@ top: -10px;
     border: none;
     outline: none;
     font-size: 1em;
-    padding:0 35px 0 5px;
+    padding:0 5px 0 5px;
     color: #fff;
 }
 /* Estilo base para el campo de entrada autocompletado */
@@ -103,7 +103,7 @@ button{
     font-size: 1em;
     font-weight: 600;
     padding-top: 5px;
-    margin-top: 85px;
+    margin-top: 45px;
 }
 button[disabled]:hover {
     cursor: default;

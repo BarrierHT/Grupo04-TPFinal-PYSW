@@ -17,8 +17,8 @@ section{
 }
 .form-box{
     position: relative;
-    width: 400px;
-    height: 550px;
+    /* width: 400px;
+    height: 550px; */
     background: transparent;
     border: 2px solid rgba(255,255,255,0.5);
     border-radius: 20px;
@@ -32,11 +32,12 @@ h2{
     font-size: 2em;
     color: #fff;
     text-align: center;
+    margin-top: 30px;
 }
 .inputbox{
     position: relative;
     margin: 40px 0px 0px;
-    width: 310px;
+    /* width: 310px; */
     border-bottom: 2px solid #fff;
 }
 .inputbox label{
@@ -59,7 +60,7 @@ top: -10px;
     border: none;
     outline: none;
     font-size: 1em;
-    padding:0 35px 0 5px;
+    padding:0 5px 0 5px;
     color: #fff;
 }
 /* Estilo base para el campo de entrada autocompletado */

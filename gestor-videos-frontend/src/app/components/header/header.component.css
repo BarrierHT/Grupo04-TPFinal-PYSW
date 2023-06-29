@@ -1,0 +1,25 @@
+.nav-link{
+    color: white;
+}
+
+.nav-link:hover {
+    background-color: white;
+    color: black;
+}
+
+.navbar-toggler {
+    background-color: white;
+    margin-bottom: 4px;
+}
+
+.active, .active .nav-link{
+    background-color: orange;
+    border: 2px;
+    border-color: black;
+}
+
+.active .nav-link{
+    color: white;
+}
+
+  
