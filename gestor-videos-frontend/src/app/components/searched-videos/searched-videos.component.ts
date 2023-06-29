@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-show-video',
-  templateUrl: './show-video.component.html',
-  styleUrls: ['./show-video.component.css']
+  selector: 'app-searched-videos',
+  templateUrl: './searched-videos.component.html',
+  styleUrls: ['./searched-videos.component.css']
 })
-export class ShowVideoComponent {
+export class SearchedVideosComponent {
   videos: any[] = [
     {
       title: 'Video 1',
@@ -28,13 +28,9 @@ export class ShowVideoComponent {
   ];
   showOptions: boolean = false;
   selectedVideo: any;
-  showFullDescription: boolean = true;
-
-  stringTest:string = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam condimentum feugiat mi aconvallis."+
-  "Nulla tempusnibh ac metus semper, eget semper neque pellentesque. Mauris at ligula sapien. Integer ullamcorper, nunc a"+
-  "tristique sollicitudin, tortor nisi efficitur odio, vel malesuada purus lacus sit amet lacus."+
-  "Sed sollicitudin"+
-  "felis in euismod consequat, felis leo iaculis est, eget fermentum enim odio ut arcu." ;
+  
+  constructor() {
+  }
 
   onMouseEnter(video: any) {
     this.showOptions = true;
@@ -53,5 +49,5 @@ export class ShowVideoComponent {
   zoomOutThumbnail(event: any) {
     event.target.style.transform = 'scale(1)';
   }
-}
 
+}
