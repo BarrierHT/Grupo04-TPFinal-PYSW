@@ -47,16 +47,17 @@
                     </div>
                 </div>
 
-                <!-- Descripción del video -->
-                <div class="col-12 ">
-                    <div class="">
-                        {{ showFullDescription ? stringTest : stringTest.substring(0, 8) + '...' }}
-                    </div>
-
-                    <button class="btn btn-link" (click)="showFullDescription = !showFullDescription">
+               <!-- Descripción del video -->
+               <div class="col-12 video-info-description rounded-4 mt-2">
+                <div class="p-3">
+                    {{ showFullDescription ? stringTest : stringTest.substring(0, 8) + '...' }}
+                </div>
+                <div class="px-3 pt-0 pb-3">
+                    <button class="btn btn-dark btn-sm" (click)="showFullDescription = !showFullDescription">
                         {{!showFullDescription ? 'Read More':'Minimize'}}
                       </button>
                 </div>
+            </div>
             </div>
 
         </div>

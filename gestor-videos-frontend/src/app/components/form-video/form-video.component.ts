@@ -6,5 +6,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./form-video.component.css']
 })
 export class FormVideoComponent {
-
+  video: {
+    file: File | null;
+    title: string;
+    description: string;
+    tags: string;
+  } = {
+    file: null,
+    title: '',
+    description: '',
+    tags: ''
+  };
 }
