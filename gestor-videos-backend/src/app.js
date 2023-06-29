@@ -1,5 +1,6 @@
 import morgan from 'morgan';
 import express from 'express';
+import cors from 'cors';
 
 import './utils/db.js';
 import './utils/start.js';
@@ -24,9 +25,9 @@ const app = express();
 app.set('port', process.env.PORT || 8080);
 
 /* Middlewares */
-
+app.use(cors({ origin: 'http://localhost:4200' }));
 app.use(express.json());
-app.use(morgan("dev"));
+app.use(morgan('dev'));
 
 /* Routes */
 

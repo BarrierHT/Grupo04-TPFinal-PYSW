@@ -5,9 +5,9 @@
                 (submit)="login(loginForm.value)">
                 <h2 class="pb-2">Login</h2>
                 <div class="inputbox ">
-                    <input type="name" name="username" placeholder=" " id="username" [(ngModel)]="usuario.username"
+                    <input type="email" name="email" placeholder=" " id="email" [(ngModel)]="usuario.username"
                         #username="ngModel" required>
-                    <label for="username">Email <i class="bi bi-person-fill"></i></label>
+                    <label for="email">Email <i class="bi bi-person-fill"></i></label>
                 </div>
                 <div *ngIf="username.invalid && (username.dirty || username.touched)">
                     <div *ngIf="username.errors?.['required']" class="alerta text-center">
