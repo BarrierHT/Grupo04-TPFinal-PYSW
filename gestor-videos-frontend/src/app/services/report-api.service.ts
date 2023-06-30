@@ -21,6 +21,19 @@ export class ReportApiService {
     );
   }
 
+  putReviewReport(reportId: string): Observable<any> {
+    let httpOption = {
+      headers: new HttpHeaders({
+        'Content-type': 'application/json',
+      }),
+    };
+    return this._http.put(
+      `http://localhost:8080/report/review-report`,
+      { reportId },
+      httpOption
+    );
+  }
+
   getReport(reportId: string): Observable<any> {
     let httpOption = {
       headers: new HttpHeaders({
@@ -33,6 +46,18 @@ export class ReportApiService {
     };
     return this._http.get(
       `http://localhost:8080/report/get-report/${reportId}`,
+      httpOption
+    );
+  }
+
+  getReports(): Observable<any> {
+    let httpOption = {
+      headers: new HttpHeaders({
+        'Content-type': 'application/json',
+      }),
+    };
+    return this._http.get(
+      `http://localhost:8080/report/get-reports`,
       httpOption
     );
   }

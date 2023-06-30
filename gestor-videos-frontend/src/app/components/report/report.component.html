@@ -11,39 +11,25 @@
                 </tr>
             </thead>
             <tbody class="table-group-divider">
-                <tr>
-                    <th scope="row">Video inapropiado</th>
-                    <td>1</td>
-                    <td>aaaaa</td>
-                    <td>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorum, quibusdam.</td>
+                <tr *ngFor="let report of reports">
+
+                    <th scope="row">{{report.title}}</th>
+                    <td>{{report.videoId._id}}</td>
+                    <td>{{report.videoId.title}}</td>
+                    <td>{{report.reason}}</td>
                     <td class="text-center">
-                        <button type="button" class="btn btn-warning btn-sm">
-                            Revisado
+
+                        <button type="button" class="btn btn-danger btn-sm" *ngIf="report.reviewed == false"
+                            (click)="reviewReport(report._id)">
+                            Revisar
                         </button>
+
+                        <p class="btn btn-warning btn-sm" *ngIf="report.reviewed == true">
+                            Revisado
+                        </p>
                     </td>
                 </tr>
-                <tr>
-                    <th scope="row">Video inapropiado</th>
-                    <td>1</td>
-                    <td>aaaaa</td>
-                    <td>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorum, quibusdam.</td>
-                    <td class="text-center">
-                        <button type="button" class="btn btn-warning btn-sm">
-                            Revisado
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">Video inapropiado</th>
-                    <td>1</td>
-                    <td>aaaaa</td>
-                    <td>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorum, quibusdam.</td>
-                    <td class="text-center">
-                        <button type="button" class="btn btn-warning btn-sm">
-                            Revisado
-                        </button>
-                    </td>
-                </tr>
+
             </tbody>
         </table>
     </div>
