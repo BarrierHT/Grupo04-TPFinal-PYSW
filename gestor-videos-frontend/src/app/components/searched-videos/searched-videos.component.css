@@ -1,19 +1,27 @@
-.container {
-    margin-top: 20px;
+.container-custom-1 {
+    font-family: sans-serif;
+    background-color: black;
 }
-
+.hr-custom-1 {
+    background-color: rgb(72, 235, 72);
+    height: 3px;
+    opacity: 80%;
+  }
+  
 .video-card {
     display: flex;
     margin-bottom: 20px;
-    background-color: #f0f0f0;
+    background-color: rgb(48, 48, 48);
+    color: #fff;
     padding: 10px;
     position: relative;
     z-index: 1;
+    transition: all 0.2s ease; 
 }
 
 .video-card:hover {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
+    background-color:rgba(192, 125, 0, 1); 
+    
 }
 
 .video-thumbnail {
@@ -65,6 +73,7 @@
 
 .video-thumbnail:hover img {
     transform: scale(1.1);
+    cursor: pointer;
 }
 
 .playlist-icon {
@@ -101,6 +110,10 @@
     margin-bottom: 5px;
 }
 
+.channel:hover {
+    cursor: pointer;
+}
+
 .channel-image {
     width: 30px;
     height: 30px;
@@ -132,6 +145,13 @@
     z-index: 2;
 }
 
+.dropdown-toggle{
+    color: #fff;
+    background-color: rgb(48, 48, 48);
+}
+.dropdown-toggle:hover{
+    background-color: rgb(20, 20, 20);
+}
 .dropdown-toggle::after {
     display: none;
 }
@@ -139,15 +159,22 @@
 .dropdown-toggle:focus {
     box-shadow: none;
     outline: none;
+    border-color: rgb(72, 235, 72);
 }
 
 .dropdown-menu {
+    background-color: rgb(48, 48, 48);
+    box-shadow: 0px 0px 5px 3px rgb(59, 59, 59);
     min-width: auto;
     right: 0;
     z-index: 3;
     position: absolute;
 }
 
+.dropdown-item{
+    color: #fff; 
+}
+
 .dropdown-item:hover {
-    background-color: #f0f0f0;
+    background-color: black;
 }

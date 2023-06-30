@@ -28,7 +28,7 @@ export class ShowVideoComponent {
   ];
   showOptions: boolean = false;
   selectedVideo: any;
-  showFullDescription: boolean = true;
+  showFullDescription: boolean = false;
 
   stringTest:string = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam condimentum feugiat mi aconvallis."+
   "Nulla tempusnibh ac metus semper, eget semper neque pellentesque. Mauris at ligula sapien. Integer ullamcorper, nunc a"+
