@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport(
 
 const sendNotification = async (req, res, next) => {
 	try {
-		const { contenido } = req.body;
+		const { message, grupo, infoTitle } = req.body;
 
 		const newNotification = new notificationSchema({
 			contenido: contenido,
@@ -45,7 +45,7 @@ const getNotifications = async (req, res, next) => {
 };
 
 const notificationController = {
-	sendNotification,
+	// sendNotification,
 	getNotifications,
 };
 

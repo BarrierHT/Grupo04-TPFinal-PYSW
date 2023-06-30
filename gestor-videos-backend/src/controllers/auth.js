@@ -49,14 +49,17 @@ const postLogin = async (req, res, next) => {
 
 const postSignup = async (req, res, next) => {
 	try {
-		const { nombre, password, correo, telefono, username } = req.body;
+		const { username, email, password, telefono, name } = req.body;
+
+		console.log(username, email, password, telefono, name);
 
 		const newUser = new userSchema({
-			nombre: nombre,
+			nombre: name,
 			password: password,
-			correo: correo,
+			email,
 			telefono: telefono,
-			username: username,
+			username,
+			rol: 'usuario',
 		});
 
 		await newUser.save();

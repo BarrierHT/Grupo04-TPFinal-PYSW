@@ -1,7 +1,8 @@
 <section>
     <div class="form-box col-11 col-sm-8 col-lg-4 m-5">
         <div class="form-value p-2 col-10">
-            <form class="signup-form" action="/signup" method="POST" #signUpForm="ngForm">
+            <form class="signup-form" action="/signup" method="POST" #signUpForm="ngForm"
+                (submit)="signup(signUpForm.value)">
                 <h2 class="pb-2">Sign Up</h2>
                 <div class="inputbox">
                     <input type="name" name="name" placeholder=" " id="name" value="" [(ngModel)]="usuario.nombre"
@@ -14,15 +15,16 @@
                     </div>
                 </div>
                 <div class="inputbox">
-                    <input type="email" name="email" placeholder=" " id="email" [(ngModel)]="usuario.correo"
-                        #correo="ngModel" required>
-                    <label for="email">Email <i class="bi bi-envelope"></i></label>
+                    <input type="name" name="username" placeholder=" " id="username" [(ngModel)]="usuario.username"
+                        #username="ngModel" required>
+                    <label for="username">Username <i class="bi bi-person-fill"></i></label>
                 </div>
-                <div *ngIf="correo.invalid && (correo.dirty || correo.touched)">
-                    <div *ngIf="correo.errors?.['required']" class="alerta text-center">
-                        Please, enter a email!
+                <div *ngIf="username.invalid && (username.dirty || username.touched)">
+                    <div *ngIf="username.errors?.['required']" class="alerta text-center">
+                        Please, enter a username!
                     </div>
                 </div>
+
                 <div class="inputbox">
                     <input type="tel" name="telefono" placeholder=" " id="telefono" value=""
                         [(ngModel)]="usuario.telefono" #telefono="ngModel" required>
@@ -33,16 +35,18 @@
                         Please, enter a phone number!
                     </div>
                 </div>
+
                 <div class="inputbox">
-                    <input type="name" name="username" placeholder=" " id="username" [(ngModel)]="usuario.username"
-                        #username="ngModel" required>
-                    <label for="username">Username <i class="bi bi-person-fill"></i></label>
+                    <input type="email" name="email" placeholder=" " id="email" [(ngModel)]="usuario.correo"
+                        #correo="ngModel" required>
+                    <label for="email">Email <i class="bi bi-envelope"></i></label>
                 </div>
-                <div *ngIf="username.invalid && (username.dirty || username.touched)">
-                    <div *ngIf="username.errors?.['required']" class="alerta text-center">
-                        Please, enter a username!
+                <div *ngIf="correo.invalid && (correo.dirty || correo.touched)">
+                    <div *ngIf="correo.errors?.['required']" class="alerta text-center">
+                        Please, enter a email!
                     </div>
                 </div>
+
                 <div class="inputbox">
                     <input type="password" name="password" placeholder=" " id="password" value=""
                         [(ngModel)]="usuario.password" #password="ngModel" required>
@@ -74,10 +78,10 @@
                 </div> -->
                 <input type="hidden" name="_csrf" value="">
                 <button type="submit" [disabled]="signUpForm.invalid">Sign up</button>
-                <div class="register">
+                <!-- <div class="register">
                     <p><a class="google" href="/auth/google">Sign up with Google <i class="bi bi-google"></i></a></p>
                     <p><a class="fb" href="/auth/facebook">Sign up with Facebook <i class="bi bi-facebook"></i></a></p>
-                </div>
+                </div> -->
             </form>
         </div>
     </div>
