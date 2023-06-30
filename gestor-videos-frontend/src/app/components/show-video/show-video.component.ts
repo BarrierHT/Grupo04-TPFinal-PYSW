@@ -1,40 +1,62 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-show-video',
   templateUrl: './show-video.component.html',
-  styleUrls: ['./show-video.component.css']
+  styleUrls: ['./show-video.component.css'],
 })
-export class ShowVideoComponent {
+export class ShowVideoComponent implements OnInit {
   videos: any[] = [
     {
       title: 'Video 1',
-      description: 'Descripción del video 1 Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+      description:
+        'Descripción del video 1 Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
       thumbnail: 'assets/img/image-not-found.jpg',
       views: 1234567,
       duration: '10:23',
       channelName: 'Canal 1',
-      channelImage: 'assets/img/image-not-found.jpg'
+      channelImage: 'assets/img/image-not-found.jpg',
     },
     {
       title: 'Video 2',
-      description: 'Descripción del video 2 Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      description:
+        'Descripción del video 2 Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       thumbnail: 'assets/img/image-not-found.jpg',
       views: 9876543,
       duration: '5:42',
       channelName: 'Canal 2',
-      channelImage: 'assets/img/image-not-found.jpg'
-    }
+      channelImage: 'assets/img/image-not-found.jpg',
+    },
   ];
   showOptions: boolean = false;
   selectedVideo: any;
   showFullDescription: boolean = false;
 
-  stringTest:string = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam condimentum feugiat mi aconvallis."+
-  "Nulla tempusnibh ac metus semper, eget semper neque pellentesque. Mauris at ligula sapien. Integer ullamcorper, nunc a"+
-  "tristique sollicitudin, tortor nisi efficitur odio, vel malesuada purus lacus sit amet lacus."+
-  "Sed sollicitudin"+
-  "felis in euismod consequat, felis leo iaculis est, eget fermentum enim odio ut arcu." ;
+  stringTest: string =
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam condimentum feugiat mi aconvallis.' +
+    'Nulla tempusnibh ac metus semper, eget semper neque pellentesque. Mauris at ligula sapien. Integer ullamcorper, nunc a' +
+    'tristique sollicitudin, tortor nisi efficitur odio, vel malesuada purus lacus sit amet lacus.' +
+    'Sed sollicitudin' +
+    'felis in euismod consequat, felis leo iaculis est, eget fermentum enim odio ut arcu.';
+
+  ngOnInit(): void {
+    const btn1: any = document.querySelector('#green-button-rating');
+    const btn2: any = document.querySelector('#red-button-rating');
+
+    btn1.addEventListener('click', function () {
+      if (btn2.classList.contains('red')) {
+        btn2.classList.remove('red');
+      }
+      btn1.classList.toggle('green');
+    });
+
+    btn2.addEventListener('click', function () {
+      if (btn1.classList.contains('green')) {
+        btn1.classList.remove('green');
+      }
+      btn2.classList.toggle('red');
+    });
+  }
 
   onMouseEnter(video: any) {
     this.showOptions = true;
@@ -54,4 +76,3 @@ export class ShowVideoComponent {
     event.target.style.transform = 'scale(1)';
   }
 }
-

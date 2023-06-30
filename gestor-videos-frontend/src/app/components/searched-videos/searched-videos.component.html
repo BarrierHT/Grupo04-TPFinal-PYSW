@@ -8,8 +8,8 @@
     <div class="row d-flex justify-content-center">
         <div class="col-8">
             <div class="video-card rounded-4" *ngFor="let video of videos" (mouseenter)="onMouseEnter(video)"
-                (mouseleave)="onMouseLeave()">
-                <div class="video-thumbnail rounded-4" (click)="watchVideo(video)">
+                (mouseleave)="onMouseLeave()" (click)="watchVideo(video)">
+                <div class="video-thumbnail rounded-4">
                     <div class="thumbnail-overlay">
                         <div class="overlay-content">
                             <div class="views p-1 rounded-2">
@@ -23,7 +23,8 @@
                     </div>
                     <img src="{{ video.thumbnail }}" alt="{{ video.title }}" (mouseenter)="zoomInThumbnail($event)"
                         (mouseleave)="zoomOutThumbnail($event)">
-                    <div class="playlist-icon rounded-2" *ngIf="showOptions && video === selectedVideo" [routerLink]="['/playlist']">
+                    <div class="playlist-icon rounded-2" *ngIf="showOptions && video === selectedVideo"
+                        [routerLink]="['/playlist']">
                         <i class="bi bi-plus-circle-fill"></i>
                     </div>
                 </div>
