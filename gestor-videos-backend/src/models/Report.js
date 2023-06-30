@@ -10,6 +10,7 @@ let reportSchema = new Schema(
 			ref: 'Video',
 			required: true,
 		},
+		reviewed: { type: Boolean, required: true, default: false },
 	},
 	{
 		versionKey: false,

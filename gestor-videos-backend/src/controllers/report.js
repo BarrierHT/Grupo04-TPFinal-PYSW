@@ -17,9 +17,22 @@ const getReport = async (req, res, next) => {
 	}
 };
 
+const getReports = async (req, res, next) => {
+	try {
+		const reports = await reportSchema.find();
+
+		if (!reports) throw errorHandler('fail retrieving reports', 404, {});
+		res.status(200).json({ message: 'reports found', reports });
+	} catch (err) {
+		next(err);
+	}
+};
+
 const postReport = async (req, res, next) => {
 	try {
 		const { title, reason, videoId } = req.body;
+
+		console.log(req.body);
 
 		const newReport = new reportSchema({
 			title,
@@ -41,6 +54,7 @@ const postReport = async (req, res, next) => {
 const reportController = {
 	getReport,
 	postReport,
+	getReports,
 };
 
 export default reportController;

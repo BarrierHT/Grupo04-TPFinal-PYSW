@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { catchError } from 'rxjs';
+import { ReportApiService } from 'src/app/services/report-api.service';
 
 @Component({
   selector: 'app-show-video',
@@ -6,6 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./show-video.component.css'],
 })
 export class ShowVideoComponent implements OnInit {
+  report: any = {
+    title: '',
+    reason: '',
+  };
+
   videos: any[] = [
     {
       title: 'Video 1',
@@ -38,6 +45,12 @@ export class ShowVideoComponent implements OnInit {
     'tristique sollicitudin, tortor nisi efficitur odio, vel malesuada purus lacus sit amet lacus.' +
     'Sed sollicitudin' +
     'felis in euismod consequat, felis leo iaculis est, eget fermentum enim odio ut arcu.';
+
+  video: any = {
+    _id: '649f373ceb3cdb108c0075f5',
+  };
+
+  constructor(private reportService: ReportApiService) {}
 
   ngOnInit(): void {
     const btn1: any = document.querySelector('#green-button-rating');
@@ -74,5 +87,37 @@ export class ShowVideoComponent implements OnInit {
 
   zoomOutThumbnail(event: any) {
     event.target.style.transform = 'scale(1)';
+  }
+
+  addReport(reportForm: any) {
+    console.log(reportForm);
+
+    const { reportTitle, reportReason, videoId } = reportForm;
+
+    console.log(reportTitle, reportReason, videoId);
+
+    this.reportService
+      .postReport(reportTitle, reportReason, videoId)
+      .pipe(
+        catchError((error) => {
+          //console.log('Error en el observable: ', error);
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            // throw new Error('');
+          }
+          return [];
+        })
+      )
+      .subscribe((result) => {
+        try {
+          console.log(result);
+        } catch (err) {
+          console.log(err);
+        }
+      });
+  }
+  onModalHidden() {
+    this.report.title = '';
+    this.report.reason = '';
   }
 }
