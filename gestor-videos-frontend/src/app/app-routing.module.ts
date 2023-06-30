@@ -11,6 +11,7 @@ import { FormVideoComponent } from './components/form-video/form-video.component
 import { ChannelComponent } from './components/channel/channel.component';
 import { GroupComponent } from './components/group/group.component';
 import { ReportComponent } from './components/report/report.component';
+import { ExploreGroupsComponent } from './components/explore-groups/explore-groups.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'channel', component: ChannelComponent },
   { path: 'groups', component: GroupComponent },
   { path: 'reports', component: ReportComponent },
+  { path: 'explore-groups', component: ExploreGroupsComponent },
 
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
@@ -33,4 +35,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

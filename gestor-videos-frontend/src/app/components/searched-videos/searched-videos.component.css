@@ -2,6 +2,24 @@
     font-family: sans-serif;
     background-color: black;
 }
+
+.form-control{
+    border-radius: 0px;
+}
+
+.btn{
+    background-color: orange;
+    border-radius: 0px;
+}
+
+.btn:hover{
+    background-color: rgb(250, 180, 49);
+}
+
+.bi{
+    color: white;
+}
+
 .hr-custom-1 {
     background-color: rgb(72, 235, 72);
     height: 3px;

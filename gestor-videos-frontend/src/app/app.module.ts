@@ -19,6 +19,7 @@ import { SearchedVideosComponent } from './components/searched-videos/searched-v
 import { AbbreviateNumberPipe } from './pipes/abbreviate-number.pipe';
 import { GroupComponent } from './components/group/group.component';
 import { ReportComponent } from './components/report/report.component';
+import { ExploreGroupsComponent } from './components/explore-groups/explore-groups.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ReportComponent } from './components/report/report.component';
     SearchedVideosComponent,
     AbbreviateNumberPipe,
     GroupComponent,
-    ReportComponent
+    ReportComponent,
+    ExploreGroupsComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [],

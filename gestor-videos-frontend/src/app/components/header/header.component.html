@@ -1,14 +1,7 @@
 <nav class="navbar navbar-expand-lg sticky-top bg-dark" data-bs-theme="dark">
   <div class="container-fluid">
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -16,8 +9,7 @@
         <li class="nav-item" [routerLinkActive]="['active']">
           <a class="nav-link" aria-current="page" [routerLink]="['/home']">
             <i class="bi bi-house-door fs-4"></i>
-            Home</a
-          >
+            Home</a>
         </li>
         <!-- <li class="nav-item" [routerLinkActive]="['active']">
             <a class="nav-link" [routerLink]="['/page1']" target="_blank">
@@ -28,68 +20,60 @@
         <li class="nav-item" [routerLinkActive]="['active']">
           <a class="nav-link" [routerLink]="['/results']">
             <i class="bi bi-film fs-4"></i>
-            Busqueda de videos</a
-          >
+            Busqueda de videos</a>
         </li>
 
         <li class="nav-item" [routerLinkActive]="['active']">
           <a class="nav-link" [routerLink]="['/playlist']">
             <i class="bi bi-fast-forward-circle fs-4"></i>
-            Playlists</a
-          >
+            Playlists</a>
         </li>
 
         <li class="nav-item" [routerLinkActive]="['active']">
           <a class="nav-link" [routerLink]="['/channel']">
             <i class="bi bi-person-video2 fs-4"></i>
-            Canal</a
-          >
+            Canal</a>
         </li>
 
         <li class="nav-item" [routerLinkActive]="['active']">
           <a class="nav-link" [routerLink]="['/groups']">
             <i class="bi bi-people fs-4"></i>
-            Grupos</a
-          >
+            Grupos</a>
+        </li>
+
+        <li class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link" [routerLink]="['/explore-groups']">
+            <i class="bi bi-collection-play fs-4"></i>
+            Buscar grupos</a>
         </li>
 
         <li class="nav-item" [routerLinkActive]="['active']">
           <a class="nav-link" [routerLink]="['/reports']">
             <i class="bi bi-flag fs-4"></i>
-            Reportes</a
-          >
+            Reportes</a>
         </li>
 
         <li class="nav-item" [routerLinkActive]="['active']">
           <a class="nav-link" [routerLink]="['/form-video']">
             <i class="bi bi-camera-reels fs-4"></i>
-            Subir Video</a
-          >
+            Subir Video</a>
         </li>
 
         <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="bi bi-person-circle fs-4"></i>
           </a>
           <ul class="dropdown-menu">
             <li class="nav-item" [routerLinkActive]="['active']">
               <a class="nav-link" [routerLink]="['/login']">
                 <i class="bi bi-box-arrow-in-right fs-4"></i>
-                Login</a
-              >
+                Login</a>
             </li>
 
             <li class="nav-item" [routerLinkActive]="['active']">
               <a class="nav-link" [routerLink]="['/signup']">
                 <i class="bi bi-person-add fs-4"></i>
-                Sign up</a
-              >
+                Sign up</a>
             </li>
 
             <li>
@@ -97,11 +81,7 @@
             </li>
 
             <li class="nav-item">
-              <i
-                class="nav-link bi bi-bell fs-4"
-                data-bs-toggle="modal"
-                data-bs-target="#lineaVentaModal"
-              >
+              <i class="nav-link bi bi-bell fs-4" data-bs-toggle="modal" data-bs-target="#lineaVentaModal">
                 <span class="fs-6">Notificaciones</span>
               </i>
             </li>
@@ -113,21 +93,11 @@
 </nav>
 
 <!-- Modal Linea Venta-->
-<div
-  class="modal fade"
-  id="lineaVentaModal"
-  tabindex="-1"
-  aria-labelledby="detalleModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="lineaVentaModal" tabindex="-1" aria-labelledby="detalleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h1
-          class="modal-title fs-5"
-          id="detalleModalLabel"
-          style="color: green"
-        >
+        <h1 class="modal-title fs-5" id="detalleModalLabel" style="color: green">
           Notificaciones
         </h1>
       </div>
@@ -195,16 +165,9 @@
           </tbody>
         </table>
       </div>
-      <div
-        class="modal-footer d-flex justify-content-center align-items-center"
-      >
+      <div class="modal-footer d-flex justify-content-center align-items-center">
         <div class="col-12 d-flex justify-content-center align-items-center">
-          <button
-            type="button"
-            class="btn btn-outline-danger btn-lg"
-            data-bs-dismiss="modal"
-            id="cerrarModalDetalle"
-          >
+          <button type="button" class="btn btn-outline-danger btn-lg" data-bs-dismiss="modal" id="cerrarModalDetalle">
             Cerrar
           </button>
         </div>
