@@ -19,10 +19,28 @@ const getReport = async (req, res, next) => {
 
 const getReports = async (req, res, next) => {
 	try {
-		const reports = await reportSchema.find();
+		const reports = await reportSchema.find().populate('videoId', 'title');
+		// .select('videoIdtitle');
+
+		console.log(reports);
 
 		if (!reports) throw errorHandler('fail retrieving reports', 404, {});
 		res.status(200).json({ message: 'reports found', reports });
+	} catch (err) {
+		next(err);
+	}
+};
+
+const putReviewReport = async (req, res, next) => {
+	try {
+		const { reportId } = req.body;
+
+		const report = await reportSchema.findOne({ _id: reportId });
+		if (!report) throw errorHandler('fail updating report', 404, {});
+		report.reviewed = true;
+		await report.save();
+
+		res.status(200).json({ message: 'report updated' });
 	} catch (err) {
 		next(err);
 	}
@@ -55,6 +73,7 @@ const reportController = {
 	getReport,
 	postReport,
 	getReports,
+	putReviewReport,
 };
 
 export default reportController;
