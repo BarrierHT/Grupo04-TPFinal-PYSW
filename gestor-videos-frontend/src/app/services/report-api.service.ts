@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class ReportApiService {
   constructor(private _http: HttpClient) {}
 
-  postReport(report: any): Observable<any> {
+  postReport(title: string, reason: string, videoId: string): Observable<any> {
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
@@ -16,7 +16,7 @@ export class ReportApiService {
     };
     return this._http.post(
       `http://localhost:8080/report/add-report`,
-      report,
+      { title, reason, videoId },
       httpOption
     );
   }
