@@ -1,27 +1,25 @@
-import channelSchema from '../models/Canal.js'
+import channelSchema from "../models/Canal.js";
+import { errorHandler } from "../utils/errorHandler.js";
 
 //Controller para gestionar los canales de los usuarios (devolveran enlaces a sus playlists, videos, info del usuario)
 
-const getChannel = (req, res, next) => {
+const getChannel = async (req, res, next) => {
+  try {
+    const { id } = req.params;
 
-	try {
-		const { id } = req.params;
+    const channelFound = await channelSchema.findById({ _id: id });
 
-		const channelFound = channelSchema.findById({_id: id});
+    if (!channelFound)
+      throw errorHandler("The channel does not exist", 404, {});
 
-		if(!channelFound) return res.status(404).json({ message: "El canal no existe" });
-
-		res.json(channelFound);
-
-	} catch (err) {
-		res.status(500).json({ message: "Ocurrio un error, pruebe mas tarde" });
-		console.log(err);
-	}
-
+    res.json(channelFound);
+  } catch (err) {
+    next(err);
+  }
 };
 
 const channelController = {
-	getChannel,
+  getChannel,
 };
 
 export default channelController;
