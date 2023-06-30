@@ -1,13 +1,13 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 let channelSchema = new Schema(
-  {
-    nombre: { type: String, required: true },
-    descripcion: { type: String, required: true },
-  },
-  {
-    versionKey: false,
-  }
+	{
+		nombre: { type: String, required: true },
+		descripcion: { type: String, required: true },
+	},
+	{
+		versionKey: false,
+	}
 );
 
-export default model("channelSchema", channelSchema);
+export default model('Channel', channelSchema);
