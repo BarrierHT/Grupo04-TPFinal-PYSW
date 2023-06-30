@@ -7,7 +7,7 @@ router.get(
 	'/get-notifications/:userId',
 	notificationController.getNotifications
 );
-router.post('/add-notification', notificationController.sendNotification);
+// router.post('/add-notification', notificationController.sendNotification);
 
 //exportamos el modulo de rutas
 

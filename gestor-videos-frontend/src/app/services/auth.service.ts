@@ -21,7 +21,8 @@ export class AuthService {
     );
   }
 
-  postSignup(user: any): Observable<any> {
+  postSignup(signupValues: any): Observable<any> {
+    console.log(signupValues);
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
@@ -29,7 +30,7 @@ export class AuthService {
     };
     return this._http.post(
       `http://localhost:8080/auth/signup`,
-      user,
+      signupValues,
       httpOption
     );
   }
