@@ -17,6 +17,8 @@ import { ShowVideoComponent } from './components/show-video/show-video.component
 import { FormVideoComponent } from './components/form-video/form-video.component';
 import { SearchedVideosComponent } from './components/searched-videos/searched-videos.component';
 import { AbbreviateNumberPipe } from './pipes/abbreviate-number.pipe';
+import { GroupComponent } from './components/group/group.component';
+import { ReportComponent } from './components/report/report.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { AbbreviateNumberPipe } from './pipes/abbreviate-number.pipe';
     ShowVideoComponent,
     FormVideoComponent,
     SearchedVideosComponent,
-    AbbreviateNumberPipe
+    AbbreviateNumberPipe,
+    GroupComponent,
+    ReportComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [],

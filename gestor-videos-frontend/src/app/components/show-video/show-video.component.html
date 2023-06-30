@@ -14,9 +14,11 @@
                     <div class="upload-date-custom">Upload date: june 28th, 2023</div>
                 </div>
                 <div class="video-options-custom">
-                    <button class="btn btn-dark">Option 1</button>
-                    <button class="btn btn-dark">Option 2</button>
-                    <button class="btn btn-dark">Option 3</button>
+                    <button class="btn-rating" id="green-button-rating"><i class="bi bi-hand-thumbs-up fs-4"
+                            aria-hidden="true"></i></button>
+                    <button class="btn-rating" id="red-button-rating"><i class="bi bi-hand-thumbs-down fs-4"
+                            aria-hidden="true"></i></button>
+
                     <div class="dropdown">
                         <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -87,8 +89,8 @@
                             </div>
                             <div class="video-options" *ngIf="showOptions && video === selectedVideo">
                                 <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">

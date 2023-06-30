@@ -1,10 +1,10 @@
 <div class="container mt-5 d-flex justify-content-center">
     <div class="row p-2 d-flex justify-content-center">
-        <form class="form col-8 form-box p-4" action="/upload" method="POST" #videoForm="ngForm">
-            <h2 class="row h2 d-flex justify-content-center">Create Video</h2>
+        <form class="form col-12 form-box p-4" action="/upload" method="POST" #videoForm="ngForm">
+            <h2 class="row h2 d-flex justify-content-center">Upload Video</h2>
             <div class="input-group mt-3">
-                <input type="file" class="form-control" id="videoFile" name="videoFile" [(ngModel)]="video.file" #videoFile="ngModel"
-                required>
+                <input type="file" class="form-control" id="videoFile" name="videoFile" [(ngModel)]="video.file"
+                    #videoFile="ngModel" required>
                 <label class="input-group-text" for="videoFile">Upload</label>
             </div>
             <div class="" *ngIf="videoFile.invalid && (videoFile.dirty || videoFile.touched)">
@@ -13,7 +13,8 @@
                 </div>
             </div>
             <div class="form-floating mt-3">
-                <input type="text" class="form-control" id="title" name="title" placeholder="name@example.com" [(ngModel)]="video.title"  #title="ngModel" required>
+                <input type="text" class="form-control" id="title" name="title" placeholder="name@example.com"
+                    [(ngModel)]="video.title" #title="ngModel" required>
                 <label class="text-black-50" for="title">Title</label>
             </div>
             <div class="" *ngIf="title.invalid && (title.dirty || title.touched)">
@@ -23,8 +24,8 @@
             </div>
 
             <div class="form-floating mt-3">
-                <textarea class="form-control" name="description" placeholder="Leave a comment here" id="description" [(ngModel)]="video.description"
-                #description="ngModel" required></textarea>
+                <textarea class="form-control" name="description" placeholder="Leave a comment here" id="description"
+                    [(ngModel)]="video.description" #description="ngModel" required></textarea>
                 <label class="text-black-50" for="description">Description</label>
             </div>
             <div class="" *ngIf="description.invalid && (description.dirty || description.touched)">
@@ -33,8 +34,8 @@
                 </div>
             </div>
             <div class="form-floating mt-3">
-                <input type="text"  name="tags" class="form-control" id="tags" placeholder="name@example.com" [(ngModel)]="video.tags" #tags="ngModel"
-                required>
+                <input type="text" name="tags" class="form-control" id="tags" placeholder="name@example.com"
+                    [(ngModel)]="video.tags" #tags="ngModel" required>
                 <label class="text-black-50" for="tags">Tags</label>
             </div>
             <div class="" *ngIf="tags.invalid && (tags.dirty || tags.touched)">
@@ -44,9 +45,8 @@
             </div>
             <div class="row mt-3 button-video-upload">
                 <input type="hidden" name="_csrf" value="">
-                <button type="submit"  [disabled]="videoForm.invalid">Upload Video</button>
+                <button type="submit" [disabled]="videoForm.invalid">Upload Video</button>
             </div>
         </form>
     </div>
 </div>
-

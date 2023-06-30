@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-form-video',
   templateUrl: './form-video.component.html',
-  styleUrls: ['./form-video.component.css']
+  styleUrls: ['./form-video.component.css'],
 })
 export class FormVideoComponent {
   video: {
@@ -15,6 +15,6 @@ export class FormVideoComponent {
     file: null,
     title: '',
     description: '',
-    tags: ''
+    tags: '',
   };
 }

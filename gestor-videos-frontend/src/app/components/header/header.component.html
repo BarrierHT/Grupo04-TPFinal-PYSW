@@ -29,6 +29,30 @@
                         Playlists</a>
                 </li>
 
+                <li class="nav-item" [routerLinkActive]="['active']">
+                    <a class="nav-link" [routerLink]="['/channel']">
+                        <i class="bi bi-fast-forward-circle fs-4"></i>
+                        Canal</a>
+                </li>
+
+                <li class="nav-item" [routerLinkActive]="['active']">
+                    <a class="nav-link" [routerLink]="['/groups']">
+                        <i class="bi bi-fast-forward-circle fs-4"></i>
+                        Grupos</a>
+                </li>
+
+                <li class="nav-item" [routerLinkActive]="['active']">
+                    <a class="nav-link" [routerLink]="['/reports']">
+                        <i class="bi bi-fast-forward-circle fs-4"></i>
+                        Reportes</a>
+                </li>
+
+                <li class="nav-item" [routerLinkActive]="['active']">
+                    <a class="nav-link" [routerLink]="['/form-video']">
+                        <i class="bi bi-fast-forward-circle fs-4"></i>
+                        Subir Video</a>
+                </li>
+
 
                 <li class="nav-item" [routerLinkActive]="['active']">
                     <a class="nav-link" [routerLink]="['/login']">
@@ -42,7 +66,46 @@
                         Sign up</a>
                 </li>
 
+                <li class="nav-item">
+                    <i class="nav-link bi bi-person-add fs-4" data-bs-toggle="modal" data-bs-target="#lineaVentaModal">
+                        <span class="fs-6">Notificaciones</span>
+                    </i>
+
+                </li>
             </ul>
         </div>
     </div>
 </nav>
+
+<!-- Modal Linea Venta-->
+<div class="modal fade" id="lineaVentaModal" tabindex="-1" aria-labelledby="detalleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h1 class="modal-title fs-5" id="detalleModalLabel" style="color: green">
+                    Notificaciones
+                </h1>
+
+            </div>
+            <div class="modal-body pb-0">
+                <strong>Nuevas notificaciones</strong>
+                <hr class="m-0">
+                <p class="mt-1">
+                    <span id="lineaVentaCantidad"></span>
+                </p>
+                <strong>Todas las notificaciones</strong>
+                <hr class="m-0">
+                <p class="mt-1">
+                    <span id="lineaVentaSubtotal"></span>
+                </p>
+            </div>
+            <div class="modal-footer d-flex justify-content-center align-items-center">
+                <div class="col-12 d-flex justify-content-center align-items-center">
+                    <button type="button" class="btn btn-outline-danger btn-lg" data-bs-dismiss="modal"
+                        id="cerrarModalDetalle">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Linea Venta-->
