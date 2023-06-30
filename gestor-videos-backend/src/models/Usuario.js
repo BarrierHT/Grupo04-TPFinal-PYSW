@@ -14,4 +14,4 @@ let userSchema = new Schema(
 	}
 );
 
-export default model('userSchema', userSchema);
+export default model('User', userSchema);

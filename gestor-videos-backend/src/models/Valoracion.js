@@ -1,12 +1,12 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 let ratingSchema = new Schema(
-  {
-    puntaje: { type: Number, required: true },
-  },
-  {
-    versionKey: false,
-  }
+	{
+		puntaje: { type: Number, required: true },
+	},
+	{
+		versionKey: false,
+	}
 );
 
-export default model("ratingSchema", ratingSchema);
+export default model('Rating', ratingSchema);
