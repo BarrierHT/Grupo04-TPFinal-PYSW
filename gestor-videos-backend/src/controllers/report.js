@@ -1,4 +1,5 @@
 import reportSchema from "../models/Reporte.js";
+import { errorHandler } from "../utils/errorHandler.js";
 
 //Controller para gestionar reclamos sobre un video
 
@@ -8,12 +9,10 @@ const getReport = async (req, res, next) => {
 
     const reportFound = await reportSchema.findById({ _id: id });
 
-    if (!reportFound)
-      return res.status(404).json({ message: "El reporte no existe" });
+    if (!reportFound) throw errorHandler("The report does not exist", 404, {});
     res.json(reportFound);
   } catch (err) {
-    res.status(500).json({ message: "Ocurrio un error, pruebe mas tarde" });
-    console.log(err);
+    next(err);
   }
 };
 
@@ -28,8 +27,7 @@ const postReport = async (req, res, next) => {
     await newReport.save();
     res.json(newReport);
   } catch (err) {
-    res.status(500).json({ message: "Ocurrio un error, pruebe mas tarde" });
-    console.log(err);
+    next(err);
   }
 };
 

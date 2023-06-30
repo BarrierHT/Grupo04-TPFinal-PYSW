@@ -1,4 +1,5 @@
 import playlistSchema from "../models/ListaDeReproduccion.js";
+import { errorHandler } from "../utils/errorHandler.js";
 
 //Controller para gestionar playlists de videos
 
@@ -9,12 +10,11 @@ const getPlaylist = async (req, res, next) => {
     const playlistFound = await playlistSchema.findById({ _id: id });
 
     if (!playlistFound)
-      return res.status(404).json({ message: "La playlist no existe" });
+      throw errorHandler("The playlist does not exist", 404, {});
 
     res.json(playlistFound);
   } catch (err) {
-    res.status(500).json({ message: "Ocurrio un error, pruebe mas tarde" });
-    console.log(err);
+    next(err);
   }
 };
 
@@ -30,8 +30,7 @@ const postPlaylist = async (req, res, next) => {
     await newPlaylist.save();
     res.json(newPlaylist);
   } catch (err) {
-    res.status(500).json({ message: "Ocurrio un error, pruebe mas tarde" });
-    console.log(err);
+    next(err);
   }
 };
 

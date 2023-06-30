@@ -1,4 +1,5 @@
 import videoSchema from "../models/Video.js";
+import { errorHandler } from "../utils/errorHandler.js";
 
 //Controller para gestionar videos (funciones CRUD y similares)
 
@@ -6,13 +7,11 @@ const getVideos = async (req, res, next) => {
   try {
     const videos = await videoSchema.find();
 
-    if (videos.length === 0)
-      return res.status(404).json({ message: "No hay videos" });
+    if (videos.length === 0) throw errorHandler("No videos", 404, {});
 
     res.json(videos);
   } catch (err) {
-    res.status(500).json({ message: "Ocurrio un error, pruebe mas tarde" });
-    console.log(err);
+    next(err);
   }
 };
 
@@ -22,13 +21,11 @@ const getVideo = async (req, res, next) => {
 
     const videoFound = await videoSchema.findById({ _id: videoId });
 
-    if (!videoFound)
-      return res.status(404).json({ message: "El video no existe" });
+    if (!videoFound) throw errorHandler("The video does not exist", 404, {});
 
     res.json(videoFound);
   } catch (err) {
-    res.status(500).json({ message: "Ocurrio un error, pruebe mas tarde" });
-    console.log(err);
+    next(err);
   }
 };
 
@@ -46,8 +43,7 @@ const postVideo = async (req, res, next) => {
     await newVideo.save();
     res.json(newVideo);
   } catch (err) {
-    res.status(500).json({ message: "Ocurrio un error, pruebe mas tarde" });
-    console.log(err);
+    next(err);
   }
 };
 
