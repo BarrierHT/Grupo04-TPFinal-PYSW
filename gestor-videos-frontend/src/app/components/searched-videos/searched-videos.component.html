@@ -8,8 +8,8 @@
     <div class="row d-flex justify-content-center">
         <div class="col-8">
             <div class="video-card rounded-4" *ngFor="let video of videos" (mouseenter)="onMouseEnter(video)"
-                (mouseleave)="onMouseLeave()" (click)="watchVideo(video)">
-                <div class="video-thumbnail rounded-4">
+                (mouseleave)="onMouseLeave()">
+                <div class="video-thumbnail rounded-4" (click)="watchVideo(video)">
                     <div class="thumbnail-overlay">
                         <div class="overlay-content">
                             <div class="views p-1 rounded-2">
