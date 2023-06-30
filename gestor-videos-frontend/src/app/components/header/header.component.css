@@ -22,4 +22,22 @@
     color: white;
 }
 
+.notification-cell {
+    display: flex;
+    align-items: center;
+}
+
+.notification-thumbnail {
+    margin-right: 10px;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-thumbnail img {
+    max-width: 50px;
+    height: auto;
+}
+
   

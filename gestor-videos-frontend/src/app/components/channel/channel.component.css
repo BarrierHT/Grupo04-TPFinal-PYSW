@@ -1,0 +1,40 @@
+body {
+  background-color: #f8f9fa;
+}
+
+.navbar {
+  background-color: #fff;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.profile-section {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.username {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.video-card {
+  margin-bottom: 20px;
+}
+
+.video-card img {
+  width: 100%;
+  height: auto;
+}
+
+.video-card .card-body {
+  padding: 10px;
+}
