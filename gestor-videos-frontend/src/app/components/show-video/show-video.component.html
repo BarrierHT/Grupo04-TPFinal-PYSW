@@ -1,109 +1,101 @@
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="video-container">
-                <video controls>
-                    <source src="assets/videos/video-prueba.mp4" type="video/mp4">
-                    Tu navegador no admite la reproducción de videos.
-                </video>
+<div class="row py-5 px-5 d-flex justify-content-center container-custom-1">
+    <div class="col-lg-8">
+        <div class="video-container">
+            <video controls>
+                <source src="assets/videos/video-prueba.mp4" type="video/mp4">
+                Your web browser does not allow video player
+            </video>
+        </div>
+        <div class="video-info-custom">
+            <h3 class="col-12 video-title-custom">Title of the video</h3>
+            <div class="col-12 video-metadata-custom">
+                <div class="video-details-custom">
+                    <div class="views-custom">100,000 views</div>
+                    <div class="upload-date-custom">Upload date: june 28th, 2023</div>
+                </div>
+                <div class="video-options-custom">
+                    <button class="btn btn-dark">Option 1</button>
+                    <button class="btn btn-dark">Option 2</button>
+                    <button class="btn btn-dark">Option 3</button>
+                    <div class="dropdown">
+                        <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="bi bi-three-dots-vertical"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-
-            <!-- Información del video -->
-            <div class="video-info-custom">
-                <h3 class="video-title-custom col-12">Título del video</h3>
-                <div class="col-12 video-metadata-custom">
-                    <div class="video-details-custom">
-                        <div class="views-custom">100,000 visualizaciones</div>
-                        <div class="upload-date-custom">Fecha de subida: 28 de junio de 2023</div>
-                    </div>
-                    <div class="video-options-custom">
-                        <button class="btn btn-dark">Opción 1</button>
-                        <button class="btn btn-dark">Opción 2</button>
-                        <button class="btn btn-dark">Opción 3</button>
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-three-dots-vertical"></i>
-                            </button>
-                            <ul class="dropdown-menu">
-                              <li><a class="dropdown-item" href="#">Action</a></li>
-                              <li><a class="dropdown-item" href="#">Another action</a></li>
-                              <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                          </div>
-                    </div>
+            <div class="col-12 user-info-custom">
+                <div class="user-image-custom"><img src="assets/img/image-not-found.jpg" alt="Imagen del usuario"></div>
+                <div class="user-details-custom">
+                    <div class="user-name-custom">Username</div>
+                    <div class="user-followers-custom">10,000 followers</div>
                 </div>
-
-                <!-- Información del usuario -->
-                <div class="col-12 user-info-custom">
-                    <div class="user-image-custom"><img src="assets/img/image-not-found.jpg"
-                            alt="Imagen del usuario"></div>
-                    <div class="user-details-custom">
-                        <div class="user-name-custom">Nombre del usuario</div>
-                        <div class="user-followers-custom">10,000 seguidores</div>
-                    </div>
-                    <div class="user-actions-custom">
-                        <button class="btn btn-dark">Opción 1</button>
-                        <button class="btn btn-dark">Opción 2</button>
-                    </div>
+                <div class="user-actions-custom">
+                    <button class="btn btn-dark">Option 1</button>
+                    <button class="btn btn-dark">Option 2</button>
                 </div>
-
-               <!-- Descripción del video -->
-               <div class="col-12 video-info-description rounded-4 mt-2">
+            </div>
+            <div class="col-12 video-info-description rounded-4 mt-2">
                 <div class="p-3">
-                    {{ showFullDescription ? stringTest : stringTest.substring(0, 8) + '...' }}
+                    {{ showFullDescription ? stringTest : stringTest.substring(0, 320) + '...' }}
                 </div>
                 <div class="px-3 pt-0 pb-3">
                     <button class="btn btn-dark btn-sm" (click)="showFullDescription = !showFullDescription">
                         {{!showFullDescription ? 'Read More':'Minimize'}}
-                      </button>
+                    </button>
                 </div>
             </div>
-            </div>
-
         </div>
 
-        <div class="col-lg-4">
-            <div class="recommended-videos">
-                <h3>Videos recomendados</h3>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="video-card rounded-4" *ngFor="let video of videos"
-                            (mouseenter)="onMouseEnter(video)" (mouseleave)="onMouseLeave()">
-                            <div class="video-thumbnail rounded-4">
-                                <div class="thumbnail-overlay">
-                                    <div class="overlay-content">
-                                        <div class="views p-1 rounded-2">
-                                            <i class="bi bi-eye-fill"></i>
-                                            {{ video.views | abbreviateNumber }}
-                                        </div>
-                                        <div class="duration p-1 rounded-2">
-                                            {{ video.duration }}
-                                        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="recommended-videos">
+            <h3 class="text-white">Recommended videos</h3>
+            <hr class="hr-custom-1">
+            <div class="row">
+                <div class="col-12">
+                    <div class="video-card rounded-4" *ngFor="let video of videos" (mouseenter)="onMouseEnter(video)"
+                        (mouseleave)="onMouseLeave()">
+                        <div class="video-thumbnail rounded-4">
+                            <div class="thumbnail-overlay">
+                                <div class="overlay-content">
+                                    <div class="views p-1 rounded-2">
+                                        <i class="bi bi-eye-fill"></i>
+                                        {{ video.views | abbreviateNumber }}
                                     </div>
-                                </div>
-                                <img src="{{ video.thumbnail }}" alt="{{ video.title }}"
-                                    (mouseenter)="zoomInThumbnail($event)" (mouseleave)="zoomOutThumbnail($event)">
-                                <div class="playlist-icon rounded-2" *ngIf="showOptions && video === selectedVideo">
-                                    <i class="bi bi-plus-circle-fill"></i>
+                                    <div class="duration p-1 rounded-2">
+                                        {{ video.duration }}
+                                    </div>
                                 </div>
                             </div>
-                            <div class="video-details">
-                                <h2 class="video-title">{{ video.title }}</h2>
-                                <div class="channel-name">
-                                    {{ video.channelName }}
-                                </div>
-                                <div class="video-options" *ngIf="showOptions && video === selectedVideo">
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="bi bi-three-dots-vertical"></i>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Action</a></li>
-                                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                        </ul>
-                                    </div>
+                            <img src="{{ video.thumbnail }}" alt="{{ video.title }}"
+                                (mouseenter)="zoomInThumbnail($event)" (mouseleave)="zoomOutThumbnail($event)">
+                            <div class="playlist-icon rounded-2" *ngIf="showOptions && video === selectedVideo">
+                                <i class="bi bi-plus-circle-fill"></i>
+                            </div>
+                        </div>
+                        <div class="video-details">
+                            <h2 class="video-title">{{ video.title }}</h2>
+                            <div class="channel-name">
+                                {{ video.channelName }}
+                            </div>
+                            <div class="video-options" *ngIf="showOptions && video === selectedVideo">
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-three-dots-vertical"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li><a class="dropdown-item" href="#">Action</a></li>
+                                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
