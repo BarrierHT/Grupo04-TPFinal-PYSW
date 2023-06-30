@@ -1,39 +1,93 @@
-<div class="container mt-5 d-flex justify-content-center">
-    <div class="row p-2 d-flex justify-content-center">
-        <form class="form col-12 form-box p-3" method="POST">
-            <h2 class="row h2 d-flex justify-content-center">Register Group</h2>
-            <div class="form-floating mt-3">
-                <input type="text" class="form-control" id="name" name="name" placeholder="example123" required>
-                <label class="text-black-50" for="name">Group Name</label>
-            </div>
-            <!-- <div class="" *ngIf="name.invalid && (name.dirty || name.touched)">
-                <div *ngIf="name.errors?.['required']" class="alerta text-center">
-                    Please enter a name!
+<div class="container mt-5 justify-content-center">
+    <div class="row g-5 justify-content-center">
+        <div class="col-4">
+            <form class="form form-box p-3" method="POST">
+                <h2 class="row h2 d-flex justify-content-center">Register Group</h2>
+                <div class="form-floating mt-3">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="example123" required>
+                    <label class="text-black-50" for="name">Group Name</label>
                 </div>
-            </div> -->
+                <!-- <div class="" *ngIf="name.invalid && (name.dirty || name.touched)">
+                    <div *ngIf="name.errors?.['required']" class="alerta text-center">
+                        Please enter a name!
+                    </div>
+                </div> -->
 
-            <div class="form-floating mt-3">
-                <textarea class="form-control" name="description" placeholder="Leave a comment here" id="description"
-                    required></textarea>
-                <label class="text-black-50" for="description">Group Description</label>
-            </div>
-            <!-- <div class="" *ngIf="description.invalid && (description.dirty || description.touched)">
-                <div *ngIf="description.errors?.['required']" class="alerta text-center">
-                    Please enter a description!
+                <div class="form-floating mt-3">
+                    <input type="text" class="form-control" id="description" name="description"
+                        placeholder="Leave a comment here" required>
+                    <label class="text-black-50" for="description">Group Description</label>
                 </div>
-            </div> -->
-            <div class="form-check mt-3">
-                <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
-                <label class="btn btn-outline-warning" for="btn-check-outlined">
-                    <i class="bi bi-bell"></i>
-                </label>
-                <label class="form-check-label ps-1" for="btn-check-outlined">Do you want to receive
-                    notifications?</label>
-            </div>
-            <div class="row mt-3 button-group-upload">
-                <input type="hidden" name="_csrf" value="">
-                <button type="submit">Register Group</button>
-            </div>
-        </form>
+                <!-- <div class="" *ngIf="description.invalid && (description.dirty || description.touched)">
+                    <div *ngIf="description.errors?.['required']" class="alerta text-center">
+                        Please enter a description!
+                    </div>
+                </div> -->
+                <div class="form-check mt-3">
+                    <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+                    <label class="btn btn-outline-warning" for="btn-check-outlined">
+                        <i class="bi bi-bell"></i>
+                    </label>
+                    <label class="form-check-label ps-1" for="btn-check-outlined">
+                        Enviar notificaciones?
+                    </label>
+                </div>
+                <div class="form-check mt-3">
+                    <input type="checkbox" class="btn-check" id="btn-check-email-outlined" autocomplete="off">
+                    <label class="btn btn-outline-info" for="btn-check-email-outlined">
+                        <i class="bi bi-envelope-at"></i>
+                    </label>
+                    <label class="form-check-label ps-1" for="btn-check-email-outlined">
+                        Enviar notificaciones al correo?
+                    </label>
+                </div>
+                <div class="row mt-3 button-group-upload">
+                    <input type="hidden" name="_csrf" value="">
+                    <button type="submit">Register Group</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-8">
+            <h2 class="row h2 d-flex justify-content-center">Groups</h2>
+            <table class="table table-borderless">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td scope="row">Group-1</td>
+                        <td>Lorem ipsum dolor sit amet.</td>
+                        <td class="text-center">
+                            <div class="dropdown-center">
+                                <button class="btn btn-secondary btn-sm dropdown-toggle ps-5 pe-5 w-100" type="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    View video
+                                </button>
+                                <ul class="dropdown-menu w-100">
+                                    <li><a class="dropdown-item" href="">Video1</a></li>
+                                    <li><a class="dropdown-item" href="">Video2</a></li>
+                                    <li><a class="dropdown-item" href="">Video3</a></li>
+                                    <li><a class="dropdown-item" href="">
+                                        <span>
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates, delectus ab corporis ipsam ipsa odit voluptatibus dolore reprehenderit pariatur illo.
+                                        </span>
+                                    </a></li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-primary btn-sm">
+                                View PlayList
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
