@@ -1,124 +1,216 @@
 <nav class="navbar navbar-expand-lg sticky-top bg-dark" data-bs-theme="dark">
-    <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center">
-                <li class="nav-item" [routerLinkActive]="['active']">
-                    <a class="nav-link" aria-current="page" [routerLink]="['/home']">
-                        <i class="bi bi-house-door fs-4"></i>
-                        Home</a>
-                </li>
-                <!-- <li class="nav-item" [routerLinkActive]="['active']">
+  <div class="container-fluid">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center">
+        <li class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link" aria-current="page" [routerLink]="['/home']">
+            <i class="bi bi-house-door fs-4"></i>
+            Home</a
+          >
+        </li>
+        <!-- <li class="nav-item" [routerLinkActive]="['active']">
             <a class="nav-link" [routerLink]="['/page1']" target="_blank">
               <i class="bi bi-columns fs-4"></i>
               page1</a>
           </li> -->
 
-                <li class="nav-item" [routerLinkActive]="['active']">
-                    <a class="nav-link" [routerLink]="['/results']">
-                        <i class="bi bi-film fs-4"></i>
-                        Busqueda de videos</a>
-                </li>
+        <li class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link" [routerLink]="['/results']">
+            <i class="bi bi-film fs-4"></i>
+            Busqueda de videos</a
+          >
+        </li>
 
-                <li class="nav-item" [routerLinkActive]="['active']">
-                    <a class="nav-link" [routerLink]="['/playlist']">
-                        <i class="bi bi-fast-forward-circle fs-4"></i>
-                        Playlists</a>
-                </li>
+        <li class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link" [routerLink]="['/playlist']">
+            <i class="bi bi-fast-forward-circle fs-4"></i>
+            Playlists</a
+          >
+        </li>
 
-                <li class="nav-item" [routerLinkActive]="['active']">
-                    <a class="nav-link" [routerLink]="['/channel']">
-                        <i class="bi bi-person-video2 fs-4"></i>
-                        Canal</a>
-                </li>
+        <li class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link" [routerLink]="['/channel']">
+            <i class="bi bi-person-video2 fs-4"></i>
+            Canal</a
+          >
+        </li>
 
-                <li class="nav-item" [routerLinkActive]="['active']">
-                    <a class="nav-link" [routerLink]="['/groups']">
-                        <i class="bi bi-people fs-4"></i>
-                        Grupos</a>
-                </li>
+        <li class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link" [routerLink]="['/groups']">
+            <i class="bi bi-people fs-4"></i>
+            Grupos</a
+          >
+        </li>
 
-                <li class="nav-item" [routerLinkActive]="['active']">
-                    <a class="nav-link" [routerLink]="['/reports']">
-                        <i class="bi bi-flag fs-4"></i>
-                        Reportes</a>
-                </li>
+        <li class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link" [routerLink]="['/reports']">
+            <i class="bi bi-flag fs-4"></i>
+            Reportes</a
+          >
+        </li>
 
-                <li class="nav-item" [routerLinkActive]="['active']">
-                    <a class="nav-link" [routerLink]="['/form-video']">
-                        <i class="bi bi-camera-reels fs-4"></i>
-                        Subir Video</a>
-                </li>
+        <li class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link" [routerLink]="['/form-video']">
+            <i class="bi bi-camera-reels fs-4"></i>
+            Subir Video</a
+          >
+        </li>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <i class="bi bi-person-circle fs-4"></i>
-                    </a>
-                    <ul class="dropdown-menu">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="bi bi-person-circle fs-4"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="nav-item" [routerLinkActive]="['active']">
+              <a class="nav-link" [routerLink]="['/login']">
+                <i class="bi bi-box-arrow-in-right fs-4"></i>
+                Login</a
+              >
+            </li>
 
-                        <li class="nav-item" [routerLinkActive]="['active']">
-                            <a class="nav-link" [routerLink]="['/login']">
-                                <i class="bi bi-box-arrow-in-right fs-4"></i>
-                                Login</a>
-                        </li>
+            <li class="nav-item" [routerLinkActive]="['active']">
+              <a class="nav-link" [routerLink]="['/signup']">
+                <i class="bi bi-person-add fs-4"></i>
+                Sign up</a
+              >
+            </li>
 
-                        <li class="nav-item" [routerLinkActive]="['active']">
-                            <a class="nav-link" [routerLink]="['/signup']">
-                                <i class="bi bi-person-add fs-4"></i>
-                                Sign up</a>
-                        </li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
 
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-
-                        <li class="nav-item">
-                            <i class="nav-link bi bi-bell fs-4" data-bs-toggle="modal"
-                                data-bs-target="#lineaVentaModal">
-                                <span class="fs-6">Notificaciones</span>
-                            </i>
-                        </li>
-
-                    </ul>
-                </li>
-            </ul>
-        </div>
+            <li class="nav-item">
+              <i
+                class="nav-link bi bi-bell fs-4"
+                data-bs-toggle="modal"
+                data-bs-target="#lineaVentaModal"
+              >
+                <span class="fs-6">Notificaciones</span>
+              </i>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
+  </div>
 </nav>
 
 <!-- Modal Linea Venta-->
-<div class="modal fade" id="lineaVentaModal" tabindex="-1" aria-labelledby="detalleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header text-center">
-                <h1 class="modal-title fs-5" id="detalleModalLabel" style="color: green">
-                    Notificaciones
-                </h1>
-
-            </div>
-            <div class="modal-body pb-0">
-                <strong>Nuevas notificaciones</strong>
-                <hr class="m-0">
-                <p class="mt-1">
-                    <span id="lineaVentaCantidad"></span>
-                </p>
-                <strong>Todas las notificaciones</strong>
-                <hr class="m-0">
-                <p class="mt-1">
-                    <span id="lineaVentaSubtotal"></span>
-                </p>
-            </div>
-            <div class="modal-footer d-flex justify-content-center align-items-center">
-                <div class="col-12 d-flex justify-content-center align-items-center">
-                    <button type="button" class="btn btn-outline-danger btn-lg" data-bs-dismiss="modal"
-                        id="cerrarModalDetalle">Cerrar</button>
+<div
+  class="modal fade"
+  id="lineaVentaModal"
+  tabindex="-1"
+  aria-labelledby="detalleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h1
+          class="modal-title fs-5"
+          id="detalleModalLabel"
+          style="color: green"
+        >
+          Notificaciones
+        </h1>
+      </div>
+      <div class="modal-body pb-0">
+        <strong>Nuevas notificaciones</strong>
+        <hr class="m-0" />
+        <table class="table">
+          <tbody>
+            <tr>
+              <td class="notification-cell">
+                <!-- <div class="notification-thumbnail">
+                                    <img src="ruta_miniatura_1" alt="Miniatura 1">
+                                </div> -->
+                <div class="notification-content">
+                  <small>Notificación de: </small>
+                  <br />
+                  <a href="enlace_al_video_1">Título del video 1</a>
                 </div>
-            </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="notification-cell">
+                <!-- <div class="notification-thumbnail">
+                                    <img src="ruta_miniatura_2" alt="Miniatura 2">
+                                </div> -->
+                <div class="notification-content">
+                  <small>Notificación de: </small>
+                  <br />
+                  <a href="enlace_al_video_2">Título del video 2</a>
+                </div>
+              </td>
+            </tr>
+            <!-- Agrega más filas si es necesario -->
+          </tbody>
+        </table>
+        <strong>Todas las notificaciones</strong>
+        <hr class="m-0" />
+        <table class="table">
+          <tbody>
+            <tr>
+              <td class="notification-cell">
+                <!-- <div class="notification-thumbnail">
+                                    <img src="ruta_miniatura_1" alt="Miniatura 1">
+                                </div> -->
+                <div class="notification-content">
+                  <small>Notificación de: </small>
+                  <br />
+                  <a href="enlace_al_video_1">Título del video 1</a>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="notification-cell">
+                <!-- <div class="notification-thumbnail">
+                                    <img src="ruta_miniatura_2" alt="Miniatura 2">
+                                </div> -->
+                <div class="notification-content">
+                  <small>Notificación de: </small>
+                  <br />
+                  <a href="enlace_al_video_2">Título del video 2</a>
+                </div>
+              </td>
+            </tr>
+            <!-- Agrega más filas si es necesario -->
+          </tbody>
+        </table>
+      </div>
+      <div
+        class="modal-footer d-flex justify-content-center align-items-center"
+      >
+        <div class="col-12 d-flex justify-content-center align-items-center">
+          <button
+            type="button"
+            class="btn btn-outline-danger btn-lg"
+            data-bs-dismiss="modal"
+            id="cerrarModalDetalle"
+          >
+            Cerrar
+          </button>
         </div>
+      </div>
     </div>
+  </div>
 </div>
+
 <!-- Modal Linea Venta-->
