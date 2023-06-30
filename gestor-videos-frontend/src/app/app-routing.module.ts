@@ -10,6 +10,7 @@ import { ShowVideoComponent } from './components/show-video/show-video.component
 import { FormVideoComponent } from './components/form-video/form-video.component';
 import { ChannelComponent } from './components/channel/channel.component';
 import { GroupComponent } from './components/group/group.component';
+import { ReportComponent } from './components/report/report.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'form-video', component: FormVideoComponent },
   { path: 'channel', component: ChannelComponent },
   { path: 'groups', component: GroupComponent },
+  { path: 'reports', component: ReportComponent },
 
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
