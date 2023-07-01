@@ -2,8 +2,9 @@ import { Schema, model } from 'mongoose';
 
 let channelSchema = new Schema(
 	{
-		nombre: { type: String, required: true },
-		descripcion: { type: String, required: true },
+		name: { type: String, required: true },
+		description: { type: String, required: true },
+		owner: { type: Schema.Types.ObjectId, ref: 'User', required: true }
 	},
 	{
 		versionKey: false,

@@ -1,4 +1,4 @@
-import userSchema from "../models/Usuario.js";
+import userSchema from "../models/User.js";
 import { errorHandler } from "../utils/errorHandler.js";
 
 //Controller para gestionar usuarios, gestores y administradores(distinto de auth)

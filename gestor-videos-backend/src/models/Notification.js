@@ -2,7 +2,9 @@ import { Schema, model } from 'mongoose';
 
 let notificationSchema = new Schema(
 	{
-		contenido: { type: String, required: true },
+		content: { type: String, required: true },
+		addressee: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+		type: { type: String, required: true }
 	},
 	{
 		timestamps: true,

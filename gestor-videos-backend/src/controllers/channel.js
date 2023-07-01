@@ -1,4 +1,4 @@
-import channelSchema from "../models/Canal.js";
+import channelSchema from "../models/Channel.js";
 import { errorHandler } from "../utils/errorHandler.js";
 
 //Controller para gestionar los canales de los usuarios (devolveran enlaces a sus playlists, videos, info del usuario)

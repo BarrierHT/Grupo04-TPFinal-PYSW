@@ -1,4 +1,4 @@
-import userSchema from "../models/Usuario.js";
+import userSchema from "../models/User.js";
 import { errorHandler } from "../utils/errorHandler.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
@@ -20,8 +20,7 @@ const postLogin = async (req, res, next) => {
 
     loadedUser = user;
 
-    //ToDo return bcrypt.compare(password, user.password);
-    const hasMatch = password === user.password;
+    const hasMatch = bcrypt.compare(password, user.password);
 
     if (!hasMatch)
       throw errorHandler("A user with this password was not found", 401, {});
@@ -45,7 +44,7 @@ const postLogin = async (req, res, next) => {
 
 const postSignup = async (req, res, next) => {
   try {
-    const { username, email, password, telefono, name } = req.body;
+    const { username, email, password, phoneNumber, name } = req.body;
 
     // console.log(username, email, password, telefono, name);
 
@@ -56,15 +55,15 @@ const postSignup = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const newUser = new userSchema({
-      nombre: name,
+      name: name,
       password: hashedPassword,
       email: email,
-      telefono: telefono,
+      phoneNumber: phoneNumber,
       username: username,
     });
 
     await newUser.save();
-    res.json(newUser);
+    res.status(200).json({ message: "Registered successfully" });
   } catch (err) {
     next(err);
   }
