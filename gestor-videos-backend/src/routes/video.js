@@ -22,7 +22,7 @@ AWS.config.update({
 const s3 = new S3();
 
 const fileFilter = (req, file, cb) => {
-	if (file.mimetype === 'image/mp4') cb(null, true);
+	if (file.mimetype === 'video/mp4') cb(null, true);
 	else cb(new Error('mimetype not allowed'), false);
 };
 
@@ -39,7 +39,7 @@ const upload = multer({
 		},
 	}),
 	fileFilter,
-	// limits: { fileSize: 3145728 },
+	limits: { fileSize: 4096 * 4096 },
 	// Definir limites de subida
 });
 
