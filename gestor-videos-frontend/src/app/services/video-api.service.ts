@@ -18,6 +18,14 @@ export class VideoApiService {
   }
 
   postVideo(video: any): Observable<any> {
+    const data = {
+    title: video.title,
+    description: video.title,
+    duration: 0,
+    url: '',
+    reproductions: 0,
+    owner: video.owner
+    }
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
@@ -25,7 +33,7 @@ export class VideoApiService {
     };
     return this._http.post(
       `http://localhost:8080/video/add-video`,
-      video,
+      data,
       httpOption
     );
   }
