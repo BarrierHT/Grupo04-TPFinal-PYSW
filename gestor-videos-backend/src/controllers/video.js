@@ -1,56 +1,105 @@
-import videoSchema from "../models/Video.js";
-import { errorHandler } from "../utils/errorHandler.js";
+import videoSchema from '../models/Video.js';
+import groupSchema from '../models/Group.js';
+import userSchema from '../models/User.js';
+
+import notificationController from '../controllers/notification.js';
+
+import { errorHandler } from '../utils/errorHandler.js';
 
 //Controller para gestionar videos (funciones CRUD y similares)
 
 const getVideos = async (req, res, next) => {
-  try {
-    const videos = await videoSchema.find();
+	try {
+		const { pattern } = req.query;
 
-    if (videos.length === 0) throw errorHandler("No videos", 404, {});
+		const regexPattern = new RegExp(pattern, 'i');
+		const videos = await videoSchema.find({ name: regexPattern });
 
-    res.json(videos);
-  } catch (err) {
-    next(err);
-  }
+		if (!videos) throw errorHandler('An error happened', 404, {});
+
+		res.status(200).json({ message: 'Videos found', videos });
+	} catch (err) {
+		next(err);
+	}
 };
 
 const getVideo = async (req, res, next) => {
-  try {
-    const { videoId } = req.params;
+	try {
+		const { videoId } = req.params;
 
-    const videoFound = await videoSchema.findById({ _id: videoId });
+		const videoFound = await videoSchema.findById({ _id: videoId });
 
-    if (!videoFound) throw errorHandler("The video does not exist", 404, {});
+		if (!videoFound)
+			throw errorHandler('The video does not exist', 404, {});
 
-    res.json(videoFound);
-  } catch (err) {
-    next(err);
-  }
+		res.json(videoFound);
+	} catch (err) {
+		next(err);
+	}
 };
 
 const postVideo = async (req, res, next) => {
-  try {
-    const { title, duration, url, reproductions } = req.body;
+	try {
+		const { title, description, groupId } = req.body;
 
-    const newVideo = new videoSchema({
-      title: title,
-      duration: duration,
-      url: url,
-      reproductions: reproductions,
-    });
+		if (!req.file) throw errorHandler('An image is required', 422, {});
 
-    await newVideo.save();
-    res.status(200).json({ message: "Video uploaded" });
-  } catch (err) {
-    next(err);
-  }
+		let newVideo;
+
+		if (groupId != '') {
+			newVideo = new videoSchema({
+				title,
+				description,
+				url: req.file.location,
+				owner: req.userId,
+				groupId,
+			});
+			//Registrar como grupo, owner sigue siendo quien lo subio (integrante del grupo)
+		} else {
+			newVideo = new videoSchema({
+				title,
+				description,
+				url: req.file.location,
+				owner: req.userId,
+			});
+			//Registrar como usuario
+		}
+
+		if (!newVideo) throw errorHandler('An error ocurred', 400, {});
+
+		await newVideo.save();
+
+		if (groupId != '') {
+			const group = await groupSchema
+				.findById(groupId)
+				.select('name users');
+
+			for (const groupUser of group.users) {
+				if (groupUser.sendEmailNotification) {
+					const user = await userSchema
+						.findById(req.userId)
+						.select('email');
+					notificationController.sendEmailNotification(
+						{
+							data: 'Nuevo video del grupo : ' + group.name,
+							url: req.file.location,
+						},
+						user.email
+					);
+				}
+			}
+		}
+
+		res.status(200).json({ message: 'Video uploaded' });
+	} catch (err) {
+		next(err);
+	}
 };
 
 const videoController = {
-  getVideos,
-  getVideo,
-  postVideo,
+	getVideos,
+	getVideo,
+	postVideo,
 };
 
 export default videoController;
