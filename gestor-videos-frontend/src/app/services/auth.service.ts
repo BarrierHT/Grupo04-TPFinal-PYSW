@@ -30,7 +30,7 @@ export class AuthService {
     };
     return this._http.post(
       `http://localhost:8080/auth/signup`,
-      signupValues,
+      { ...signupValues, phoneNumber: signupValues.telefono },
       httpOption
     );
   }

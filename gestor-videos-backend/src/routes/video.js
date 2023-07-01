@@ -4,22 +4,21 @@ import { isAuth } from '../middlewares/is-Auth.js';
 
 import multer from 'multer';
 import multerS3 from 'multer-s3';
-import AWS from 'aws-sdk';
 
-import { S3 } from '@aws-sdk/client-s3';
+import { v4 as uuidv4 } from 'uuid';
+
+import { S3Client } from '@aws-sdk/client-s3';
 
 import maintenance_mode_message from 'aws-sdk/lib/maintenance_mode_message.js';
 maintenance_mode_message.suppress = true;
 
-// console.log(AWS);
-
-AWS.config.update({
-	secretAccessKey: process.env.SECRET_KEY_AWS,
-	accessKeyId: process.env.ACCESS_KEY_AWS,
+let s3 = new S3Client({
 	region: process.env.REGION_AWS,
+	credentials: {
+		accessKeyId: process.env.ACCESS_KEY_AWS,
+		secretAccessKey: process.env.SECRET_KEY_AWS,
+	},
 });
-
-const s3 = new S3();
 
 const fileFilter = (req, file, cb) => {
 	if (file.mimetype === 'video/mp4') cb(null, true);
@@ -48,9 +47,9 @@ const router = express.Router();
 router.get('/get-videos', videoController.getVideos);
 router.get('/get-video/:videoId', videoController.getVideo);
 
-router.post('/add-video', videoController.postVideo);
+router.post('/add-video', upload.single('file'), videoController.postVideo);
 
-// router.post('/add-video', upload.single('video'), videoController.postVideo);
+// router.post('/add-video', , videoController.postVideo);
 
 //Exportamos el modulo de rutas
 
