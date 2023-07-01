@@ -1,4 +1,4 @@
-import ratingSchema from "../models/Valoracion.js";
+import ratingSchema from "../models/Rating.js";
 import { errorHandler } from "../utils/errorHandler.js";
 
 //Controller para gestionar valoraciones de un video
@@ -19,14 +19,14 @@ const getRating = async (req, res, next) => {
 
 const postRating = async (req, res, next) => {
   try {
-    const { puntaje } = req.body;
+    const { rating } = req.body;
 
     const newRating = new ratingSchema({
-      puntaje: puntaje,
+      rating: rating,
     });
 
     await newRating.save();
-    res.json(newRating);
+    res.status(200).json({ message: "Rating saved" });
   } catch (err) {
     next(err);
   }
