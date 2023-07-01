@@ -1,4 +1,4 @@
-import playlistSchema from "../models/ListaDeReproduccion.js";
+import playlistSchema from "../models/Playlist.js";
 import { errorHandler } from "../utils/errorHandler.js";
 
 //Controller para gestionar playlists de videos
@@ -20,15 +20,16 @@ const getPlaylist = async (req, res, next) => {
 
 const postPlaylist = async (req, res, next) => {
   try {
-    const { nombre, descripcion } = req.body;
+    const { name, description } = req.body;
 
     const newPlaylist = new playlistSchema({
-      nombre: nombre,
-      descripcion: descripcion,
+      name: name,
+      description: description,
     });
 
     await newPlaylist.save();
-    res.json(newPlaylist);
+    res.status(200).json({ message: 'Playlist created' });
+
   } catch (err) {
     next(err);
   }

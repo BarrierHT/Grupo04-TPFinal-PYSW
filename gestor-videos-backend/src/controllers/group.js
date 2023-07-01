@@ -1,4 +1,4 @@
-import groupSchema from "../models/Grupo.js";
+import groupSchema from "../models/Group.js";
 import { errorHandler } from "../utils/errorHandler.js";
 
 //Controller para gestionar los grupos de usuarios (nueva funcionalidad)
@@ -19,14 +19,15 @@ const getGroup = async (req, res, next) => {
 
 const postGroup = async (req, res, next) => {
   try {
-    const { nombre } = req.body;
+    const { name } = req.body;
 
     const newGroup = new groupSchema({
-      nombre: nombre,
+      name: name,
     });
 
     await newGroup.save();
-    res.json(newGroup);
+    res.status(200).json({ message: 'Group created' });
+
   } catch (err) {
     next(err);
   }

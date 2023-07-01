@@ -31,17 +31,17 @@ const getVideo = async (req, res, next) => {
 
 const postVideo = async (req, res, next) => {
   try {
-    const { titulo, duracion, url, reproducciones } = req.body;
+    const { title, duration, url, reproductions } = req.body;
 
     const newVideo = new videoSchema({
-      titulo: titulo,
-      duracion: duracion,
+      title: title,
+      duration: duration,
       url: url,
-      reproducciones: reproducciones,
+      reproductions: reproductions,
     });
 
     await newVideo.save();
-    res.json(newVideo);
+    res.status(200).json({ message: "Video uploaded" });
   } catch (err) {
     next(err);
   }
