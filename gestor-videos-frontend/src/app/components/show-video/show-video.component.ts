@@ -52,23 +52,25 @@ export class ShowVideoComponent implements OnInit {
 
   constructor(private reportService: ReportApiService) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  addPositiveRating() {
     const btn1: any = document.querySelector('#green-button-rating');
     const btn2: any = document.querySelector('#red-button-rating');
+    if (btn2.classList.contains('red')) {
+      btn2.classList.remove('red');
+    }
+    btn1.classList.toggle('green');
+    console.log({ videoId: this.video._id, rating: 1 });
+  }
 
-    btn1.addEventListener('click', function () {
-      if (btn2.classList.contains('red')) {
-        btn2.classList.remove('red');
-      }
-      btn1.classList.toggle('green');
-    });
+  addNegativeRating() {
+    const btn1: any = document.querySelector('#green-button-rating');
+    const btn2: any = document.querySelector('#red-button-rating');
+    if (btn1.classList.contains('green')) btn1.classList.remove('green');
 
-    btn2.addEventListener('click', function () {
-      if (btn1.classList.contains('green')) {
-        btn1.classList.remove('green');
-      }
-      btn2.classList.toggle('red');
-    });
+    btn2.classList.toggle('red');
+    console.log({ videoId: this.video._id, rating: -1 });
   }
 
   onMouseEnter(video: any) {

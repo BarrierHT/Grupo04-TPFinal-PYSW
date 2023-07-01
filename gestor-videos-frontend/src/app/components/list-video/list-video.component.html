@@ -25,7 +25,7 @@
                         <h1 class="modal-title fs-5" id="exampleModalLabel">New Playlist</h1>
                     </div>
                     <div class="modal-body">
-                        <form #playlistForm="ngForm">
+                        <form #playlistForm="ngForm" method="POST" (submit)="addPlaylist(playlistForm.value)">
                             <div class="inputbox ">
                                 <input type="name" name="nombre" placeholder=" " id="nombre"
                                     [(ngModel)]="newPlaylist.nombre" #nombre="ngModel" required>

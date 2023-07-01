@@ -28,4 +28,8 @@ export class ListVideoComponent {
       queryParams: { playlist: 'aa', index: 1 },
     });
   }
+
+  addPlaylist(playlistForm: any) {
+    console.log(playlistForm);
+  }
 }

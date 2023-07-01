@@ -15,7 +15,7 @@ import { ChannelComponent } from './components/channel/channel.component';
 import { ListVideoComponent } from './components/list-video/list-video.component';
 import { ShowVideoComponent } from './components/show-video/show-video.component';
 import { FormVideoComponent } from './components/form-video/form-video.component';
-import { SearchedVideosComponent } from './components/searched-videos/searched-videos.component';
+
 import { AbbreviateNumberPipe } from './pipes/abbreviate-number.pipe';
 import { GroupComponent } from './components/group/group.component';
 import { ReportComponent } from './components/report/report.component';
@@ -34,11 +34,11 @@ import { ExploreGroupsComponent } from './components/explore-groups/explore-grou
     ListVideoComponent,
     ShowVideoComponent,
     FormVideoComponent,
-    SearchedVideosComponent,
+
     AbbreviateNumberPipe,
     GroupComponent,
     ReportComponent,
-    ExploreGroupsComponent
+    ExploreGroupsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [],
