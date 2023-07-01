@@ -3,9 +3,10 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-explore-groups',
   templateUrl: './explore-groups.component.html',
-  styleUrls: ['./explore-groups.component.css']
+  styleUrls: ['./explore-groups.component.css'],
 })
 export class ExploreGroupsComponent {
+  pattern: string = '';
 
   groups: Array<any>;
 
@@ -19,8 +20,12 @@ export class ExploreGroupsComponent {
     ];
   }
 
-  requestJoin() {
+  requestJoin(groupId: string) {
     //Manejar solicitud
+    console.log(groupId);
   }
 
+  searchGroups() {
+    console.log(this.pattern);
+  }
 }

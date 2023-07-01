@@ -1,8 +1,9 @@
 <div class="container-fluid content">
     <div class="row p-4">
         <div class="container-fluid col-12">
-            <form class="d-flex" method="GET">
-                <input class="form-control" type="search" placeholder="Qué estas buscando?" aria-label="Search">
+            <form class="d-flex" method="GET" (submit)="searchGroups()">
+                <input class="form-control" type="search" placeholder="Qué estas buscando?" aria-label="Search"
+                    [(ngModel)]="pattern" name="pattern">
                 <button class="btn" type="submit"><i class="bi bi-search"></i></button>
             </form>
         </div>
@@ -21,7 +22,7 @@
                                     <h2 class="text-white">{{group.nombre}}</h2>
                                 </div>
                                 <div class="play-icon d-flex justify-content-center align-items-center">
-                                    <div class="circle text-center" (click)="requestJoin()">
+                                    <div class="circle text-center" (click)="requestJoin('groupId')">
                                         <p class="m-0 p-0"><b>SOLICITAR UNIRSE</b></p>
                                     </div>
                                 </div>
