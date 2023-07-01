@@ -1,21 +1,24 @@
 <div class="container mt-5 d-flex justify-content-center">
-    <div class="row p-2 d-flex justify-content-center">
-        <form class="form col-12 form-box p-4" action="/upload" method="POST" #videoForm="ngForm">
-            <h2 class="row h2 d-flex justify-content-center">Upload Video</h2>
+    <div class="row p-2 d-flex justify-content-center form-box">
+        <div class="row p-3 pb-0">
+            <h3 class="text-white">Subir Video</h3>
+            <hr class="hr-custom-1">
+        </div>
+        <form (submit)="postVideo()" #videoForm="ngForm">
             <div class="input-group mt-3">
-                <input type="file" class="form-control" id="videoFile" name="videoFile" [(ngModel)]="video.file"
-                    #videoFile="ngModel" required>
+                <input type="file" class="form-control" id="videoFile" name="videoFile"  required
+                  accept="video/*" (change)="onFileSelected($event)">
                 <label class="input-group-text" for="videoFile">Upload</label>
             </div>
-            <div class="" *ngIf="videoFile.invalid && (videoFile.dirty || videoFile.touched)">
-                <div *ngIf="videoFile.errors?.['required']" class="alerta text-center">
-                    Please select a video file!
+            <div *ngIf="msgVideoValidation">
+                <div class="alerta text-center">
+                  {{ msgVideoValidation }}
                 </div>
             </div>
-            <div class="form-floating mt-3">
-                <input type="text" class="form-control" id="title" name="title" placeholder="name@example.com"
+            <div class="inputbox">
+                <input type="text" id="title" name="title" placeholder=""
                     [(ngModel)]="video.title" #title="ngModel" required>
-                <label class="text-black-50" for="title">Title</label>
+                <label for="title">Title <i class="bi bi-music-note-beamed"></i> </label>
             </div>
             <div class="" *ngIf="title.invalid && (title.dirty || title.touched)">
                 <div *ngIf="title.errors?.['required']" class="alerta text-center">
@@ -33,19 +36,10 @@
                     Please enter a description!
                 </div>
             </div>
-            <div class="form-floating mt-3">
-                <input type="text" name="tags" class="form-control" id="tags" placeholder="name@example.com"
-                    [(ngModel)]="video.tags" #tags="ngModel" required>
-                <label class="text-black-50" for="tags">Tags</label>
-            </div>
-            <div class="" *ngIf="tags.invalid && (tags.dirty || tags.touched)">
-                <div *ngIf="tags.errors?.['required']" class="alerta text-center">
-                    Please enter tags!
-                </div>
-            </div>
+
             <div class="row mt-3 button-video-upload">
                 <input type="hidden" name="_csrf" value="">
-                <button type="submit" [disabled]="videoForm.invalid">Upload Video</button>
+                <button type="submit" [disabled]="videoForm.invalid || !isValidVideo(video.file)">Upload Video</button>
             </div>
         </form>
     </div>
