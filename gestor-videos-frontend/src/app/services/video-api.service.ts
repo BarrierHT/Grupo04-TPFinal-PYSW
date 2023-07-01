@@ -18,23 +18,26 @@ export class VideoApiService {
   }
 
   postVideo(video: any): Observable<any> {
-    const data = {
-    title: video.title,
-    description: video.title,
-    duration: 0,
-    url: '',
-    reproductions: 0,
-    owner: video.owner
-    }
-    let httpOption = {
+    const formData = new FormData();
+    formData.append('file', video.file);
+    formData.append('title', video.title);
+    formData.append('description', video.description);
+    formData.append('duration', '0');
+    formData.append('url', '');
+    formData.append('reproductions', '0');
+    formData.append('groupId', '');
+    formData.append('owner', video.owner);
+
+    const httpOptions = {
       headers: new HttpHeaders({
-        'Content-type': 'application/json',
+        enctype: 'multipart/form-data', // Establece el tipo de contenido como "multipart/form-data"
       }),
     };
+
     return this._http.post(
-      `http://localhost:8080/video/add-video`,
-      data,
-      httpOption
+      'http://localhost:8080/video/add-video',
+      formData,
+      httpOptions
     );
   }
 

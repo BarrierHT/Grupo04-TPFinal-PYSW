@@ -40,7 +40,9 @@ const getVideo = async (req, res, next) => {
 
 const postVideo = async (req, res, next) => {
 	try {
-		const { title, description, groupId } = req.body;
+		const { title, description, groupId, owner } = req.body;
+
+		console.log(title, description, owner, groupId);
 
 		if (!req.file) throw errorHandler('An image is required', 422, {});
 
@@ -51,7 +53,7 @@ const postVideo = async (req, res, next) => {
 				title,
 				description,
 				url: req.file.location,
-				owner: req.userId,
+				owner,
 				groupId,
 			});
 			//Registrar como grupo, owner sigue siendo quien lo subio (integrante del grupo)
@@ -60,7 +62,7 @@ const postVideo = async (req, res, next) => {
 				title,
 				description,
 				url: req.file.location,
-				owner: req.userId,
+				owner,
 			});
 			//Registrar como usuario
 		}
