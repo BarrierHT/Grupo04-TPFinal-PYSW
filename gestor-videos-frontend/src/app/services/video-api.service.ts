@@ -56,4 +56,20 @@ export class VideoApiService {
       httpOption
     );
   }
+
+  getAllVideos(): Observable<any> {
+    let httpOption = {
+      headers: new HttpHeaders({
+        'Content-type': 'application/json',
+      }),
+      // req.query
+      //params: {
+      //   videoId,
+      // },
+    };
+    return this._http.get(
+      `http://localhost:8080/video/get-all-videos`,
+      httpOption
+    );
+  }
 }

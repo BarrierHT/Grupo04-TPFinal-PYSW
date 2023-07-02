@@ -46,9 +46,9 @@ const router = express.Router();
 
 router.get('/get-videos', videoController.getVideos);
 router.get('/get-video/:videoId', videoController.getVideo);
+router.get('/get-all-videos', videoController.getAllVideos);
 
 router.post('/add-video', upload.single('file'), videoController.postVideo);
-
 // router.post('/add-video', , videoController.postVideo);
 
 //Exportamos el modulo de rutas

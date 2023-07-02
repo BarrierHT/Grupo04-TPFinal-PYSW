@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GroupApiService } from 'src/app/services/group-api.service';
 
 @Component({
   selector: 'app-group',
@@ -11,14 +12,22 @@ export class GroupComponent implements OnInit {
     description: '',
     sendNotification: false,
     sendEmailNotification: false,
+    owner: '',
   };
 
-  constructor() {}
+  constructor(private groupApiService: GroupApiService) {}
 
   ngOnInit(): void {}
 
-  postGroup(groupForm: any) {
-    console.log(groupForm);
+  postGroup() {
+    this.group.owner = localStorage.getItem('userId');
+    this.groupApiService.postGroup(this.group).subscribe((res) => {
+      try {
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    });
   }
 
   sendNotifications(sendNotificationGroup: any, grupoId: string) {
