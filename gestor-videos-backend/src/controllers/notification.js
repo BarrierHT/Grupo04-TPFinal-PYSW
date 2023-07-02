@@ -42,11 +42,13 @@ const sendEmailNotification = async (content, receiver) => {
 //   }
 // };
 
-const getNotifications = async (req, res, next) => {
+const getNotificationsByUser = async (req, res, next) => {
 	// const { userId } = req.params;
 
 	try {
-		const notifications = await notificationSchema.find();
+		const notifications = await notificationSchema.find({
+			owner: req.userId,
+		});
 
 		if (notifications.length === 0)
 			throw errorHandler('You dont have notifications', 404, {});
@@ -59,7 +61,7 @@ const getNotifications = async (req, res, next) => {
 
 const notificationController = {
 	// sendNotification,
-	getNotifications,
+	getNotificationsByUser,
 	sendEmailNotification,
 };
 

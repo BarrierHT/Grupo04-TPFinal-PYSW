@@ -4,7 +4,7 @@ import { isAuth } from '../middlewares/is-Auth.js';
 
 const router = express.Router();
 
-router.get('/get-users', userController.getUsers);
+router.get('/get-users', isAuth, userController.getUsers);
 
 //exportamos el modulo de rutas
 
