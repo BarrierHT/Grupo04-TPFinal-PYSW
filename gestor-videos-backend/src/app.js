@@ -2,8 +2,8 @@ import morgan from 'morgan';
 import express from 'express';
 import cors from 'cors';
 
-import './utils/db.js';
 import './utils/start.js';
+import './utils/db.js';
 
 import authRoutes from './routes/auth.js';
 import videoRoutes from './routes/video.js';
