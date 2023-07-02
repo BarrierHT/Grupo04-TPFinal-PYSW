@@ -6,10 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  
-  logged: boolean=false;
-  constructor() {}
-  
+
+  logged: boolean = false;
+  constructor() { }
+
   ngOnInit(): void {
     console.log(
       'userId: ',
@@ -20,8 +20,17 @@ export class HeaderComponent implements OnInit {
       localStorage.getItem('expiryDate')
     );
 
-    if(localStorage.getItem('userId') != null){
+    if (localStorage.getItem('userId') != null) {
       this.logged = true;
     }
+  }
+
+  logout() {
+    // Eliminar los datos del localStorage
+    localStorage.removeItem('userId');
+    localStorage.removeItem('token');
+    localStorage.removeItem('expiryDate');
+    // Actualizar el valor de logged
+    this.logged = false;
   }
 }
