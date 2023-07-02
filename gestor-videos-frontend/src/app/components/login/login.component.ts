@@ -42,6 +42,9 @@ export class LoginComponent {
             new Date().getTime() + remainingMilliseconds
           );
           localStorage.setItem('expiryDate', expiryDate.toISOString());
+          if (result) {
+            location.href = "http://localhost:4200/home";
+          }
         } catch (err) {
           console.log(err);
         }
