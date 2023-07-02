@@ -35,6 +35,7 @@ export class VideoApiService {
     const httpOptions = {
       headers: new HttpHeaders({
         enctype: 'multipart/form-data', // Establece el tipo de contenido como "multipart/form-data"
+        'Authorization': 'Bearer ' + video.owner
       }),
     };
 

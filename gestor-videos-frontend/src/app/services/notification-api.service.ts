@@ -12,6 +12,7 @@ export class NotificationApiService {
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
+        'Authorization': 'Bearer ' + userId
       }),
       // req.query
       //params: {

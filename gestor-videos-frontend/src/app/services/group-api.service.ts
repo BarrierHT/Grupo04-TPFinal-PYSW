@@ -11,18 +11,16 @@ export class GroupApiService {
   postGroup(group: any): Observable<any> {
     let httpOption = {
       headers: new HttpHeaders({
-        // 'Content-type': 'application/json',
-      }),
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ' + group.owner 
+      })
     };
 
-    const body = new HttpParams()
-      .set('name', group.name)
-      .set('description', group.description)
-      .set('owner', group.owner);
+    const {name, description } = group;
 
     return this._http.post(
-      `http://localhost:8080/group/add-group`,
-      body,
+      "http://localhost:8080/group/add-group",
+      {name, description},
       httpOption
     );
   }
@@ -31,6 +29,7 @@ export class GroupApiService {
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('userId')
       }),
       // req.query
       //params: {

@@ -12,6 +12,7 @@ export class PlaylistApiService {
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
+        'Authorization': 'Bearer ' + playlist.owner
       }),
     };
     return this._http.post(
@@ -25,6 +26,7 @@ export class PlaylistApiService {
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('userId')
       }),
       // req.query
       //params: {
