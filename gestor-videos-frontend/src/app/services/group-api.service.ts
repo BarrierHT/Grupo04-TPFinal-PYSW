@@ -8,15 +8,21 @@ import { Observable } from 'rxjs';
 export class GroupApiService {
   constructor(private _http: HttpClient) {}
 
-  postGroup(name: any): Observable<any> {
+  postGroup(group: any): Observable<any> {
     let httpOption = {
       headers: new HttpHeaders({
-        'Content-type': 'application/json',
+        // 'Content-type': 'application/json',
       }),
     };
+
+    const body = new HttpParams()
+      .set('name', group.name)
+      .set('description', group.description)
+      .set('owner', group.owner);
+
     return this._http.post(
       `http://localhost:8080/group/add-group`,
-      name,
+      body,
       httpOption
     );
   }

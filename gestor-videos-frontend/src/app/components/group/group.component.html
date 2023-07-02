@@ -1,7 +1,7 @@
 <div class="container mt-5 justify-content-center">
     <div class="row g-5 justify-content-center">
         <div class="col-4">
-            <form class="form form-box p-3" method="POST" #groupForm="ngForm" (submit)="postGroup(groupForm.value)">
+            <form class="form form-box p-3" method="POST" #groupForm="ngForm" (submit)="postGroup()">
                 <h2 class="row h2 d-flex justify-content-center">Register Group</h2>
                 <div class="form-floating mt-3">
                     <input type="text" class="form-control" id="name" name="name" placeholder="example123" required
