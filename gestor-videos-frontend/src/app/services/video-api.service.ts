@@ -30,12 +30,11 @@ export class VideoApiService {
     formData.append('url', '');
     formData.append('reproductions', '0');
     formData.append('groupId', '');
-    formData.append('owner', video.owner);
 
     const httpOptions = {
       headers: new HttpHeaders({
         enctype: 'multipart/form-data', // Establece el tipo de contenido como "multipart/form-data"
-        'Authorization': 'Bearer ' + video.owner
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
       }),
     };
 

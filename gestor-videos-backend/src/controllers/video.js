@@ -46,7 +46,8 @@ const getVideo = async (req, res, next) => {
 
 const postVideo = async (req, res, next) => {
 	try {
-		const { title, description, groupId, owner } = req.body;
+		const { title, description, groupId } = req.body;
+		const owner = req.userId;
 
 		console.log(title, description, owner, groupId);
 

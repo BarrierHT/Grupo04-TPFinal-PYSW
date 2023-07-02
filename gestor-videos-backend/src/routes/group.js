@@ -1,13 +1,16 @@
 import express from 'express';
 import groupController from '../controllers/group.js';
+import { isAuth } from '../middlewares/is-Auth.js';
 
 const router = express.Router();
 
-router.get('/get-group/:id', groupController.getGroup);
-router.get('/get-groups', groupController.getGroups);
+router.get('/get-group/:id', isAuth, groupController.getGroup);
+router.get('/get-groups', isAuth, groupController.getGroups);
 
-router.post('/add-group', groupController.postGroup);
-router.put('/add-user-to-group', groupController.addUserToGroup);
+router.get('/get-groups-user', isAuth, groupController.getGroupsByUser);
+
+router.post('/add-group', isAuth, groupController.postGroup);
+router.put('/add-user-to-group', isAuth, groupController.addUserToGroup);
 
 //exportamos el modulo de rutas
 
