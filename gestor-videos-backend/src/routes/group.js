@@ -7,6 +7,7 @@ router.get('/get-group/:id', groupController.getGroup);
 router.get('/get-groups', groupController.getGroups);
 
 router.post('/add-group', groupController.postGroup);
+router.put('/add-user-to-group', groupController.addUserToGroup);
 
 //exportamos el modulo de rutas
 

@@ -61,10 +61,36 @@ const postGroup = async (req, res, next) => {
   }
 };
 
+const addUserToGroup = async (req, res, next) => {
+  try {
+    const { groupId, userId } = req.body;
+
+    const updatedGroup = await groupSchema.findByIdAndUpdate(
+      groupId,
+      {
+        $push: {
+          users: {
+            dateOfJoining: Date.now(),
+            sendNotification: false,
+            sendEmailNotification: false,
+            _id: userId,
+          },
+        },
+      },
+      { new: true }
+    );
+
+    res.status(200).json({ message: "User added to group", group: updatedGroup });
+  } catch (err) {
+    next(err);
+  }
+};
+
 const groupController = {
   getGroup,
   postGroup,
   getGroups,
+  addUserToGroup
 };
 
 export default groupController;

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { VideoApiService } from 'src/app/services/video-api.service';
 
 @Component({
   selector: 'app-home',
@@ -36,9 +37,14 @@ export class HomeComponent implements OnInit {
 
   pattern: string = '';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private videoApiService: VideoApiService
+  ) {}
 
-  ngOnInit(): void {}
+  async ngOnInit(): Promise<void> {
+    await this.getAllVideos();
+  }
 
   searchVideos() {
     console.log(this.pattern);
@@ -64,5 +70,15 @@ export class HomeComponent implements OnInit {
 
   zoomOutThumbnail(event: any) {
     event.target.style.transform = 'scale(1)';
+  }
+
+  async getAllVideos(): Promise<void> {
+    this.videoApiService.getAllVideos().subscribe((res) => {
+      try {
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    });
   }
 }
