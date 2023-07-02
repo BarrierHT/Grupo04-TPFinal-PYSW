@@ -2,7 +2,7 @@
     color: white;
 }
 
-.nav-link:hover {
+.navbar-nav .nav-link:hover {
     background-color: white;
     color: black;
 }
@@ -40,4 +40,6 @@
     height: auto;
 }
 
-  
+.user .nav-link:hover {
+    background-color: none;
+}

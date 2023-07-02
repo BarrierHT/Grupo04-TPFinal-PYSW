@@ -6,7 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
+  
+  logged: boolean=false;
   constructor() {}
+  
   ngOnInit(): void {
     console.log(
       'userId: ',
@@ -16,5 +19,9 @@ export class HeaderComponent implements OnInit {
       '\nexpiryDate: ',
       localStorage.getItem('expiryDate')
     );
+
+    if(localStorage.getItem('userId') != null){
+      this.logged = true;
+    }
   }
 }

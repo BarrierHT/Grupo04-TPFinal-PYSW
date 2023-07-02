@@ -1,80 +1,100 @@
-<nav class="navbar navbar-expand-lg sticky-top bg-dark" data-bs-theme="dark">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center">
-        <li class="nav-item" [routerLinkActive]="['active']">
-          <a class="nav-link" aria-current="page" [routerLink]="['/home']">
-            <i class="bi bi-house-door fs-4"></i>
-            Home</a>
-        </li>
+<div class="d-flex justify-content-between bg-dark" data-bs-theme="dark">
+  <nav class="navbar navbar-expand-lg sticky-top w-100">
+    <div class="container-fluid">
+  
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <a class="navbar-brand me-auto ps-2 pe-2" [routerLink]="['/home']">
+        <img src="../../../assets/img/Icono.png" alt="Logo" width="25" height="25" class="d-inline-block align-text-top">
+        Gestor de Videos
+      </a>
+  
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center">
+          <li class="nav-item" [routerLinkActive]="['active']">
+            <a class="nav-link" aria-current="page" [routerLink]="['/home']">
+              <i class="bi bi-house-door fs-4"></i>
+              Home
+            </a>
+          </li>
+  
+          <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged">
+            <a class="nav-link" [routerLink]="['/playlist']">
+              <i class="bi bi-fast-forward-circle fs-4"></i>
+              Playlists
+            </a>
+          </li>
+  
+          <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged">
+            <a class="nav-link" [routerLink]="['/channel']">
+              <i class="bi bi-person-video2 fs-4"></i>
+              Canal
+            </a>
+          </li>
+  
+          <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged">
+            <a class="nav-link" [routerLink]="['/explore-groups']">
+              <i class="bi bi-collection-play fs-4"></i>
+              Buscar grupos
+            </a>
+          </li>
+  
+          <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged">
+            <a class="nav-link" [routerLink]="['/reports']">
+              <i class="bi bi-flag fs-4"></i>
+              Reportes
+            </a>
+          </li>
+  
+          <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged">
+            <a class="nav-link" [routerLink]="['/form-video']">
+              <i class="bi bi-camera-reels fs-4"></i>
+              Subir Video
+            </a>
+          </li>
+        </ul>
+      </div>
 
+      <div class="btn-group ms-auto user">
+        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-person-circle fs-4"></i>
+        </a>
+    
+        <ul class="dropdown-menu dropdown-menu-end mb-2 mb-lg-0 ps-2 pe-2">
+          <li class="nav-item" [routerLinkActive]="['active']">
+            <a class="nav-link" [routerLink]="['/login']">
+              <i class="bi bi-box-arrow-in-right fs-4"></i>
+              Login
+            </a>
+          </li>
+        
+          <li class="nav-item" [routerLinkActive]="['active']">
+            <a class="nav-link" [routerLink]="['/signup']">
+              <i class="bi bi-person-add fs-4"></i>
+              Sign up
+            </a>
+          </li>
+        
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+        
+          <li class="nav-item" *ngIf="logged">
+            <i class="nav-link bi bi-bell fs-4" data-bs-toggle="modal" data-bs-target="#lineaVentaModal">
+              <span class="fs-6">
+                Notificaciones
+              </span>
+            </i>
+          </li>
+        </ul>
+      </div>
 
-        <li class="nav-item" [routerLinkActive]="['active']">
-          <a class="nav-link" [routerLink]="['/playlist']">
-            <i class="bi bi-fast-forward-circle fs-4"></i>
-            Playlists</a>
-        </li>
-
-        <li class="nav-item" [routerLinkActive]="['active']">
-          <a class="nav-link" [routerLink]="['/channel']">
-            <i class="bi bi-person-video2 fs-4"></i>
-            Canal</a>
-        </li>
-
-        <li class="nav-item" [routerLinkActive]="['active']">
-          <a class="nav-link" [routerLink]="['/explore-groups']">
-            <i class="bi bi-collection-play fs-4"></i>
-            Buscar grupos</a>
-        </li>
-
-        <li class="nav-item" [routerLinkActive]="['active']">
-          <a class="nav-link" [routerLink]="['/reports']">
-            <i class="bi bi-flag fs-4"></i>
-            Reportes</a>
-        </li>
-
-        <li class="nav-item" [routerLinkActive]="['active']">
-          <a class="nav-link" [routerLink]="['/form-video']">
-            <i class="bi bi-camera-reels fs-4"></i>
-            Subir Video</a>
-        </li>
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="bi bi-person-circle fs-4"></i>
-          </a>
-          <ul class="dropdown-menu">
-            <li class="nav-item" [routerLinkActive]="['active']">
-              <a class="nav-link" [routerLink]="['/login']">
-                <i class="bi bi-box-arrow-in-right fs-4"></i>
-                Login</a>
-            </li>
-
-            <li class="nav-item" [routerLinkActive]="['active']">
-              <a class="nav-link" [routerLink]="['/signup']">
-                <i class="bi bi-person-add fs-4"></i>
-                Sign up</a>
-            </li>
-
-            <li>
-              <hr class="dropdown-divider" />
-            </li>
-
-            <li class="nav-item">
-              <i class="nav-link bi bi-bell fs-4" data-bs-toggle="modal" data-bs-target="#lineaVentaModal">
-                <span class="fs-6">Notificaciones</span>
-              </i>
-            </li>
-          </ul>
-        </li>
-      </ul>
     </div>
-  </div>
-</nav>
+  </nav>
+</div>
 
 <!-- Modal Linea Venta-->
 <div class="modal fade" id="lineaVentaModal" tabindex="-1" aria-labelledby="detalleModalLabel" aria-hidden="true">
