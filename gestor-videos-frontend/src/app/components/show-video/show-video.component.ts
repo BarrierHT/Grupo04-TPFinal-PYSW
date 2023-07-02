@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { catchError } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { catchError, delay } from 'rxjs';
 import { ReportApiService } from 'src/app/services/report-api.service';
+import { VideoApiService } from 'src/app/services/video-api.service';
 
 @Component({
   selector: 'app-show-video',
@@ -47,12 +49,49 @@ export class ShowVideoComponent implements OnInit {
     'felis in euismod consequat, felis leo iaculis est, eget fermentum enim odio ut arcu.';
 
   video: any = {
-    _id: '649f373ceb3cdb108c0075f5',
+    title: '',
   };
 
-  constructor(private reportService: ReportApiService) {}
+  constructor(
+    private reportService: ReportApiService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private videoService: VideoApiService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.activatedRoute.params.subscribe((params) => {
+      console.log(params['videoId']);
+      //console.log(this.ticketService.getTickets());
+      if (params['videoId'] != '') {
+        const videoId = params['videoId'];
+        this.videoService
+          .getVideo(videoId)
+          .pipe(
+            catchError((error) => {
+              console.log('Error en el observable: ', error);
+              return [];
+            }),
+            delay(1000) // Agrega un retraso de 1 segundo
+          )
+          .subscribe((result) => {
+            try {
+              console.log(result);
+
+              this.video = result.video;
+            } catch (err) {
+              console.log(err);
+            }
+          });
+
+        // .find((ticket) => ticket._id.toString() == params['ticketId']);
+
+        // if (updateAllowed) {
+
+        // } else this.router.navigate(['home']);
+      }
+    });
+  }
 
   addPositiveRating() {
     const btn1: any = document.querySelector('#green-button-rating');

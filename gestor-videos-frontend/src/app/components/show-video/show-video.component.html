@@ -1,13 +1,14 @@
 <div class="row py-5 px-5 d-flex justify-content-center container-custom-1">
-  <div class="col-lg-8">
+
+  <div class="col-lg-8" *ngIf="video.title != ''">
     <div class="video-container">
       <video controls>
-        <source src="assets/videos/video-prueba.mp4" type="video/mp4" />
+        <source src="{{video.url}}" type="video/mp4" />
         Your web browser does not allow video player
       </video>
     </div>
     <div class="video-info-custom">
-      <h3 class="col-12 video-title-custom">Title of the video</h3>
+      <h3 class="col-12 video-title-custom">{{video.title}}</h3>
       <div class="col-12 video-metadata-custom">
         <div class="video-details-custom">
           <div class="views-custom">100,000 views</div>
@@ -98,8 +99,8 @@
         <div class="p-3">
           {{
           showFullDescription
-          ? stringTest
-          : stringTest.substring(0, 320) + "..."
+          ? video.description
+          : video.description.substring(0, 320) + "..."
           }}
         </div>
         <div class="px-3 pt-0 pb-3">
