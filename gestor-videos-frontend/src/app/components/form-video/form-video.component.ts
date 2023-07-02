@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Video } from 'src/app/models/video';
 import { VideoApiService } from 'src/app/services/video-api.service';
 
@@ -14,14 +15,17 @@ export class FormVideoComponent {
     description: string;
     owner: string | null;
   } = {
-      file: null,
-      title: '',
-      description: '',
-      owner: ''
-    };
+    file: null,
+    title: '',
+    description: '',
+    owner: '',
+  };
   msgVideoValidation!: string;
 
-  constructor(private videoApiService: VideoApiService) { }
+  constructor(
+    private videoApiService: VideoApiService,
+    private router: Router
+  ) {}
 
   postVideo() {
     if (this.isValidVideo(this.video.file)) {
@@ -32,16 +36,25 @@ export class FormVideoComponent {
       console.log(this.video.description);
       console.log(this.video.title);
       console.log(this.video.owner);
-      
+
       this.videoApiService.postVideo(this.video).subscribe(
-        result => {
+        (result) => {
           console.log(result);
-          this.video = { file: null, title: '', description: '', owner: localStorage.getItem('userId') }
+          this.video = {
+            file: null,
+            title: '',
+            description: '',
+            owner: localStorage.getItem('userId'),
+          };
+          if (result.message == 'Video uploaded') {
+            alert('VIDEO SUBIDO CORRECTAMENTE');
+            this.router.navigate(['watch', result.videoId]);
+          }
         },
-        error => {
+        (error) => {
           console.log(error);
         }
-      )
+      );
     } else {
       console.log('Invalid video');
     }
@@ -64,11 +77,11 @@ export class FormVideoComponent {
           this.video.file = file;
           valid = true;
         } else {
-          this.msgVideoValidation = "Tamaño invalido! maximo: 200mb";
-          console.log('tamaño invalido! maximo: 200mb');
+          this.msgVideoValidation = 'Tamaño invalido! maximo: 50mb';
+          console.log('tamaño invalido! maximo: 50mb');
         }
       } else {
-        this.msgVideoValidation = "Por favor selecciona un video";
+        this.msgVideoValidation = 'Por favor selecciona un video';
         console.log('Por favor selecciona un video');
       }
     }
@@ -78,8 +91,14 @@ export class FormVideoComponent {
   isVideoFile(file: File | null): boolean {
     if (file) {
       const allowedExtensions = ['mp4', 'mov', 'avi'];
-      const extension = file.name ? file.name.split('.').pop()?.toLowerCase() : null;
-      const allowedMimeTypes = ['video/mp4', 'video/quicktime', 'video/x-msvideo'];
+      const extension = file.name
+        ? file.name.split('.').pop()?.toLowerCase()
+        : null;
+      const allowedMimeTypes = [
+        'video/mp4',
+        'video/quicktime',
+        'video/x-msvideo',
+      ];
       if (extension && allowedExtensions.includes(extension)) {
         return true;
       }
@@ -91,13 +110,10 @@ export class FormVideoComponent {
   }
 
   isVideoSizeValid(file: File | null): boolean {
-    const maxSizeInBytes = 200 * 1024 * 1024; // 200 MB en bytes
+    const maxSizeInBytes = 50 * 1024 * 1024; // 50 MB en bytes
     if (file && file.size) {
       return file.size <= maxSizeInBytes;
     }
     return false;
   }
-
-
-
 }

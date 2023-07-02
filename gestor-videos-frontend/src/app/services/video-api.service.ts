@@ -8,12 +8,16 @@ import { Observable } from 'rxjs';
 export class VideoApiService {
   constructor(private _http: HttpClient) {}
 
-  getVideos(): Observable<any> {
+  getVideos(pattern: string): Observable<any> {
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
       }),
+      params: {
+        pattern,
+      },
     };
+
     return this._http.get(`http://localhost:8080/video/get-videos`, httpOption);
   }
 
@@ -53,22 +57,6 @@ export class VideoApiService {
     };
     return this._http.get(
       `http://localhost:8080/video/get-video/${videoId}`,
-      httpOption
-    );
-  }
-
-  getAllVideos(): Observable<any> {
-    let httpOption = {
-      headers: new HttpHeaders({
-        'Content-type': 'application/json',
-      }),
-      // req.query
-      //params: {
-      //   videoId,
-      // },
-    };
-    return this._http.get(
-      `http://localhost:8080/video/get-all-videos`,
       httpOption
     );
   }

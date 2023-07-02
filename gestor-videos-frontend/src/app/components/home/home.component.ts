@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { catchError, delay } from 'rxjs';
 import { VideoApiService } from 'src/app/services/video-api.service';
 
 @Component({
@@ -9,28 +10,28 @@ import { VideoApiService } from 'src/app/services/video-api.service';
 })
 export class HomeComponent implements OnInit {
   videos: any[] = [
-    {
-      title: 'Video 1',
-      description:
-        'Descripción del video 1 Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-      thumbnail: 'assets/img/image-not-found.jpg',
-      views: 1234567,
-      duration: '10:23',
-      channelName: 'Canal 1',
-      channelImage: 'assets/img/image-not-found.jpg',
-      _id: 'a',
-    },
-    {
-      title: 'Video 2',
-      description:
-        'Descripción del video 2 Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      thumbnail: 'assets/img/image-not-found.jpg',
-      views: 9876543,
-      duration: '5:42',
-      channelName: 'Canal 2',
-      channelImage: 'assets/img/image-not-found.jpg',
-      _id: 'b',
-    },
+    // {
+    //   title: 'Video 1',
+    //   description:
+    //     'Descripción del video 1 Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    //   thumbnail: 'assets/img/image-not-found.jpg',
+    //   views: 1234567,
+    //   duration: '10:23',
+    //   channelName: 'Canal 1',
+    //   channelImage: 'assets/img/image-not-found.jpg',
+    //   _id: 'a',
+    // },
+    // {
+    //   title: 'Video 2',
+    //   description:
+    //     'Descripción del video 2 Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    //   thumbnail: 'assets/img/image-not-found.jpg',
+    //   views: 9876543,
+    //   duration: '5:42',
+    //   channelName: 'Canal 2',
+    //   channelImage: 'assets/img/image-not-found.jpg',
+    //   _id: 'b',
+    // },
   ];
   showOptions: boolean = false;
   selectedVideo: any;
@@ -39,15 +40,37 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private videoApiService: VideoApiService
+    private videoApiService: VideoApiService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit(): Promise<void> {
-    await this.getAllVideos();
+    this.searchVideos();
   }
 
   searchVideos() {
     console.log(this.pattern);
+    this.videoApiService
+      .getVideos(this.pattern)
+      .pipe(
+        catchError((error) => {
+          //console.log('Error en el observable: ', error);
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            // throw new Error('');
+          }
+          return [];
+        }),
+        delay(500) // Agrega un retraso de 1 segundo
+      )
+      .subscribe((result) => {
+        try {
+          console.log(result);
+          this.videos = result.videos;
+        } catch (err) {
+          console.log(err);
+        }
+      });
   }
 
   onMouseEnter(video: any) {
@@ -60,8 +83,8 @@ export class HomeComponent implements OnInit {
     this.selectedVideo = null;
   }
 
-  watchVideo(video: any) {
-    this.router.navigate(['watch', video._id]);
+  watchVideo(videoId: any) {
+    this.router.navigate(['watch', videoId]);
   }
 
   zoomInThumbnail(event: any) {
@@ -70,15 +93,5 @@ export class HomeComponent implements OnInit {
 
   zoomOutThumbnail(event: any) {
     event.target.style.transform = 'scale(1)';
-  }
-
-  async getAllVideos(): Promise<void> {
-    this.videoApiService.getAllVideos().subscribe((res) => {
-      try {
-        console.log(res);
-      } catch (err) {
-        console.log(err);
-      }
-    });
   }
 }
