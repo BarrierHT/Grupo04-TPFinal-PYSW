@@ -1,5 +1,7 @@
+
 import { Component, OnInit } from '@angular/core';
 import { catchError, delay } from 'rxjs';
+
 import { GroupApiService } from 'src/app/services/group-api.service';
 
 @Component({
@@ -7,17 +9,28 @@ import { GroupApiService } from 'src/app/services/group-api.service';
   templateUrl: './explore-groups.component.html',
   styleUrls: ['./explore-groups.component.css'],
 })
+
 export class ExploreGroupsComponent implements OnInit {
   pattern: string = '';
   groups: any[] = [];
 
-
-  constructor(private groupApiService: GroupApiService) {
+  constructor(private groupService: GroupApiService) {
 
   }
 
   async ngOnInit(): Promise<void> {
     this.searchGroups();
+  }
+  
+  requestJoin(groupId: string) {
+    this.groupService.joinGroup(groupId).subscribe(
+      result => {
+        console.log(result);
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 
   searchGroups() {
@@ -45,8 +58,5 @@ export class ExploreGroupsComponent implements OnInit {
       });
   }
 
-  requestJoin(groupId: string) {
-    //Manejar solicitud
-    console.log(groupId);
-  }
+  
 }
