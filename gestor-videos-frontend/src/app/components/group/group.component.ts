@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { GroupApiService } from 'src/app/services/group-api.service';
 
 @Component({
@@ -17,7 +17,10 @@ export class GroupComponent implements OnInit {
 
   myGroups: Array<any> = [];
 
-  constructor(private groupService: GroupApiService) {}
+  constructor(
+    private groupService: GroupApiService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.getMyGroups();
@@ -28,6 +31,7 @@ export class GroupComponent implements OnInit {
     this.groupService.postGroup(this.group).subscribe((res) => {
       try {
         console.log(res);
+        this.getMyGroups();
       } catch (err) {
         console.log(err);
       }
@@ -43,7 +47,7 @@ export class GroupComponent implements OnInit {
   }
 
   getMyGroups() {
-    this.groupService.getGroupsByuser().subscribe(
+    this.groupService.getGroupsByUser().subscribe(
       (result) => {
         this.myGroups = result.groups;
         console.log(result);

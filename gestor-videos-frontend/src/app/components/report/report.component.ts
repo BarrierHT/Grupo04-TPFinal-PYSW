@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { catchError, delay } from 'rxjs';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject, catchError, delay } from 'rxjs';
 import { ReportApiService } from 'src/app/services/report-api.service';
 
 @Component({
@@ -7,16 +7,27 @@ import { ReportApiService } from 'src/app/services/report-api.service';
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.css'],
 })
-export class ReportComponent implements OnInit {
+export class ReportComponent implements OnInit, OnDestroy {
   reports: any = [];
+
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject<any>();
 
   constructor(
     private reportService: ReportApiService,
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.getReports();
+    (this.dtOptions = {
+      pagingType: 'full_pages',
+      pageLength: 5,
+    }),
+      this.getReports();
+  }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
   }
 
   getReports() {
@@ -37,6 +48,7 @@ export class ReportComponent implements OnInit {
         try {
           console.log(result);
           this.reports = result.reports;
+          this.dtTrigger.next(this.reports);
           this.cdr.detectChanges(); // forzar una actualización inmediata de la vista
         } catch (err) {
           console.log(err);

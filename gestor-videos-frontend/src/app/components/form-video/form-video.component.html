@@ -6,18 +6,34 @@
         </div>
         <form (submit)="postVideo()" #videoForm="ngForm">
             <div class="input-group mt-3">
-                <input type="file" class="form-control" id="videoFile" name="videoFile"  required
-                  accept="video/*" (change)="onFileSelected($event)">
+                <input type="file" class="form-control" id="videoFile" name="videoFile" required accept="video/*"
+                    (change)="onFileSelected($event)">
                 <label class="input-group-text" for="videoFile">Upload</label>
             </div>
+
+            <div class="text-center mt-3 ">
+
+                <select class="btn btn-secondary btn-sm dropdown-toggle pe-5 text-center" name="groupId" required
+                    [(ngModel)]="video.groupId">
+                    <option class="dropdown-item text-center" selected disabled value="">
+                        Subir como grupo
+                    </option>
+                    <option class="dropdown-item text-center" value="{{group._id}}" *ngFor="let group of myGroups">
+                        {{group.name}}</option>
+
+                </select>
+
+            </div>
+
+
             <div *ngIf="msgVideoValidation">
                 <div class="alerta text-center">
-                  {{ msgVideoValidation }}
+                    {{ msgVideoValidation }}
                 </div>
             </div>
             <div class="inputbox">
-                <input type="text" id="title" name="title" placeholder=""
-                    [(ngModel)]="video.title" #title="ngModel" required>
+                <input type="text" id="title" name="title" placeholder="" [(ngModel)]="video.title" #title="ngModel"
+                    required>
                 <label for="title">Title <i class="bi bi-music-note-beamed"></i> </label>
             </div>
             <div class="" *ngIf="title.invalid && (title.dirty || title.touched)">

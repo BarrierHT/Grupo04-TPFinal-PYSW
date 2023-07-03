@@ -30,7 +30,7 @@ const getGroups = async (req, res, next) => {
 
 		const groupsToSend = groups.map(group => {
 			const userExists = group.users.some(
-				user => user._id.toString() == req.userId
+				user => user.userId.toString() == req.userId
 			);
 			const groupObject = group.toObject();
 
@@ -42,7 +42,7 @@ const getGroups = async (req, res, next) => {
 			return groupObject;
 		});
 
-		res.status(200).json({ message: 'Groups found', groupsToSend });
+		res.status(200).json({ message: 'Groups found', groups: groupsToSend });
 	} catch (err) {
 		next(err);
 	}
@@ -62,11 +62,19 @@ const getGroupsByOwner = async (req, res, next) => {
 
 const getGroupsByUser = async (req, res, next) => {
 	try {
-		const groups = await groupSchema.find({ 'users._id': req.userId });
+		const groups = await groupSchema.find({ 'users.userId': req.userId });
 
 		if (!groups) throw errorHandler('An error happened', 404, {});
 
-		res.status(200).json({ message: 'Groups found', groups });
+		const groupsToSend = groups.map(group => {
+			const groupObject = group.toObject();
+
+			delete groupObject.users;
+
+			return groupObject;
+		});
+
+		res.status(200).json({ message: 'Groups found', groups: groupsToSend });
 	} catch (err) {
 		next(err);
 	}
@@ -84,8 +92,16 @@ const postGroup = async (req, res, next) => {
 			owner: owner,
 			users: [],
 		});
-
 		if (!newGroup) throw errorHandler('An error happened', 404, {});
+
+		newGroup.users.push({
+			dateOfJoining: Date.now(),
+			sendNotification: false,
+			sendEmailNotification: false,
+			userId: owner,
+		});
+
+		//Ingresar al owner como integrante
 
 		await newGroup.save();
 		res.status(200).json({ message: 'Group created' });

@@ -20,6 +20,7 @@ import { AbbreviateNumberPipe } from './pipes/abbreviate-number.pipe';
 import { GroupComponent } from './components/group/group.component';
 import { ReportComponent } from './components/report/report.component';
 import { ExploreGroupsComponent } from './components/explore-groups/explore-groups.component';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,13 @@ import { ExploreGroupsComponent } from './components/explore-groups/explore-grou
     ReportComponent,
     ExploreGroupsComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    DataTablesModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

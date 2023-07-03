@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Video } from 'src/app/models/video';
+import { GroupApiService } from 'src/app/services/group-api.service';
 import { VideoApiService } from 'src/app/services/video-api.service';
 
 @Component({
@@ -8,34 +9,49 @@ import { VideoApiService } from 'src/app/services/video-api.service';
   templateUrl: './form-video.component.html',
   styleUrls: ['./form-video.component.css'],
 })
-export class FormVideoComponent {
+export class FormVideoComponent implements OnInit {
   video: {
     file: File | null;
     title: string;
     description: string;
-    owner: string | null;
+    groupId: string;
   } = {
     file: null,
     title: '',
     description: '',
-    owner: '',
+    groupId: '',
   };
   msgVideoValidation!: string;
+  myGroups: Array<any> = [];
 
   constructor(
     private videoApiService: VideoApiService,
+    private groupService: GroupApiService,
     private router: Router
   ) {}
 
+  ngOnInit(): void {
+    this.getMyGroups();
+  }
+
+  getMyGroups() {
+    this.groupService.getGroupsByUser().subscribe(
+      (result) => {
+        this.myGroups = result.groups;
+        console.log(result);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
   postVideo() {
     if (this.isValidVideo(this.video.file)) {
-      this.video.owner = localStorage.getItem('userId');
-
       console.log(this.video.file?.name);
       console.log(this.video.file?.size);
       console.log(this.video.description);
       console.log(this.video.title);
-      console.log(this.video.owner);
 
       this.videoApiService.postVideo(this.video).subscribe(
         (result) => {
@@ -44,7 +60,7 @@ export class FormVideoComponent {
             file: null,
             title: '',
             description: '',
-            owner: localStorage.getItem('userId'),
+            groupId: '',
           };
           if (result.message == 'Video uploaded') {
             alert('VIDEO SUBIDO CORRECTAMENTE');
