@@ -5,10 +5,8 @@ import { errorHandler } from '../utils/errorHandler.js';
 
 const getChannel = async (req, res, next) => {
 	try {
-		const { id } = req.params;
-
 		const channelFound = await channelSchema
-			.findById({ _id: id })
+			.findOne({ owner: req.userId })
 			.populate('owner');
 
 		if (!channelFound)

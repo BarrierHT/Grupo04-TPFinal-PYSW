@@ -1,31 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GroupApiService } from 'src/app/services/group-api.service';
 
 @Component({
   selector: 'app-channel',
   templateUrl: './channel.component.html',
-  styleUrls: ['./channel.component.css']
+  styleUrls: ['./channel.component.css'],
 })
-export class ChannelComponent {
-
+export class ChannelComponent implements OnInit {
   myGroups: Array<any> = [];
-  showMyGroups:boolean = false;
+  showMyGroups: boolean = false;
 
-  constructor(private groupService: GroupApiService) { }
+  constructor(private groupService: GroupApiService) {}
 
-  getMyGroups() {
-    this.groupService.getGroupsByuser().subscribe(
-      result => {
-        this.myGroups = result.groups;
-        this.showMyGroups = true;
-        console.log(result);
-      },
-      error => {
-        console.log(error);
-      }
-    )
+  ngOnInit(): void {
+    this.getMyChannel();
+    this.getMyPlaylists();
+    this.getMyVideos();
   }
-  someAction(){
+
+  getMyChannel() {}
+
+  getMyPlaylists() {}
+
+  getMyVideos() {}
+
+  someAction() {
     console.log(this.myGroups);
   }
 }
