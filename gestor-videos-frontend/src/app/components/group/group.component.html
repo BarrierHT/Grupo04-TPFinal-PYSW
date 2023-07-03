@@ -32,6 +32,7 @@
                 </div>
             </form>
         </div>
+        
         <div class="col-8">
             <h2 class="row h2 d-flex justify-content-center">Groups</h2>
             <table class="table table-borderless">
@@ -76,7 +77,6 @@
                     <tr>
                         <div class="form-check mt-3">
                             <!-- TODO MANEJAR EN UN BUCLE y group.sendNotification y group.sendEmailNotification seran atributos -->
-
                             <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off"
                                 name="sendNotification" [(ngModel)]="group.sendNotification"
                                 #groupsendNotification="ngModel"
@@ -87,11 +87,8 @@
                             <label class="form-check-label ps-1" for="btn-check-outlined">
                                 Recibir notificaciones?
                             </label>
-
                         </div>
                         <div class="form-check mt-3">
-
-
                             <input type="checkbox" class="btn-check" id="btn-check-email-outlined" autocomplete="off"
                                 name="sendEmailNotification" name="sendEmailNotification"
                                 [(ngModel)]="group.sendEmailNotification" #groupsendEmailNotification="ngModel"
@@ -109,8 +106,6 @@
             </table>
         </div>
 
-
-
         <div class="container-fluid col-12">
             <div class="row">
                 <div class="grupos col-12">
@@ -125,9 +120,57 @@
                                 <div class="text text-center">
                                     <h2 class="text-white">{{group.name}}</h2>
                                 </div>
+                                <div class="text text-center">
+                                    <p class="text-white">{{group.description}}</p>
+                                </div>
+                                <div class="dropdown-center">
+                                    <button class="btn btn-secondary btn-sm dropdown-toggle ps-5 pe-5 w-100" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        View video
+                                    </button>
+                                    <ul class="dropdown-menu w-100">
+                                        <li><a class="dropdown-item" href="">Video1</a></li>
+                                        <li><a class="dropdown-item" href="">Video2</a></li>
+                                        <li><a class="dropdown-item" href="">Video3</a></li>
+                                        <li><a class="dropdown-item" href="">
+                                                <span>
+                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates,
+                                                    delectus ab corporis ipsam ipsa odit voluptatibus dolore reprehenderit
+                                                    pariatur illo.
+                                                </span>
+                                            </a></li>
+                                    </ul>
+                                </div>
+                                <div class="d-flex justify-content-center mb-2">
+                                    <div class="form-check mt-3 me-3">
+                                      <div class="custom-tooltip">
+                                        <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off"
+                                          name="sendNotification" [(ngModel)]="group.sendNotification"
+                                          #groupsendNotification="ngModel"
+                                          (ngModelChange)="sendNotifications(group.sendNotification,'grupoId')">
+                                        <label class="btn btn-outline-warning" for="btn-check-outlined">
+                                          <i class="bi bi-bell"></i>
+                                        </label>
+                                        <div class="tooltip-text">Recibir notificaciones?</div>
+                                      </div>
+                                    </div>
+                                    <div class="form-check mt-3">
+                                      <div class="custom-tooltip">
+                                        <input type="checkbox" class="btn-check" id="btn-check-email-outlined" autocomplete="off"
+                                          name="sendEmailNotification" name="sendEmailNotification"
+                                          [(ngModel)]="group.sendEmailNotification" #groupsendEmailNotification="ngModel"
+                                          (ngModelChange)="sendEmailNotifications(group.sendEmailNotification, 'grupoId')">
+                                        <label class="btn btn-outline-info" for="btn-check-email-outlined">
+                                          <i class="bi bi-envelope-at"></i>
+                                        </label>
+                                        <div class="tooltip-text">Recibir notificaciones al correo?</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  
                                 <div class="play-icon d-flex justify-content-center align-items-center">
                                     <div class="circle text-center">
-                                        <p class="m-0 p-0"><b>ALGUNA ACCION</b></p>
+                                        <p class="m-0 p-0"><b>Ver Lista de Reproduccion</b></p>
                                     </div>
                                 </div>
                             </div>
