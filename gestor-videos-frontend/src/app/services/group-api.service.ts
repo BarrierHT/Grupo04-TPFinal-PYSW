@@ -57,14 +57,12 @@ export class GroupApiService {
   }
 
   joinGroup(groupId: string): Observable<any> {
-    const data = {
-      groupId: groupId,
-      userId: localStorage.getItem('userId'),
-    };
+    console.log(groupId);
+
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('userId'),
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
       }),
       // req.query
       //params: {
@@ -73,7 +71,7 @@ export class GroupApiService {
     };
     return this._http.put(
       `http://localhost:8080/group/add-user-to-group`,
-      data,
+      { groupId },
       httpOption
     );
   }

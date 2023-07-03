@@ -7,9 +7,12 @@ const router = express.Router();
 router.get('/get-group/:id', isAuth, groupController.getGroup);
 router.get('/get-groups', isAuth, groupController.getGroups);
 
-router.get('/get-groups-user', isAuth, groupController.getGroupsByUser);
-
 router.post('/add-group', isAuth, groupController.postGroup);
+
+router.get('/get-groups-owner-user', isAuth, groupController.getGroupsByOwner);
+// LLamar cuando se solicite unirse
+
+router.get('/get-groups-user', isAuth, groupController.getGroupsByUser);
 router.put('/add-user-to-group', isAuth, groupController.addUserToGroup);
 
 //exportamos el modulo de rutas

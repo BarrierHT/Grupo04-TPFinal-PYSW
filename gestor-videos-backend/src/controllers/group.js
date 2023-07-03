@@ -28,6 +28,32 @@ const getGroups = async (req, res, next) => {
 
 		if (!groups) throw errorHandler('An error happened', 404, {});
 
+		const groupsToSend = groups.map(group => {
+			const userExists = group.users.some(
+				user => user._id.toString() == req.userId
+			);
+			const groupObject = group.toObject();
+
+			if (userExists) groupObject.isUserJoined = true;
+			else groupObject.isUserJoined = false;
+
+			delete groupObject.users;
+
+			return groupObject;
+		});
+
+		res.status(200).json({ message: 'Groups found', groupsToSend });
+	} catch (err) {
+		next(err);
+	}
+};
+
+const getGroupsByOwner = async (req, res, next) => {
+	try {
+		const groups = await groupSchema.find({ owner: req.userId });
+
+		if (!groups) throw errorHandler('An error happened', 404, {});
+
 		res.status(200).json({ message: 'Groups found', groups });
 	} catch (err) {
 		next(err);
@@ -36,7 +62,7 @@ const getGroups = async (req, res, next) => {
 
 const getGroupsByUser = async (req, res, next) => {
 	try {
-		const groups = await groupSchema.find({ owner: req.userId });
+		const groups = await groupSchema.find({ 'users._id': req.userId });
 
 		if (!groups) throw errorHandler('An error happened', 404, {});
 
@@ -56,14 +82,7 @@ const postGroup = async (req, res, next) => {
 			name: name,
 			description: description,
 			owner: owner,
-			users: [
-				{
-					dateOfJoining: Date.now(),
-					sendNotification: false,
-					sendEmailNotification: false,
-					_id: owner,
-				},
-			],
+			users: [],
 		});
 
 		if (!newGroup) throw errorHandler('An error happened', 404, {});
@@ -78,23 +97,28 @@ const postGroup = async (req, res, next) => {
 const addUserToGroup = async (req, res, next) => {
 	try {
 		const { groupId } = req.body;
-
 		const userId = req.userId;
 
-		const updatedGroup = await groupSchema.findByIdAndUpdate(
-			groupId,
-			{
-				$push: {
-					users: {
-						dateOfJoining: Date.now(),
-						sendNotification: false,
-						sendEmailNotification: false,
-						_id: userId,
-					},
-				},
-			},
-			{ new: true }
+		const group = await groupSchema.findById(groupId);
+
+		if (!group) {
+			throw errorHandler('Group not found', 404, {});
+		}
+
+		const userExists = group.users.some(
+			user => user._id.toString() == userId
 		);
+
+		if (userExists) throw errorHandler('User already in group', 400, {});
+
+		group.users.push({
+			dateOfJoining: Date.now(),
+			sendNotification: false,
+			sendEmailNotification: false,
+			_id: userId,
+		});
+
+		const updatedGroup = await group.save();
 
 		res.status(200).json({
 			message: 'User added to group',
@@ -110,6 +134,7 @@ const groupController = {
 	postGroup,
 	getGroups,
 	addUserToGroup,
+	getGroupsByOwner,
 	getGroupsByUser,
 };
 
