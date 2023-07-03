@@ -29,6 +29,7 @@ const getVideos = async (req, res, next) => {
 
 const getVideosByUser = async (req, res, next) => {
 	try {
+
 		const videos = await videoSchema.find({ owner: req.userId });
 
 		if (!videos) throw errorHandler('An error happened', 404, {});
