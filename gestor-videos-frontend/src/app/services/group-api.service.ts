@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class GroupApiService {
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) { }
 
   postGroup(group: any): Observable<any> {
     let httpOption = {
@@ -40,5 +40,19 @@ export class GroupApiService {
       `http://localhost:8080/group/get-group/${groupId}`,
       httpOption
     );
+  }
+
+  getGroups(pattern: string): Observable<any> {
+    let httpOption = {
+      headers: new HttpHeaders({
+        'Content-type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+      params: {
+        pattern,
+      },
+    };
+
+    return this._http.get(`http://localhost:8080/group/get-groups`, httpOption);
   }
 }

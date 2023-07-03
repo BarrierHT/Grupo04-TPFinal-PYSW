@@ -13,7 +13,7 @@ export class ReportComponent implements OnInit {
   constructor(
     private reportService: ReportApiService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getReports();
@@ -31,7 +31,7 @@ export class ReportComponent implements OnInit {
           }
           return [];
         }),
-        delay(1000) // Agrega un retraso de 1 segundo
+        delay(500) // Agrega un retraso de 1 segundo
       )
       .subscribe((result) => {
         try {

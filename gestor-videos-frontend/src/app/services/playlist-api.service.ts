@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class PlaylistApiService {
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) { }
 
   postPlaylist(playlist: any): Observable<any> {
     let httpOption = {
@@ -15,10 +15,11 @@ export class PlaylistApiService {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       }),
     };
+
+    const { name, description } = playlist;
+
     return this._http.post(
-      `http://localhost:8080/playlist/add-playlist`,
-      playlist,
-      httpOption
+      `http://localhost:8080/playlist/add-playlist`, { name, description }, httpOption
     );
   }
 
@@ -35,6 +36,19 @@ export class PlaylistApiService {
     };
     return this._http.get(
       `http://localhost:8080/playlist/get-playlist/${playlistId}`,
+      httpOption
+    );
+  }
+
+  getPlaylistsByUser(): Observable<any> {
+    let httpOption = {
+      headers: new HttpHeaders({
+        'Content-type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+    };
+    return this._http.get(
+      `http://localhost:8080/playlist/get-playlists`,
       httpOption
     );
   }

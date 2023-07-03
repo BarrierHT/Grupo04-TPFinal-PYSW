@@ -25,6 +25,7 @@ const postPlaylist = async (req, res, next) => {
 		const newPlaylist = new playlistSchema({
 			name: name,
 			description: description,
+			videos: [],
 			owner: req.userId,
 		});
 
@@ -37,7 +38,7 @@ const postPlaylist = async (req, res, next) => {
 
 const getPlaylistsByUser = async (req, res, next) => {
 	try {
-		const playlists = await videoSchema
+		const playlists = await playlistSchema
 			.find({ owner: req.userId })
 			.populate('videos.videoId');
 
