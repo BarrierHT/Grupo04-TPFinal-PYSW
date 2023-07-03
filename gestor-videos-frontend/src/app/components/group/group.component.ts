@@ -8,20 +8,24 @@ import { GroupApiService } from 'src/app/services/group-api.service';
 })
 export class GroupComponent implements OnInit {
   group: any = {
-    name: '',
-    description: '',
+    name: 'a',
+    description: 'a',
     sendNotification: false,
     sendEmailNotification: false,
-    owner: '',
+    owner: 'a',
   };
 
-  constructor(private groupApiService: GroupApiService) {}
+  myGroups: Array<any> = [];
 
-  ngOnInit(): void {}
+  constructor(private groupService: GroupApiService) {}
+
+  ngOnInit(): void {
+    this.getMyGroups();
+  }
 
   postGroup() {
     this.group.owner = localStorage.getItem('userId');
-    this.groupApiService.postGroup(this.group).subscribe((res) => {
+    this.groupService.postGroup(this.group).subscribe((res) => {
       try {
         console.log(res);
       } catch (err) {
@@ -36,5 +40,18 @@ export class GroupComponent implements OnInit {
 
   sendEmailNotifications(sendEmailNotificationGroup: any, grupoId: string) {
     console.log(sendEmailNotificationGroup, grupoId);
+  }
+
+  getMyGroups() {
+    this.groupService.getGroupsByuser().subscribe(
+      (result) => {
+        this.myGroups = result.groups;
+        this.myGroups.push(this.group);
+        console.log(result);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }
