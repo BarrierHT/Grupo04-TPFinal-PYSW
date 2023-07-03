@@ -18,40 +18,40 @@
 
         <!--  New Playlist Modal  -->
         <div class="modal fade" id="newPlaylistModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            aria-labelledby="exampleModalLabel" aria-hidden="true" (hidden.bs.modal)="resetModal(playlistForm)">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content p-2">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">New Playlist</h1>
                     </div>
                     <div class="modal-body">
-                        <form #playlistForm="ngForm" method="POST" (submit)="addPlaylist(playlistForm.value)">
+                        <form #playlistForm="ngForm" method="POST" (submit)="addPlaylist()">
                             <div class="inputbox ">
-                                <input type="name" name="nombre" placeholder=" " id="nombre"
-                                    [(ngModel)]="newPlaylist.nombre" #nombre="ngModel" required>
-                                <label for="nombre">Name <i class="bi bi-music-note-beamed"></i></label>
+                                <input type="name" name="name" placeholder=" " id="name" [(ngModel)]="newPlaylist.name"
+                                    #name="ngModel" required>
+                                <label for="name">Nombre <i class="bi bi-music-note-beamed"></i></label>
                             </div>
-                            <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
-                                <div *ngIf="nombre.errors?.['required']" class="alerta text-center">
+                            <div *ngIf="name.invalid && (name.dirty || name.touched)">
+                                <div *ngIf="name.errors?.['required']" class="alerta text-center">
                                     Please, enter a playlist name!
                                 </div>
                             </div>
                             <div class="inputbox ">
-                                <input type="text" name="descripcion" placeholder=" " id="descripcion"
-                                    [(ngModel)]="newPlaylist.descripcion" #descripcion="ngModel" required>
-                                <label for="descripcion">Description <i class="bi bi-music-note-beamed"></i></label>
+                                <input type="text" name="description" placeholder=" " id="description"
+                                    [(ngModel)]="newPlaylist.description" #description="ngModel" required>
+                                <label for="description">Descripcion <i class="bi bi-music-note-beamed"></i></label>
                             </div>
-                            <div *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)">
-                                <div *ngIf="descripcion.errors?.['required']" class="alerta text-center">
+                            <div *ngIf="description.invalid && (description.dirty || description.touched)">
+                                <div *ngIf="description.errors?.['required']" class="alerta text-center">
                                     Please, enter a playlist description!
                                 </div>
                             </div>
                             <div class="row text-center mt-4">
                                 <div class="col-12 col-sm-6 mb-2"><button type="submit"
-                                        [disabled]="playlistForm.invalid">Add
+                                        [disabled]="playlistForm.invalid" data-bs-dismiss="modal">Add
                                         playlist</button></div>
-                                <div class="col-12 col-sm-6"><button type="button" data-bs-dismiss="modal"
-                                        (click)="resetModal()">Close</button></div>
+                                <div class="col-12 col-sm-6"><button type="button"
+                                        data-bs-dismiss="modal">Close</button></div>
                             </div>
                         </form>
                     </div>
@@ -69,8 +69,8 @@
                         class="image">
                 </div>
                 <div class="text">
-                    <h2>{{playlist.nombre}}</h2>
-                    <p>{{playlist.descripcion}}</p>
+                    <h2>{{playlist.name}}</h2>
+                    <p>{{playlist.description}}</p>
                 </div>
                 <div class="play-icon d-flex justify-content-center align-items-center">
                     <div class="circle" (click)="showPlaylistVideos()">

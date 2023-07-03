@@ -11,11 +11,24 @@
             <div class="row">
                 <div class="grupos col-12">
                     <div class="row">
+                        <!-- Add a new group -->
+                        <div class="col-12 col-sm-6 col-lg-4 p-4" [routerLink]="['/groups']">
+                            <div class="cards new-playlist">
+                                <div class="img-holder">
+                                    <img src="https://www.gstatic.com/youtube/media/ytm/images/pbg/create-playlist-@210.png"
+                                        class="image">
+                                </div>
+                                <div class="text">
+                                    <h2 class="text-white">Crea un nuevo grupo!</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Add a new group -->
                         <!-- Show all groups -->
                         <div class="col-12 col-sm-6 col-lg-4 p-4" *ngFor="let group of groups">
                             <div class="cards">
                                 <div class="img-holder">
-                                    <img src="https://p4.wallpaperbetter.com/wallpaper/639/159/622/soccer-fc-barcelona-logo-wallpaper-preview.jpg"
+                                    <img src="https://png.pngtree.com/png-vector/20191009/ourlarge/pngtree-group-icon-png-image_1796653.jpg"
                                         class="image">
                                 </div>
                                 <div class="text text-center">

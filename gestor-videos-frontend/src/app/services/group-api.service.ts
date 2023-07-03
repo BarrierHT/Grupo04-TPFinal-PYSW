@@ -42,6 +42,22 @@ export class GroupApiService {
     );
   }
 
+
+  getGroups(pattern: string): Observable<any> {
+    let httpOption = {
+      headers: new HttpHeaders({
+        'Content-type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+      params: {
+        pattern,
+      },
+    };
+
+    return this._http.get(`http://localhost:8080/group/get-groups`, httpOption);
+  }
+}
+
   joinGroup(groupId: string): Observable<any> {
     const data = {
       'groupId': groupId,
@@ -60,23 +76,6 @@ export class GroupApiService {
     return this._http.put(
       `http://localhost:8080/group/add-user-to-group`,
       data,
-      httpOption
-    );
-  }
-
-  getGroups(): Observable<any> {
-    let httpOption = {
-      headers: new HttpHeaders({
-        'Content-type': 'application/json',
-        // 'Authorization': 'Bearer ' + localStorage.getItem('userId')
-      }),
-      // req.query
-      //params: {
-      //   videoId,
-      // },
-    };
-    return this._http.get(
-      `http://localhost:8080/group/get-groups`,
       httpOption
     );
   }
@@ -100,3 +99,4 @@ export class GroupApiService {
   }
 
 }
+

@@ -1,6 +1,6 @@
 <div class="row py-5 px-5 d-flex justify-content-center container-custom-1">
 
-  <div class="col-lg-8" *ngIf="video.title != ''">
+  <div class="col-lg-12" *ngIf="video.title != ''">
     <div class="video-container">
       <video controls>
         <source src="{{video.url}}" type="video/mp4" />
@@ -14,7 +14,7 @@
           <div class="views-custom">100,000 views</div>
           <div class="upload-date-custom">Upload date: june 28th, 2023</div>
         </div>
-        <div class="video-options-custom">
+        <div class="video-options-custom" *ngIf="logged">
           <button class="btn-rating" id="green-button-rating" (click)="addPositiveRating()">
             <i class="bi bi-hand-thumbs-up fs-4" aria-hidden="true"></i>
           </button>
@@ -41,7 +41,7 @@
         <div class="user-details-custom">
           <div class="user-name-custom">Username</div>
         </div>
-        <div class="user-actions-custom">
+        <div class="user-actions-custom" *ngIf="logged">
           <!-- Button trigger modal -->
           <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Reportar
@@ -111,7 +111,7 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-4">
+  <!-- <div class="col-lg-4">
     <div class="recommended-videos">
       <h3 class="text-white">Recommended videos</h3>
       <hr class="hr-custom-1" />
@@ -163,5 +163,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>

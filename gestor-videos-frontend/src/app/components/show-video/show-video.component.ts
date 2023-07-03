@@ -40,6 +40,7 @@ export class ShowVideoComponent implements OnInit {
   showOptions: boolean = false;
   selectedVideo: any;
   showFullDescription: boolean = false;
+  logged: boolean = false;
 
   stringTest: string =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam condimentum feugiat mi aconvallis.' +
@@ -57,7 +58,7 @@ export class ShowVideoComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private videoService: VideoApiService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
@@ -91,6 +92,10 @@ export class ShowVideoComponent implements OnInit {
         // } else this.router.navigate(['home']);
       }
     });
+
+    if (localStorage.getItem('userId')) {
+      this.logged = true;
+    }
   }
 
   addPositiveRating() {
