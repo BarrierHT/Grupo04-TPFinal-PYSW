@@ -1,6 +1,7 @@
 <div class="container mt-5 justify-content-center">
     <div class="row p-2 justify-content-center">
-        <table class="table-responsive table-hover table-sm table-bordered">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+            class="table-responsive table-hover table-sm table-bordered">
             <thead>
                 <tr>
                     <th scope="col">Report</th>

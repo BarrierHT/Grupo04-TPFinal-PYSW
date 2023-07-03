@@ -22,6 +22,7 @@ export class ExploreGroupsComponent implements OnInit {
     this.groupService.joinGroup(groupId).subscribe(
       (result) => {
         console.log(result);
+        this.searchGroups();
       },
       (error) => {
         console.log(error);
@@ -47,7 +48,7 @@ export class ExploreGroupsComponent implements OnInit {
       .subscribe((result) => {
         try {
           console.log(result);
-          this.groups = result.groupsToSend;
+          this.groups = result.groups;
         } catch (err) {
           console.log(err);
         }

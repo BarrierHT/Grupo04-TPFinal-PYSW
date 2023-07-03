@@ -76,7 +76,7 @@ export class GroupApiService {
     );
   }
 
-  getGroupsByuser(): Observable<any> {
+  getGroupsByUser(): Observable<any> {
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',

@@ -26,10 +26,7 @@ export class VideoApiService {
     formData.append('file', video.file);
     formData.append('title', video.title);
     formData.append('description', video.description);
-    formData.append('duration', '0');
-    formData.append('url', '');
-    formData.append('reproductions', '0');
-    formData.append('groupId', '');
+    formData.append('groupId', video.groupId);
 
     const httpOptions = {
       headers: new HttpHeaders({

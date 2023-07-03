@@ -39,6 +39,20 @@ const getVideosByUser = async (req, res, next) => {
 	}
 };
 
+const getVideosByGroup = async (req, res, next) => {
+	try {
+		const { groupId } = req.body;
+
+		const videos = await videoSchema.find({ groupId });
+
+		if (!videos) throw errorHandler('An error happened', 404, {});
+
+		res.status(200).json({ message: 'Videos found', videos });
+	} catch (err) {
+		next(err);
+	}
+};
+
 const getVideo = async (req, res, next) => {
 	try {
 		const { videoId } = req.params;
@@ -61,7 +75,7 @@ const postVideo = async (req, res, next) => {
 		const { title, description, groupId } = req.body;
 		const owner = req.userId;
 
-		console.log(title, description, owner, groupId);
+		console.log('datos video: ', title, description, owner, groupId);
 
 		if (!req.file) throw errorHandler('An image is required', 422, {});
 
@@ -93,19 +107,19 @@ const postVideo = async (req, res, next) => {
 		if (groupId != '') {
 			const group = await groupSchema
 				.findById(groupId)
-				.select('name users');
+				.populate('users.userId', 'name email');
+
+			console.log(group);
 
 			for (const groupUser of group.users) {
+				console.log(groupUser);
 				if (groupUser.sendEmailNotification) {
-					const user = await userSchema
-						.findById(req.userId)
-						.select('email');
 					notificationController.sendEmailNotification(
 						{
 							data: 'Nuevo video del grupo : ' + group.name,
 							url: req.file.location,
 						},
-						user.email
+						groupUser.userId.email
 					);
 				}
 			}
@@ -125,6 +139,7 @@ const videoController = {
 	getVideo,
 	postVideo,
 	getVideosByUser,
+	getVideosByGroup,
 };
 
 export default videoController;
