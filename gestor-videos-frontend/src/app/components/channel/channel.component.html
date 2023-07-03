@@ -2,47 +2,33 @@
   <div class="profile-section">
     <div class="row">
       <div class="col-md-2">
-        <img src="assets/img/profile-picture.png" class="profile-picture" alt="Imagen de perfil" />
+        <img
+          src="assets/img/profile-picture.png"
+          class="profile-picture"
+          alt="Imagen de perfil"
+        />
       </div>
-      <div class="col-md-10">
+      <div class="col-md-10" *ngIf="myChannel">
         <div class="d-flex justify-content-between align-items-center">
-          <h2 class="username">Username</h2>
+          <h2 class="username">{{ myChannel.name }}</h2>
 
           <a class="btn btn-primary btn-lg" href="http://localhost:4200/groups">
-            <i class="bi bi-people fs-3"></i> Administrar mis Grupos</a>
-
+            <i class="bi bi-people fs-3"></i> Administrar mis Grupos</a
+          >
         </div>
-        <p>Bienvenido a mi canal!</p>
+        <p>{{ myChannel.description }}</p>
       </div>
     </div>
   </div>
 
-  <h3>Videos subidos</h3>
+  <h3>Mis videos</h3>
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4" *ngFor="let v of myVideos">
       <div class="card video-card">
         <img src="assets/img/miniatura.jpeg" alt="Miniatura video" />
         <div class="card-body">
-          <h5 class="card-title">Título del video</h5>
-          <p class="card-text">Descripción del video</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card video-card">
-        <img src="assets/img/miniatura.jpeg" alt="Miniatura video" />
-        <div class="card-body">
-          <h5 class="card-title">Título del video</h5>
-          <p class="card-text">Descripción del video</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card video-card">
-        <img src="assets/img/miniatura.jpeg" alt="Miniatura video" />
-        <div class="card-body">
-          <h5 class="card-title">Título del video</h5>
-          <p class="card-text">Descripción del video</p>
+          <h5 class="card-title">{{ v.title }}</h5>
+          <p class="card-text">{{ v.description }}</p>
         </div>
       </div>
     </div>
@@ -50,36 +36,12 @@
 
   <h3>Mis playlists</h3>
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4" *ngFor="let p of myPlaylists">
       <div class="card video-card">
-        <img
-          src="https://yt3.ggpht.com/yuot-V_LxACsyOGYhDarVl60X90wN1TH6qFPj6xBSFJqJ7YzXzlI6V66jEdHIW5AVoPbbXBi5to=s576"
-          class="image" />
+        <img src="assets/img/miniatura.jpeg" alt="Miniatura video" />
         <div class="card-body">
-          <h5 class="card-title">Título de la playlist</h5>
-          <p class="card-text">Descripción de la playlist</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card video-card">
-        <img
-          src="https://yt3.ggpht.com/yuot-V_LxACsyOGYhDarVl60X90wN1TH6qFPj6xBSFJqJ7YzXzlI6V66jEdHIW5AVoPbbXBi5to=s576"
-          class="image" />
-        <div class="card-body">
-          <h5 class="card-title">Título de la playlist</h5>
-          <p class="card-text">Descripción de la playlist</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card video-card">
-        <img
-          src="https://yt3.ggpht.com/yuot-V_LxACsyOGYhDarVl60X90wN1TH6qFPj6xBSFJqJ7YzXzlI6V66jEdHIW5AVoPbbXBi5to=s576"
-          class="image" />
-        <div class="card-body">
-          <h5 class="card-title">Título de la playlist</h5>
-          <p class="card-text">Descripción de la playlist</p>
+          <h5 class="card-title">{{ p.name }}</h5>
+          <p class="card-text">{{ p.description }}</p>
         </div>
       </div>
     </div>

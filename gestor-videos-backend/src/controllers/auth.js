@@ -72,7 +72,7 @@ const postSignup = async (req, res, next) => {
 
 		const newChannel = new channelSchema({
 			name,
-			description: '',
+			description: 'Bienvenido a mi canal!',
 			owner: newUser._id,
 		});
 		await newChannel.save();

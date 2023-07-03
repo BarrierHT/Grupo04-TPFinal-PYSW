@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class ChannelApiService {
   constructor(private _http: HttpClient) {}
 
-  getChannel(channelId: string): Observable<any> {
+  getChannel(): Observable<any> {
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
@@ -20,7 +20,7 @@ export class ChannelApiService {
       // },
     };
     return this._http.get(
-      `http://localhost:8080/channel/get-channel/${channelId}`,
+      `http://localhost:8080/channel/get-channel`,
       httpOption
     );
   }
