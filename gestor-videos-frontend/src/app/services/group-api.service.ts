@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class GroupApiService {
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient) { }
 
   postGroup(group: any): Observable<any> {
     let httpOption = {
@@ -44,8 +44,8 @@ export class GroupApiService {
 
   joinGroup(groupId: string): Observable<any> {
     const data = {
-      'groupId' : groupId,
-      'userId' : localStorage.getItem('userId')
+      'groupId': groupId,
+      'userId': localStorage.getItem('userId')
     }
     let httpOption = {
       headers: new HttpHeaders({
@@ -64,7 +64,7 @@ export class GroupApiService {
     );
   }
 
-  getGroups(): Observable<any>{
+  getGroups(): Observable<any> {
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
@@ -77,6 +77,24 @@ export class GroupApiService {
     };
     return this._http.get(
       `http://localhost:8080/group/get-groups`,
+      httpOption
+    );
+  }
+
+  getGroupsByuser(): Observable<any> {
+    
+    let httpOption = {
+      headers: new HttpHeaders({
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
+      }),
+      // req.query
+      //params: {
+      //   videoId,
+      // },
+    };
+    return this._http.get(
+      `http://localhost:8080/group/get-groups-user`,
       httpOption
     );
   }
