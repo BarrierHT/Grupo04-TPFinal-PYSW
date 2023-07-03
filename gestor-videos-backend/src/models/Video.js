@@ -10,6 +10,7 @@ let videoSchema = new Schema(
 	},
 	{
 		versionKey: false,
+		timestamps: true,
 	}
 );
 

@@ -8,11 +8,11 @@ import { GroupApiService } from 'src/app/services/group-api.service';
 })
 export class GroupComponent implements OnInit {
   group: any = {
-    name: 'a',
-    description: 'a',
+    name: '',
+    description: '',
     sendNotification: false,
     sendEmailNotification: false,
-    owner: 'a',
+    owner: '',
   };
 
   myGroups: Array<any> = [];
@@ -46,7 +46,6 @@ export class GroupComponent implements OnInit {
     this.groupService.getGroupsByuser().subscribe(
       (result) => {
         this.myGroups = result.groups;
-        this.myGroups.push(this.group);
         console.log(result);
       },
       (error) => {

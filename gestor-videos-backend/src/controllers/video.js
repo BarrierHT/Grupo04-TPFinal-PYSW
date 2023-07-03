@@ -27,6 +27,18 @@ const getVideos = async (req, res, next) => {
 	}
 };
 
+const getVideosByUser = async (req, res, next) => {
+	try {
+		const videos = await videoSchema.find({ owner: req.userId });
+
+		if (!videos) throw errorHandler('An error happened', 404, {});
+
+		res.status(200).json({ message: 'Videos found', videos });
+	} catch (err) {
+		next(err);
+	}
+};
+
 const getVideo = async (req, res, next) => {
 	try {
 		const { videoId } = req.params;
@@ -112,6 +124,7 @@ const videoController = {
 	getVideos,
 	getVideo,
 	postVideo,
+	getVideosByUser,
 };
 
 export default videoController;

@@ -47,7 +47,7 @@ export class ExploreGroupsComponent implements OnInit {
       .subscribe((result) => {
         try {
           console.log(result);
-          this.groups = result.groups;
+          this.groups = result.groupsToSend;
         } catch (err) {
           console.log(err);
         }
