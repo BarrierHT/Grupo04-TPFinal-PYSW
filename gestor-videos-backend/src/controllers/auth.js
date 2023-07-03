@@ -1,4 +1,6 @@
 import userSchema from '../models/User.js';
+import channelSchema from '../models/Channel.js';
+
 import { errorHandler } from '../utils/errorHandler.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
@@ -67,6 +69,13 @@ const postSignup = async (req, res, next) => {
 		});
 
 		await newUser.save();
+
+		const newChannel = new channelSchema({
+			name,
+			description: '',
+			owner: newUser._id,
+		});
+		await newChannel.save();
 		res.status(200).json({ message: 'Registered successfully' });
 	} catch (err) {
 		next(err);
