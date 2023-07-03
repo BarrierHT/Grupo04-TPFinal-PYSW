@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class GroupApiService {
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient) {}
 
   postGroup(group: any): Observable<any> {
     let httpOption = {
@@ -42,7 +42,6 @@ export class GroupApiService {
     );
   }
 
-
   getGroups(pattern: string): Observable<any> {
     let httpOption = {
       headers: new HttpHeaders({
@@ -56,17 +55,16 @@ export class GroupApiService {
 
     return this._http.get(`http://localhost:8080/group/get-groups`, httpOption);
   }
-}
 
   joinGroup(groupId: string): Observable<any> {
     const data = {
-      'groupId': groupId,
-      'userId': localStorage.getItem('userId')
-    }
+      groupId: groupId,
+      userId: localStorage.getItem('userId'),
+    };
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('userId')
+        Authorization: 'Bearer ' + localStorage.getItem('userId'),
       }),
       // req.query
       //params: {
@@ -81,11 +79,10 @@ export class GroupApiService {
   }
 
   getGroupsByuser(): Observable<any> {
-    
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('token')
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
       }),
       // req.query
       //params: {
@@ -97,6 +94,4 @@ export class GroupApiService {
       httpOption
     );
   }
-
 }
-

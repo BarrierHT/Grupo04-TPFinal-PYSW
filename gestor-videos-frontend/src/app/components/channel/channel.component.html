@@ -10,40 +10,12 @@
 
           <a class="btn btn-primary btn-lg" href="http://localhost:4200/groups">
             <i class="bi bi-people fs-3"></i> Administrar mis Grupos</a>
-            <a class="btn btn-primary btn-lg" (click)="getMyGroups()">
-              <i class="bi bi-people fs-3"></i> Ver mis Grupos</a>
+
         </div>
         <p>Bienvenido a mi canal!</p>
       </div>
     </div>
   </div>
-
-  <div class="container-fluid col-12" *ngIf="showMyGroups">
-    <div class="row">
-        <div class="grupos col-12">
-            <div class="row">
-                <!-- Show groups -->
-                <div class="col-12 col-sm-6 col-lg-4 p-4" *ngFor="let group of myGroups">
-                    <div class="cards">
-                        <div class="img-holder">
-                            <img src="https://p4.wallpaperbetter.com/wallpaper/639/159/622/soccer-fc-barcelona-logo-wallpaper-preview.jpg"
-                                class="image">
-                        </div>
-                        <div class="text text-center">
-                            <h2 class="text-white">{{group.name}}</h2>
-                        </div>
-                        <div class="play-icon d-flex justify-content-center align-items-center">
-                            <div class="circle text-center" (click)="someAction()">
-                                <p class="m-0 p-0"><b>ALGUNA ACCION</b></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Show groups -->
-            </div>
-        </div>
-    </div>
-</div>
 
   <h3>Videos subidos</h3>
   <div class="row">
