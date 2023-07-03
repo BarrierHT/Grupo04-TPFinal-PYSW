@@ -19,10 +19,10 @@
                                         class="image">
                                 </div>
                                 <div class="text text-center">
-                                    <h2 class="text-white">{{group.nombre}}</h2>
+                                    <h2 class="text-white">{{group.name}}</h2>
                                 </div>
                                 <div class="play-icon d-flex justify-content-center align-items-center">
-                                    <div class="circle text-center" (click)="requestJoin('groupId')">
+                                    <div class="circle text-center" (click)="requestJoin(group._id)">
                                         <p class="m-0 p-0"><b>SOLICITAR UNIRSE</b></p>
                                     </div>
                                 </div>

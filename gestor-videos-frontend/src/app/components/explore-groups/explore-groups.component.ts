@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GroupApiService } from 'src/app/services/group-api.service';
 
 @Component({
   selector: 'app-explore-groups',
@@ -8,21 +9,41 @@ import { Component } from '@angular/core';
 export class ExploreGroupsComponent {
   pattern: string = '';
 
-  groups: Array<any>;
+  groups: Array<any> =[];
 
-  constructor() {
-    this.groups = [
+  constructor(private groupService: GroupApiService) {
+   /* this.groups = [
       { nombre: 'FC Barcelona Fans' },
       { nombre: 'EDM' },
       { nombre: 'Only Memes' },
       { nombre: 'Just play' },
       { nombre: 'Messi highlights' },
-    ];
+    ];*/
+    this.getGroups();
   }
 
   requestJoin(groupId: string) {
-    //Manejar solicitud
-    console.log(groupId);
+    this.groupService.joinGroup(groupId).subscribe(
+      result => {
+        console.log(result);
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+
+  getGroups() {
+    this.groupService.getGroups().subscribe(
+      result => {
+        this.groups = result.groups;
+        console.log(result);
+        console.log(this.groups);
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 
   searchGroups() {
