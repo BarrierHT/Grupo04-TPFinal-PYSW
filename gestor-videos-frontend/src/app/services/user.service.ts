@@ -12,7 +12,7 @@ export class UserService {
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('userId')
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
       }),
     };
     return this._http.get(`http://localhost:8080/user/get-users`, httpOption);

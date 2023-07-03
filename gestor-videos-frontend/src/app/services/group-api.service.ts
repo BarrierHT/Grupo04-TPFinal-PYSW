@@ -12,15 +12,15 @@ export class GroupApiService {
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
-        'Authorization': 'Bearer ' + group.owner 
-      })
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
     };
 
-    const {name, description } = group;
+    const { name, description } = group;
 
     return this._http.post(
-      "http://localhost:8080/group/add-group",
-      {name, description},
+      'http://localhost:8080/group/add-group',
+      { name, description },
       httpOption
     );
   }
@@ -29,7 +29,7 @@ export class GroupApiService {
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('userId')
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
       }),
       // req.query
       //params: {

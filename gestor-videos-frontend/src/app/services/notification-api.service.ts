@@ -12,7 +12,7 @@ export class NotificationApiService {
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
-        'Authorization': 'Bearer ' + userId
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
       }),
       // req.query
       //params: {

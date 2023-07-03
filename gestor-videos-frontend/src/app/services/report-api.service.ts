@@ -12,7 +12,7 @@ export class ReportApiService {
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('userId')
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
       }),
     };
     return this._http.post(
@@ -26,7 +26,7 @@ export class ReportApiService {
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('userId')
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
       }),
     };
     return this._http.put(
@@ -40,7 +40,7 @@ export class ReportApiService {
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('userId')
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
       }),
       // req.query
       //params: {
@@ -57,7 +57,7 @@ export class ReportApiService {
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('userId')
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
       }),
     };
     return this._http.get(

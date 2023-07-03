@@ -1,11 +1,13 @@
 import express from 'express';
 import notificationController from '../controllers/notification.js';
+import { isAuth } from '../middlewares/is-Auth.js';
 
 const router = express.Router();
 
 router.get(
 	'/get-notifications/:userId',
-	notificationController.getNotifications
+	isAuth,
+	notificationController.getNotificationsByUser
 );
 // router.post('/add-notification', notificationController.sendNotification);
 
