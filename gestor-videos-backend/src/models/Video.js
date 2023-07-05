@@ -7,6 +7,7 @@ let videoSchema = new Schema(
 		url: { type: String, required: true },
 		owner: { type: Schema.Types.ObjectId, ref: 'User', required: true },
 		groupId: { type: Schema.Types.ObjectId, ref: 'Group', required: false },
+		thumbnail: { type: String, required: false },
 	},
 	{
 		versionKey: false,
