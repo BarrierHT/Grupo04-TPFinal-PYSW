@@ -29,7 +29,6 @@ const getVideos = async (req, res, next) => {
 
 const getVideosByUser = async (req, res, next) => {
 	try {
-
 		const videos = await videoSchema.find({ owner: req.userId });
 
 		if (!videos) throw errorHandler('An error happened', 404, {});
@@ -42,9 +41,16 @@ const getVideosByUser = async (req, res, next) => {
 
 const getVideosByGroup = async (req, res, next) => {
 	try {
-		const { groupId } = req.body;
+		const { groupId } = req.query;
 
-		const videos = await videoSchema.find({ groupId });
+		if (groupId == '')
+			return res
+				.status(404)
+				.json({ message: 'Group not found', videos: [] });
+
+		const videos = await videoSchema.find({
+			groupId: { $exists: true, $ne: null, $eq: groupId },
+		});
 
 		if (!videos) throw errorHandler('An error happened', 404, {});
 
@@ -83,6 +89,7 @@ const postVideo = async (req, res, next) => {
 		let newVideo;
 
 		if (groupId != '') {
+			console.log('saving as group', groupId);
 			newVideo = new videoSchema({
 				title,
 				description,

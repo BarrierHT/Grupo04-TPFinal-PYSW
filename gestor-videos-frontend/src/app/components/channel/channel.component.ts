@@ -3,6 +3,7 @@ import { ChannelApiService } from 'src/app/services/channel-api.service';
 import { GroupApiService } from 'src/app/services/group-api.service';
 import { VideoApiService } from 'src/app/services/video-api.service';
 import { PlaylistApiService } from 'src/app/services/playlist-api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-channel',
@@ -20,7 +21,8 @@ export class ChannelComponent implements OnInit {
     private groupService: GroupApiService,
     private channelService: ChannelApiService,
     private videoService: VideoApiService,
-    private playlistService: PlaylistApiService
+    private playlistService: PlaylistApiService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -68,5 +70,24 @@ export class ChannelComponent implements OnInit {
 
   someAction() {
     console.log(this.myGroups);
+  }
+
+  redirectVideo(redirectSource: any, type: string) {
+    if (type == 'playlist') {
+      console.log('playlist: ', redirectSource);
+      if (redirectSource.videos.length != 0) {
+        const videoId = redirectSource.videos[0]._id;
+        this.router.navigate(['watch/' + videoId], {
+          queryParams: {
+            playlist: redirectSource.name,
+            index: redirectSource.index,
+          },
+        });
+      } else {
+        alert('playlists sin videos');
+      }
+    } else if (type == 'video') {
+      this.router.navigate(['watch/' + redirectSource]);
+    }
   }
 }

@@ -1,5 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { catchError } from 'rxjs';
 import { GroupApiService } from 'src/app/services/group-api.service';
+import { VideoApiService } from 'src/app/services/video-api.service';
 
 @Component({
   selector: 'app-group',
@@ -19,6 +21,8 @@ export class GroupComponent implements OnInit {
 
   constructor(
     private groupService: GroupApiService,
+    private videoService: VideoApiService,
+
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -51,10 +55,37 @@ export class GroupComponent implements OnInit {
       (result) => {
         this.myGroups = result.groups;
         console.log(result);
+        this.getVideosByGroup();
       },
       (error) => {
         console.log(error);
       }
     );
+  }
+
+  getVideosByGroup() {
+    for (const group of this.myGroups) {
+      console.log('group: ', group);
+      this.videoService
+        .getVideosByGroup(group._id)
+        .pipe(
+          catchError((error) => {
+            //console.log('Error en el observable: ', error);
+            if (error.status !== 200 && error.status !== 201) {
+              console.log('Error en el observable: ', error.error.message);
+              // throw new Error('');
+            }
+            return [];
+          })
+        )
+        .subscribe((result) => {
+          try {
+            console.log('its videos', result);
+            group.videos = result.videos;
+          } catch (err) {
+            console.log(err);
+          }
+        });
+    }
   }
 }

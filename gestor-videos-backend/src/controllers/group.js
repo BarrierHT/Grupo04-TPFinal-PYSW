@@ -131,7 +131,7 @@ const addUserToGroup = async (req, res, next) => {
 			dateOfJoining: Date.now(),
 			sendNotification: false,
 			sendEmailNotification: false,
-			_id: userId,
+			userId,
 		});
 
 		const updatedGroup = await group.save();

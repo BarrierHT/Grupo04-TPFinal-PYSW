@@ -45,7 +45,8 @@ const upload = multer({
 const router = express.Router();
 
 router.get('/get-videos', videoController.getVideos);
-router.get('/get-videos-users', isAuth, videoController.getVideosByUser);
+router.get('/get-videos-user', isAuth, videoController.getVideosByUser);
+router.get('/get-videos-group', isAuth, videoController.getVideosByGroup);
 
 router.get('/get-video/:videoId', videoController.getVideo);
 

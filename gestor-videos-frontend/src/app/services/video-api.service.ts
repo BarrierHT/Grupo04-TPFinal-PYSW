@@ -70,7 +70,24 @@ export class VideoApiService {
       // },
     };
     return this._http.get(
-      `http://localhost:8080/video/get-videos-users`,
+      `http://localhost:8080/video/get-videos-user`,
+      httpOption
+    );
+  }
+
+  getVideosByGroup(groupId: string): Observable<any> {
+    let httpOption = {
+      headers: new HttpHeaders({
+        'Content-type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+
+      params: {
+        groupId,
+      },
+    };
+    return this._http.get(
+      `http://localhost:8080/video/get-videos-group`,
       httpOption
     );
   }

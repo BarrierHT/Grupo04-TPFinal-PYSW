@@ -2,19 +2,14 @@
   <div class="profile-section">
     <div class="row">
       <div class="col-md-2">
-        <img
-          src="assets/img/profile-picture.png"
-          class="profile-picture"
-          alt="Imagen de perfil"
-        />
+        <img src="assets/img/profile-picture.png" class="profile-picture" alt="Imagen de perfil" />
       </div>
       <div class="col-md-10" *ngIf="myChannel">
         <div class="d-flex justify-content-between align-items-center">
           <h2 class="username">{{ myChannel.name }}</h2>
 
           <a class="btn btn-primary btn-lg" href="http://localhost:4200/groups">
-            <i class="bi bi-people fs-3"></i> Administrar mis Grupos</a
-          >
+            <i class="bi bi-people fs-3"></i> Administrar mis Grupos</a>
         </div>
         <p>{{ myChannel.description }}</p>
       </div>
@@ -23,7 +18,7 @@
 
   <h3>Mis videos</h3>
   <div class="row">
-    <div class="col-md-4" *ngFor="let v of myVideos">
+    <div class="col-md-4 btn" *ngFor="let v of myVideos" (click)="redirectVideo(v._id, 'video')">
       <div class="card video-card">
         <img src="assets/img/miniatura.jpeg" alt="Miniatura video" />
         <div class="card-body">
@@ -36,7 +31,7 @@
 
   <h3>Mis playlists</h3>
   <div class="row">
-    <div class="col-md-4" *ngFor="let p of myPlaylists">
+    <div class="col-md-4 btn" *ngFor="let p of myPlaylists" (click)="redirectVideo(p, 'playlist')">
       <div class="card video-card">
         <img src="assets/img/miniatura.jpeg" alt="Miniatura video" />
         <div class="card-body">

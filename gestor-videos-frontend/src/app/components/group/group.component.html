@@ -2,7 +2,7 @@
     <div class="row g-5 justify-content-center">
         <div class="col-4">
             <form class="form form-box p-3" method="POST" #groupForm="ngForm" (submit)="postGroup()">
-                <h2 class="row h2 d-flex justify-content-center">Register Group</h2>
+                <h2 class="row h2 d-flex justify-content-center">Registrar Grupo</h2>
                 <div class="form-floating mt-3">
                     <input type="text" class="form-control" id="name" name="name" placeholder="example123" required
                         [(ngModel)]="group.name" #groupName="ngModel">
@@ -28,7 +28,7 @@
 
                 <div class="row mt-3 button-group-upload">
                     <input type="hidden" name="_csrf" value="">
-                    <button type="submit">Register Group</button>
+                    <button type="submit">Registrar</button>
                 </div>
             </form>
         </div>
@@ -124,24 +124,19 @@
                                 <div class="text text-center">
                                     <p class="text-white">{{group.description}}</p>
                                 </div>
-                                <div class="dropdown-center">
+                                <div class="dropdown-center" *ngIf="group.videos">
                                     <button class="btn btn-secondary btn-sm dropdown-toggle ps-5 pe-5 w-100"
                                         type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        View video
+                                        VIDEOS DEL GRUPO
                                     </button>
                                     <ul class="dropdown-menu w-100">
-                                        <li><a class="dropdown-item" href="">Video1</a></li>
-                                        <li><a class="dropdown-item" href="">Video2</a></li>
-                                        <li><a class="dropdown-item" href="">Video3</a></li>
-                                        <li><a class="dropdown-item" href="">
-                                                <span>
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                                    Voluptates,
-                                                    delectus ab corporis ipsam ipsa odit voluptatibus dolore
-                                                    reprehenderit
-                                                    pariatur illo.
-                                                </span>
-                                            </a></li>
+                                        <li *ngIf="group.videos.length == 0" class="dropdown-item">
+                                            NO HAY VIDEOS DEL GRUPO
+                                        </li>
+                                        <li *ngFor="let videoGroup of group.videos"><a class="dropdown-item"
+                                                href="http://localhost:4200/watch/{{videoGroup._id}}">{{videoGroup.title}}</a>
+                                        </li>
+
                                     </ul>
                                 </div>
                                 <div class="d-flex justify-content-center mb-2">
