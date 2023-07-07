@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, delay } from 'rxjs';
 import { PlaylistApiService } from 'src/app/services/playlist-api.service';
@@ -40,16 +41,70 @@ export class HomeComponent implements OnInit {
 
   pattern: string = '';
 
+  video: any = {
+    title: 'bro',
+  };
+
   constructor(
     private router: Router,
     private videoApiService: VideoApiService,
     private playlistApiService: PlaylistApiService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
-  async ngOnInit(): Promise<void> {
+  async ngOnInit() {
     this.searchVideos();
     this.showPlaylists();
+  }
+
+  windowOnClick(event: any) {
+    var modal: any = document.querySelector('#modalPlaylists');
+
+    if (event.target === modal) {
+      modal.classList.remove('show-modal');
+      modal.style.display = 'none';
+
+      modal.style.opacity = '0';
+      modal.style.visibility = 'hidden';
+      modal.style.transform = 'scale(1.1)';
+      modal.style.transition =
+        'visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s';
+    }
+  }
+
+  toggleModal() {
+    var modal: any = document.querySelector('#modalPlaylists');
+
+    if (!modal.classList.contains('show-modal')) {
+      // console.log('already');
+      modal.classList.add('show-modal');
+      modal.style.display = 'block';
+      // Aplicar los atributos cuando NO tiene la clase "show-modal"
+      modal.style.opacity = '1';
+      modal.style.visibility = 'visible';
+      modal.style.transform = 'scale(1)';
+      modal.style.transition =
+        'visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s';
+      modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    } else {
+      modal.classList.remove('show-modal');
+      modal.style.display = 'none';
+
+      modal.style.opacity = '0';
+      modal.style.visibility = 'hidden';
+      modal.style.transform = 'scale(1.1)';
+      modal.style.transition =
+        'visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s';
+    }
+  }
+
+  openModal() {
+    var closeButton: any = document.querySelector('.close-button');
+    this.toggleModal();
+
+    closeButton.addEventListener('click', this.toggleModal);
+    this.document.addEventListener('click', this.windowOnClick);
   }
 
   searchVideos() {
@@ -80,13 +135,16 @@ export class HomeComponent implements OnInit {
   showPlaylists() {
     this.playlistApiService.getPlaylistsByUser().subscribe((res) => {
       try {
-        res.playlists.forEach((p: any) => {
-          this.userPlaylists.push(p);
-        });
+        console.log(res);
+        this.userPlaylists = res.playlists;
       } catch (err) {
         console.log(err);
       }
     });
+  }
+
+  addVideoToPlaylist(video: any, playlist: any) {
+    console.log('video: ', video, ' playlist: ', playlist);
   }
 
   // addVideoToPlaylist(playlistId: string, videoId: string) {
