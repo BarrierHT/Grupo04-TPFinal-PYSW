@@ -110,7 +110,7 @@ const postGroup = async (req, res, next) => {
 	}
 };
 
-const addUserToGroup = async (req, res, next) => {
+const postAddUserToGroup = async (req, res, next) => {
 	try {
 		const { groupId } = req.body;
 		const userId = req.userId;
@@ -149,7 +149,7 @@ const groupController = {
 	getGroup,
 	postGroup,
 	getGroups,
-	addUserToGroup,
+	postAddUserToGroup,
 	getGroupsByOwner,
 	getGroupsByUser,
 };

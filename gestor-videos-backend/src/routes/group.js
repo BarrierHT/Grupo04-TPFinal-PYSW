@@ -13,7 +13,7 @@ router.get('/get-groups-owner-user', isAuth, groupController.getGroupsByOwner);
 // LLamar cuando se solicite unirse
 
 router.get('/get-groups-user', isAuth, groupController.getGroupsByUser);
-router.put('/add-user-to-group', isAuth, groupController.addUserToGroup);
+router.put('/add-user-to-group', isAuth, groupController.postAddUserToGroup);
 
 //exportamos el modulo de rutas
 

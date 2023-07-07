@@ -16,8 +16,8 @@
     </div>
   </div>
 
-  <h3>Mis videos</h3>
-  <div class="row">
+  <div class="row" *ngIf="myVideos.length > 0">
+    <h3>Mis videos</h3>
     <div class="col-md-4 btn" *ngFor="let v of myVideos" (click)="redirectVideo(v._id, 'video')">
       <div class="card video-card">
         <img src="assets/img/miniatura.jpeg" alt="Miniatura video" />
@@ -29,9 +29,9 @@
     </div>
   </div>
 
-  <h3>Mis playlists</h3>
-  <div class="row">
-    <div class="col-md-4 btn" *ngFor="let p of myPlaylists" (click)="redirectVideo(p, 'playlist')" (click)="getPlaylist(p._id)">
+  <div class="row" *ngIf="myPlaylists.length > 0">
+    <h3>Mis playlists</h3>
+    <div class="col-md-4 btn" *ngFor="let p of myPlaylists" (click)="redirectVideo(p, 'playlist')">
       <div class="card video-card">
         <img src="assets/img/miniatura.jpeg" alt="Miniatura video" />
         <div class="card-body">
@@ -41,4 +41,7 @@
       </div>
     </div>
   </div>
+
+
+
 </div>

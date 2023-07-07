@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { catchError } from 'rxjs';
 import { GroupApiService } from 'src/app/services/group-api.service';
+import { NotificationApiService } from 'src/app/services/notification-api.service';
 import { VideoApiService } from 'src/app/services/video-api.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class GroupComponent implements OnInit {
   constructor(
     private groupService: GroupApiService,
     private videoService: VideoApiService,
+    private notificationService: NotificationApiService,
 
     private cdr: ChangeDetectorRef
   ) {}
@@ -42,12 +44,28 @@ export class GroupComponent implements OnInit {
     });
   }
 
-  sendNotifications(sendNotificationGroup: any, grupoId: string) {
-    console.log(sendNotificationGroup, grupoId);
-  }
+  toggleSendNotifications(sendNotificationGroup: any, groupId: string) {
+    console.log(sendNotificationGroup, groupId);
 
-  sendEmailNotifications(sendEmailNotificationGroup: any, grupoId: string) {
-    console.log(sendEmailNotificationGroup, grupoId);
+    this.notificationService
+      .toggleNotification(sendNotificationGroup, groupId)
+      .pipe(
+        catchError((error) => {
+          //console.log('Error en el observable: ', error);
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            // throw new Error('');
+          }
+          return [];
+        })
+      )
+      .subscribe((result) => {
+        try {
+          console.log(result);
+        } catch (err) {
+          console.log(err);
+        }
+      });
   }
 
   getMyGroups() {

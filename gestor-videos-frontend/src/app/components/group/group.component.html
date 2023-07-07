@@ -139,39 +139,23 @@
 
                                     </ul>
                                 </div>
-                                <div class="d-flex justify-content-center mb-2">
-                                    <div class="form-check mt-3 me-3">
+                                <div class="d-flex justify-content-center mb-2 text-center">
+                                    <div class="form-check mt-3">
                                         <div class="custom-tooltip">
-                                            <input type="checkbox" class="btn-check" id="btn-check-outlined"
-                                                autocomplete="off" name="sendNotification"
-                                                [(ngModel)]="group.sendNotification" #groupsendNotification="ngModel"
-                                                (ngModelChange)="sendNotifications(group.sendNotification,'grupoId')">
-                                            <label class="btn btn-outline-warning" for="btn-check-outlined">
+                                            <input type="checkbox" class="btn-check"
+                                                [id]="'btn-check-outlined-' + group._id" autocomplete="off"
+                                                name="sendNotification" [(ngModel)]="group.sendNotification"
+                                                #groupsendNotification="ngModel"
+                                                (ngModelChange)="toggleSendNotifications(group.sendNotification,group._id)">
+                                            <label class="btn btn-outline-warning"
+                                                [htmlFor]="'btn-check-outlined-' + group._id">
                                                 <i class="bi bi-bell"></i>
                                             </label>
                                             <div class="tooltip-text">Recibir notificaciones?</div>
                                         </div>
                                     </div>
-                                    <div class="form-check mt-3">
-                                        <div class="custom-tooltip">
-                                            <input type="checkbox" class="btn-check" id="btn-check-email-outlined"
-                                                autocomplete="off" name="sendEmailNotification"
-                                                name="sendEmailNotification" [(ngModel)]="group.sendEmailNotification"
-                                                #groupsendEmailNotification="ngModel"
-                                                (ngModelChange)="sendEmailNotifications(group.sendEmailNotification, 'grupoId')">
-                                            <label class="btn btn-outline-info" for="btn-check-email-outlined">
-                                                <i class="bi bi-envelope-at"></i>
-                                            </label>
-                                            <div class="tooltip-text">Recibir notificaciones al correo?</div>
-                                        </div>
-                                    </div>
                                 </div>
 
-                                <div class="play-icon d-flex justify-content-center align-items-center">
-                                    <div class="circle text-center">
-                                        <p class="m-0 p-0"><b>Ver Lista de Reproduccion</b></p>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <!-- Show groups -->

@@ -9,6 +9,13 @@ router.get(
 	isAuth,
 	notificationController.getNotificationsByUser
 );
+
+router.put(
+	'/toogle-notification',
+	isAuth,
+	notificationController.putToggleNotification
+);
+
 // router.post('/add-notification', notificationController.sendNotification);
 
 //exportamos el modulo de rutas

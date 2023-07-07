@@ -6,9 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-
   logged: boolean = false;
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     console.log(
@@ -20,8 +19,18 @@ export class HeaderComponent implements OnInit {
       localStorage.getItem('expiryDate')
     );
 
-    if (localStorage.getItem('userId') != null) {
-      this.logged = true;
+    const expiryDate = localStorage.getItem('expiryDate');
+
+    if (expiryDate) {
+      if (new Date() > new Date(expiryDate)) {
+        console.log('Token expirado');
+        this.logout();
+      } else if (
+        localStorage.getItem('userId') != null &&
+        localStorage.getItem('token') != null
+      ) {
+        this.logged = true;
+      }
     }
   }
 

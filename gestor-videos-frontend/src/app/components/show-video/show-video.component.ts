@@ -42,6 +42,7 @@ export class ShowVideoComponent implements OnInit {
   selectedVideo: any;
   showFullDescription: boolean = false;
   logged: boolean = false;
+  userId: any = '';
 
   stringTest: string =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam condimentum feugiat mi aconvallis.' +
@@ -64,7 +65,6 @@ export class ShowVideoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.showPlaylists();
     this.activatedRoute.params.subscribe((params) => {
       console.log(params['videoId']);
       //console.log(this.ticketService.getTickets());
@@ -99,6 +99,8 @@ export class ShowVideoComponent implements OnInit {
 
     if (localStorage.getItem('userId')) {
       this.logged = true;
+      this.userId = localStorage.getItem('userId');
+      this.showPlaylists();
     }
   }
 
