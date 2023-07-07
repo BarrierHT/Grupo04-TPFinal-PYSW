@@ -41,9 +41,7 @@ export class HomeComponent implements OnInit {
 
   pattern: string = '';
 
-  video: any = {
-    title: 'bro',
-  };
+  choosedVideo: string = '';
 
   constructor(
     private router: Router,
@@ -143,21 +141,32 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  addVideoToPlaylist(video: any, playlist: any) {
-    console.log('video: ', video, ' playlist: ', playlist);
+  getVideo(videoId: string) {
+    this.videoApiService.getVideo(videoId).subscribe((res) => {
+      try {
+        console.log(res);
+        this.choosedVideo = res.video._id;
+      } catch (err) {
+        console.log(err);
+      }
+    });
   }
 
-  // addVideoToPlaylist(playlistId: string, videoId: string) {
-  //   this.playlistApiService
-  //     .addVideoToPlaylist(playlistId, videoId)
-  //     .subscribe((res) => {
-  //       try {
-  //         console.log(res);
-  //       } catch (err) {
-  //         console.log(err);
-  //       }
-  //     });
+  // addVideoToPlaylist(playlist: any) {
+  //   console.log('video: ', this.choosedVideo, ' playlist: ', playlist);
   // }
+
+  addVideoToPlaylist(playlistId: string) {
+    this.playlistApiService
+      .addVideoToPlaylist(playlistId, this.choosedVideo)
+      .subscribe((res) => {
+        try {
+          console.log(res);
+        } catch (err) {
+          console.log(err);
+        }
+      });
+  }
 
   onMouseEnter(video: any) {
     this.showOptions = true;

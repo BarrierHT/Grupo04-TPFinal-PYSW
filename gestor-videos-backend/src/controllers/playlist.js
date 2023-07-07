@@ -40,8 +40,6 @@ const addVideoToPlaylist = async (req, res, next) => {
   try {
     const { playlistId, videoId } = req.params;
 
-    console.log(req.params);
-
     const playlist = await playlistSchema.findById({ _id: playlistId });
 
     if (!playlist) {

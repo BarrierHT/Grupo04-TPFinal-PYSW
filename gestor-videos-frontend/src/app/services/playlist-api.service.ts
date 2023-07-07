@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class PlaylistApiService {
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient) {}
 
   postPlaylist(playlist: any): Observable<any> {
     let httpOption = {
@@ -19,7 +19,9 @@ export class PlaylistApiService {
     const { name, description } = playlist;
 
     return this._http.post(
-      `http://localhost:8080/playlist/add-playlist`, { name, description }, httpOption
+      `http://localhost:8080/playlist/add-playlist`,
+      { name, description },
+      httpOption
     );
   }
 
@@ -63,6 +65,7 @@ export class PlaylistApiService {
 
     return this._http.put(
       `http://localhost:8080/playlist/add-video-to-playlist/${playlistId}/${videoId}`,
+      {},
       httpOption
     );
   }
