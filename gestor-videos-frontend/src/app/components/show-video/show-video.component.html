@@ -10,42 +10,23 @@
       <h3 class="col-12 video-title-custom">{{ video.title }}</h3>
       <div class="col-12 video-metadata-custom">
         <div class="video-details-custom">
-          <div class="views-custom">100,000 views</div>
-          <div class="upload-date-custom">Upload date: june 28th, 2023</div>
+          <div class="upload-date-custom">Fecha de subida: {{video.createdAt}}</div>
         </div>
         <div class="video-options-custom" *ngIf="logged">
-          <button
-            class="btn-rating"
-            id="green-button-rating"
-            (click)="addPositiveRating()"
-          >
+          <button class="btn-rating" id="green-button-rating" (click)="addPositiveRating()">
             <i class="bi bi-hand-thumbs-up fs-4" aria-hidden="true"></i>
           </button>
-          <button
-            class="btn-rating"
-            id="red-button-rating"
-            (click)="addNegativeRating()"
-          >
+          <button class="btn-rating" id="red-button-rating" (click)="addNegativeRating()">
             <i class="bi bi-hand-thumbs-down fs-4" aria-hidden="true"></i>
           </button>
 
-          <div class="dropdown">
-            <button
-              class="btn dropdown-toggle"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
+          <div class="dropdown" *ngIf="logged">
+            <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="bi bi-three-dots-vertical"></i>
             </button>
             <ul class="dropdown-menu">
               <li>
-                <button
-                  type="button"
-                  class="dropdown-item"
-                  data-bs-toggle="modal"
-                  data-bs-target="#modalPlaylists"
-                >
+                <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalPlaylists">
                   Agregar a playlist
                 </button>
               </li>
@@ -61,34 +42,20 @@
           </div>
 
           <!-- Modal -->
-          <div
-            class="modal fade"
-            id="modalPlaylists"
-            tabindex="-1"
-            aria-labelledby="modalPlaylistsLabel"
-            aria-hidden="true"
-          >
+          <div class="modal fade" id="modalPlaylists" tabindex="-1" aria-labelledby="modalPlaylistsLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
                   <h1 class="modal-title fs-5" id="modalPlaylistsLabel">
                     Mis Playlists
                   </h1>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                   <div *ngIf="userPlaylists.length > 0">
-                    <button
-                      type="button"
-                      class="btn border-dark modal-body mt-2 rounded-circle buttonPlay"
-                      *ngFor="let playlist of userPlaylists"
-                      (click)="addVideoToPlaylist(playlist._id, video._id)"
-                    >
+                    <button type="button" class="btn border-dark modal-body mt-2 rounded-circle buttonPlay"
+                      *ngFor="let playlist of userPlaylists" (click)="addVideoToPlaylist(playlist._id, video._id)">
                       <strong>Nombre: </strong>{{ playlist.name }}
                       <br />
                       <strong>Descripción: </strong>{{ playlist.description }}
@@ -96,11 +63,7 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     Close
                   </button>
                 </div>
@@ -110,33 +73,36 @@
         </div>
       </div>
       <div class="col-12 user-info-custom">
-        <div class="user-image-custom">
-          <img src="assets/img/image-not-found.jpg" alt="Imagen del usuario" />
+        <div>
+          <div class="user-image-custom">
+            <img src="assets/img/image-not-found.jpg" alt="Imagen del usuario" />
+          </div>
+
+
+          <div class="user-details-custom" *ngIf="!logged ||  video.owner._id != userId">
+            <div class="user-name-custom">{{ video.owner.username }}</div>
+          </div>
+          <div class="user-details-custom" *ngIf="logged && video.owner._id == userId">
+            <a href="http://localhost:4200/channel">
+              <div class="user-name-custom">{{ video.owner.username }}</div>
+            </a>
+          </div>
+
+
+
         </div>
-        <div class="user-details-custom">
-          <div class="user-name-custom">{{ video.owner.username }}</div>
-        </div>
+
+
         <div class="user-actions-custom" *ngIf="logged">
           <!-- Button trigger modal -->
-          <button
-            type="button"
-            class="btn btn-danger"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-          >
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Reportar
           </button>
 
           <!-- Modal -->
 
-          <div
-            class="modal fade"
-            id="exampleModal"
-            tabindex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-            (hidden.bs.modal)="onModalHidden()"
-          >
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+            (hidden.bs.modal)="onModalHidden()">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
@@ -144,65 +110,30 @@
                     Reporte
                   </h1>
 
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <form
-                    action=""
-                    #reportForm="ngForm"
-                    (submit)="addReport(reportForm.value)"
-                  >
-                    <input
-                      name="videoId"
-                      type="hidden"
-                      class="form-control"
-                      id="reportVideoId"
-                      [(ngModel)]="video._id"
-                      #videoId="ngModel"
-                    />
+                  <form action="" #reportForm="ngForm" (submit)="addReport(reportForm.value)">
+                    <input name="videoId" type="hidden" class="form-control" id="reportVideoId" [(ngModel)]="video._id"
+                      #videoId="ngModel" />
 
                     <div class="mb-3">
                       <label for="title" class="form-label">Titulo:</label>
-                      <input
-                        name="reportTitle"
-                        type="text"
-                        class="form-control"
-                        id="reportTitle"
-                        [(ngModel)]="report.title"
-                        #title="ngModel"
-                      />
+                      <input name="reportTitle" type="text" class="form-control" id="reportTitle"
+                        [(ngModel)]="report.title" #title="ngModel" />
                     </div>
 
                     <div class="mb-3">
                       <label for="reason" class="form-label">Motivo:</label>
-                      <textarea
-                        name="reportReason"
-                        class="form-control"
-                        id="reportReason"
-                        rows="3"
-                        [(ngModel)]="report.reason"
-                        #reason="ngModel"
-                      ></textarea>
+                      <textarea name="reportReason" class="form-control" id="reportReason" rows="3"
+                        [(ngModel)]="report.reason" #reason="ngModel"></textarea>
                     </div>
 
                     <div class="modal-footer">
-                      <button
-                        type="button"
-                        class="btn btn-danger"
-                        data-bs-dismiss="modal"
-                      >
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
                         Cancelar
                       </button>
-                      <button
-                        type="submit"
-                        class="btn btn-secondary"
-                        data-bs-dismiss="modal"
-                      >
+                      <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">
                         Enviar
                       </button>
                     </div>
@@ -216,16 +147,13 @@
       <div class="col-12 video-info-description rounded-4 mt-2">
         <div class="p-3">
           {{
-            showFullDescription
-              ? video.description
-              : video.description.substring(0, 320) + "..."
+          showFullDescription
+          ? video.description
+          : video.description.substring(0, 320) + "..."
           }}
         </div>
         <div class="px-3 pt-0 pb-3">
-          <button
-            class="btn btn-dark btn-sm"
-            (click)="showFullDescription = !showFullDescription"
-          >
+          <button class="btn btn-dark btn-sm" (click)="showFullDescription = !showFullDescription">
             {{ !showFullDescription ? "Read More" : "Minimize" }}
           </button>
         </div>

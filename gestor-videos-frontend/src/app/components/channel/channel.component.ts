@@ -68,21 +68,6 @@ export class ChannelComponent implements OnInit {
     });
   }
 
-  someAction() {
-    console.log(this.myGroups);
-  }
-
-  getPlaylist(playlistId: string) {
-    this.playlistService.getPlaylist(playlistId).subscribe((res) => {
-      try {
-        console.log(res);
-        if (res.videos.length < 1) alert('La playlist no tiene videos aún!');
-      } catch (err) {
-        console.log(err);
-      }
-    });
-  }
-
   redirectVideo(redirectSource: any, type: string) {
     if (type == 'playlist') {
       console.log('playlist: ', redirectSource);

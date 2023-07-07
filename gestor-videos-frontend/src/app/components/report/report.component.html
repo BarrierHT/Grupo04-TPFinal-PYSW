@@ -15,16 +15,14 @@
                 <tr *ngFor="let report of reports">
 
                     <th scope="row">{{report.title}}</th>
-                    <td><a href="http://localhost:4200/watch/{{report.videoId._id}}">{{report.videoId._id}}</a> </td>
+                    <td><a href="http://localhost:4200/watch/{{report.videoId._id}}">{{report.videoId._id}}</a></td>
                     <td>{{report.videoId.title}}</td>
                     <td>{{report.reason}}</td>
                     <td class="text-center">
-
                         <button type="button" class="btn btn-danger btn-sm" *ngIf="report.reviewed == false"
                             (click)="reviewReport(report._id)">
                             Revisar
                         </button>
-
                         <p class="btn btn-warning btn-sm" *ngIf="report.reviewed == true">
                             Revisado
                         </p>

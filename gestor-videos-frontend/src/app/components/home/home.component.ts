@@ -42,6 +42,7 @@ export class HomeComponent implements OnInit {
   pattern: string = '';
 
   choosedVideo: string = '';
+  logged: boolean = false;
 
   constructor(
     private router: Router,
@@ -52,8 +53,11 @@ export class HomeComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+    if (localStorage.getItem('userId')) {
+      this.logged = true;
+      this.showPlaylists();
+    }
     this.searchVideos();
-    this.showPlaylists();
   }
 
   windowOnClick(event: any) {

@@ -1,31 +1,8 @@
 //Controller para gestionar notificaciones
 
-import nodemailer from 'nodemailer';
-import sendgridTransport from 'nodemailer-sendgrid-transport';
 import jwt from 'jsonwebtoken';
 import notificationSchema from '../models/Notification.js';
 import { errorHandler } from '../utils/errorHandler.js';
-
-const transporter = nodemailer.createTransport(
-	sendgridTransport({
-		auth: {
-			api_key: process.env.API_KEY_SENDGRID,
-		},
-	})
-);
-
-const sendEmailNotification = async (content, receiver) => {
-	try {
-		transporter.sendMail({
-			to: receiver,
-			from: process.env.EMAIL_USER_SENDGRID,
-			subject: 'NUEVO VIDEO EN UN GRUPO EN EL QUE ESTAS',
-			html: `<div style="overflow:auto; padding:15px;"> <mark> ${content.data} </mark>  Link : <a target="_blank" href="${content.url}">${content.url}</a> </div>`,
-		});
-	} catch (err) {
-		console.log(err);
-	}
-};
 
 // const sendNotification = async (req, res, next) => {
 //   try {
@@ -50,19 +27,42 @@ const getNotificationsByUser = async (req, res, next) => {
 			owner: req.userId,
 		});
 
-		if (notifications.length === 0)
-			throw errorHandler('You dont have notifications', 404, {});
+		if (!notifications) throw errorHandler('An error happened', 400, {});
 
-		res.json(notifications);
+		res.status(200).json({ message: 'Notifications found', notifications });
 	} catch (err) {
 		next(err);
 	}
 };
 
+const putToggleNotification = async (req, res, next) => {
+	// const { userId } = req.params;
+
+	try {
+		const { toggledValue, groupId } = req.body;
+		const { userId } = req;
+
+		console.log('toggle: ', toggledValue, groupId);
+
+		const notifications = await notificationSchema.find({
+			owner: userId,
+		});
+
+		if (!notifications) throw errorHandler('An error happened', 400, {});
+
+		res.status(200).json({ message: 'Notifications found', notifications });
+	} catch (err) {
+		next(err);
+	}
+};
+
+const saveNotification = async (content, receiver) => {};
+
 const notificationController = {
 	// sendNotification,
 	getNotificationsByUser,
-	sendEmailNotification,
+	putToggleNotification,
+	saveNotification,
 };
 
 export default notificationController;

@@ -30,6 +30,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "nodemailer-sendgrid-transport": "^0.2.0"
+    "nodemailer-sendgrid-transport": "^0.2.0",
+    "nodemon": "^2.0.22"
   }
 }

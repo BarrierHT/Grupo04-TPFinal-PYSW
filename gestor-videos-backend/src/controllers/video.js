@@ -1,6 +1,5 @@
 import videoSchema from '../models/Video.js';
 import groupSchema from '../models/Group.js';
-import userSchema from '../models/User.js';
 
 import notificationController from '../controllers/notification.js';
 
@@ -121,14 +120,7 @@ const postVideo = async (req, res, next) => {
 
 			for (const groupUser of group.users) {
 				console.log(groupUser);
-				if (groupUser.sendEmailNotification) {
-					notificationController.sendEmailNotification(
-						{
-							data: 'Nuevo video del grupo : ' + group.name,
-							url: req.file.location,
-						},
-						groupUser.userId.email
-					);
+				if (groupUser.sendNotification) {
 				}
 			}
 		}
