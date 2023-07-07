@@ -61,7 +61,7 @@
                 </button>
                 <ul class="dropdown-menu">
                   <li>
-                    <button type="button" class="dropdown-item" (click)="openModal()">
+                    <button type="button" class="dropdown-item" (click)="openModal()" (click)="getVideo(video._id)">
                       Agregar a playlist
                     </button>
                   </li>
@@ -94,7 +94,7 @@
     <div *ngIf="userPlaylists.length > 0">
 
       <button type="button" class="btn border-dark modal-body mt-2 rounded-circle buttonPlay"
-        *ngFor="let playlist of userPlaylists" (click)="addVideoToPlaylist(video,playlist)">
+        *ngFor="let playlist of userPlaylists" (click)="addVideoToPlaylist(playlist._id)">
         <strong>Nombre: </strong>{{ playlist.name }}
         <br />
         <strong>Descripción: </strong>{{ playlist.description }}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, delay } from 'rxjs';
+import { PlaylistApiService } from 'src/app/services/playlist-api.service';
 import { ReportApiService } from 'src/app/services/report-api.service';
 import { VideoApiService } from 'src/app/services/video-api.service';
 
@@ -52,15 +53,18 @@ export class ShowVideoComponent implements OnInit {
   video: any = {
     title: '',
   };
+  userPlaylists: any = [];
 
   constructor(
     private reportService: ReportApiService,
     private activatedRoute: ActivatedRoute,
+    private playlistApiService: PlaylistApiService,
     private router: Router,
     private videoService: VideoApiService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
+    this.showPlaylists();
     this.activatedRoute.params.subscribe((params) => {
       console.log(params['videoId']);
       //console.log(this.ticketService.getTickets());
@@ -162,6 +166,30 @@ export class ShowVideoComponent implements OnInit {
         }
       });
   }
+
+  showPlaylists() {
+    this.playlistApiService.getPlaylistsByUser().subscribe((res) => {
+      try {
+        console.log(res);
+        this.userPlaylists = res.playlists;
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  }
+
+  addVideoToPlaylist(playlistId: string, videoId: string) {
+    this.playlistApiService
+      .addVideoToPlaylist(playlistId, videoId)
+      .subscribe((res) => {
+        try {
+          console.log(res);
+        } catch (err) {
+          console.log(err);
+        }
+      });
+  }
+
   onModalHidden() {
     this.report.title = '';
     this.report.reason = '';
