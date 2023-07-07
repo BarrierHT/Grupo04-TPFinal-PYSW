@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, delay } from 'rxjs';
+import { PlaylistApiService } from 'src/app/services/playlist-api.service';
 import { VideoApiService } from 'src/app/services/video-api.service';
 
 @Component({
@@ -35,17 +36,20 @@ export class HomeComponent implements OnInit {
   ];
   showOptions: boolean = false;
   selectedVideo: any;
+  userPlaylists: any = [];
 
   pattern: string = '';
 
   constructor(
     private router: Router,
     private videoApiService: VideoApiService,
+    private playlistApiService: PlaylistApiService,
     private cdr: ChangeDetectorRef
   ) {}
 
   async ngOnInit(): Promise<void> {
     this.searchVideos();
+    this.showPlaylists();
   }
 
   searchVideos() {
@@ -72,6 +76,30 @@ export class HomeComponent implements OnInit {
         }
       });
   }
+
+  showPlaylists() {
+    this.playlistApiService.getPlaylistsByUser().subscribe((res) => {
+      try {
+        res.playlists.forEach((p: any) => {
+          this.userPlaylists.push(p);
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  }
+
+  // addVideoToPlaylist(playlistId: string, videoId: string) {
+  //   this.playlistApiService
+  //     .addVideoToPlaylist(playlistId, videoId)
+  //     .subscribe((res) => {
+  //       try {
+  //         console.log(res);
+  //       } catch (err) {
+  //         console.log(err);
+  //       }
+  //     });
+  // }
 
   onMouseEnter(video: any) {
     this.showOptions = true;

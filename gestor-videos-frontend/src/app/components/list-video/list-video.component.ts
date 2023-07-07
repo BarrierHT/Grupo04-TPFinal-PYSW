@@ -19,8 +19,10 @@ export class ListVideoComponent implements OnInit {
 
   playlists: any[] = [];
 
-  constructor(private router: Router, private playlistApiService: PlaylistApiService) {
-  }
+  constructor(
+    private router: Router,
+    private playlistApiService: PlaylistApiService
+  ) {}
 
   async ngOnInit(): Promise<void> {
     this.searchPlaylists();
@@ -50,9 +52,20 @@ export class ListVideoComponent implements OnInit {
       });
   }
 
-  showPlaylistVideos() {
-    this.router.navigate(['watch/a'], {
-      queryParams: { playlist: 'aa', index: 1 },
+  // showPlaylistVideos() {
+  //   this.router.navigate(['watch/a'], {
+  //     queryParams: { playlist: 'aa', index: 1 },
+  //   });
+  // }
+
+  getPlaylist(playlistId: string) {
+    this.playlistApiService.getPlaylist(playlistId).subscribe((res) => {
+      try {
+        console.log(res);
+        if (res.videos.length < 1) alert('La playlist no tiene videos aún!');
+      } catch (err) {
+        console.log(err);
+      }
     });
   }
 

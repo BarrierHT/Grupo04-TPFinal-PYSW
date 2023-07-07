@@ -52,4 +52,18 @@ export class PlaylistApiService {
       httpOption
     );
   }
+
+  addVideoToPlaylist(playlistId: string, videoId: string): Observable<any> {
+    let httpOption = {
+      headers: new HttpHeaders({
+        'Content-type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+    };
+
+    return this._http.put(
+      `http://localhost:8080/playlist/add-video-to-playlist/${playlistId}/${videoId}`,
+      httpOption
+    );
+  }
 }
