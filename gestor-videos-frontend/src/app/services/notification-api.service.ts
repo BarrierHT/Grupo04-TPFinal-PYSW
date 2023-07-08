@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class NotificationApiService {
   constructor(private _http: HttpClient) {}
 
-  getNotifications(userId: string): Observable<any> {
+  getNotifications(): Observable<any> {
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
@@ -20,7 +20,7 @@ export class NotificationApiService {
       // },
     };
     return this._http.get(
-      `http://localhost:8080/notification/get-notifications/${userId}`,
+      `http://localhost:8080/notification/get-notifications`,
       httpOption
     );
   }

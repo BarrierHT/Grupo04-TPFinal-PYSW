@@ -1,30 +1,16 @@
 //Controller para gestionar notificaciones
 
-import jwt from 'jsonwebtoken';
 import notificationSchema from '../models/Notification.js';
+import groupSchema from '../models/Group.js';
+
 import { errorHandler } from '../utils/errorHandler.js';
-
-// const sendNotification = async (req, res, next) => {
-//   try {
-//     const { message, grupo, infoTitle } = req.body;
-
-//     const newNotification = new notificationSchema({
-//       contenido: contenido,
-//     });
-
-//     await newNotification.save();
-//     res.json(newNotification);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
 
 const getNotificationsByUser = async (req, res, next) => {
 	// const { userId } = req.params;
 
 	try {
 		const notifications = await notificationSchema.find({
-			owner: req.userId,
+			receiver: req.userId,
 		});
 
 		if (!notifications) throw errorHandler('An error happened', 400, {});
@@ -36,27 +22,52 @@ const getNotificationsByUser = async (req, res, next) => {
 };
 
 const putToggleNotification = async (req, res, next) => {
-	// const { userId } = req.params;
-
 	try {
 		const { toggledValue, groupId } = req.body;
-		const { userId } = req;
+		let groupFound = await groupSchema
+			.findById(groupId)
+			.populate('users.userId');
 
-		console.log('toggle: ', toggledValue, groupId);
+		if (!groupFound) throw errorHandler('Group not found', 404, {});
 
-		const notifications = await notificationSchema.find({
-			owner: userId,
+		let updatedGroup = groupFound;
+
+		updatedGroup.users = groupFound.users.map(user => {
+			if (user.userId._id.toString() == req.userId) {
+				// console.log('toggle: ', user.sendNotification, toggledValue);
+				user.sendNotification = toggledValue;
+			}
+			return user;
 		});
 
-		if (!notifications) throw errorHandler('An error happened', 400, {});
+		await updatedGroup.save();
 
-		res.status(200).json({ message: 'Notifications found', notifications });
+		res.status(200).json({
+			message: 'Notification User in group Updated',
+		});
 	} catch (err) {
 		next(err);
 	}
 };
 
-const saveNotification = async (content, receiver) => {};
+const saveNotification = async (content, receiver, sender) => {
+	try {
+		const notificationData = {
+			content,
+			...(receiver && { receiver }),
+			...(sender && { sender }),
+		};
+
+		console.log('Campos enviados:', Object.keys(notificationData));
+
+		const newNotification = new notificationSchema(notificationData);
+
+		await newNotification.save();
+		return { message: 'Notification created' };
+	} catch (err) {
+		next(err);
+	}
+};
 
 const notificationController = {
 	// sendNotification,

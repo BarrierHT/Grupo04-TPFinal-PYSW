@@ -5,7 +5,7 @@ import { isAuth } from '../middlewares/is-Auth.js';
 const router = express.Router();
 
 router.get(
-	'/get-notifications/:userId',
+	'/get-notifications',
 	isAuth,
 	notificationController.getNotificationsByUser
 );

@@ -112,15 +112,26 @@ const postVideo = async (req, res, next) => {
 		await newVideo.save();
 
 		if (groupId != '') {
-			const group = await groupSchema
-				.findById(groupId)
-				.populate('users.userId', 'name email');
-
-			console.log(group);
+			const group = await groupSchema.findById(groupId);
 
 			for (const groupUser of group.users) {
 				console.log(groupUser);
 				if (groupUser.sendNotification) {
+					const linkUrl =
+						'http://localhost:4200/watch/' + newVideo._id;
+					const content =
+						'Se subio un nuevo video del  grupo: ' +
+						group.name +
+						', link: ' +
+						linkUrl;
+					const receiver = groupUser.userId;
+
+					const savedNotification =
+						await notificationController.saveNotification(
+							content,
+							receiver
+						);
+					console.log(savedNotification);
 				}
 			}
 		}
