@@ -100,7 +100,31 @@ export class VideoApiService {
       }),
     };
     return this._http.delete(
-      `http://localhost:8080/delete-video/${videoId}`,
+      `http://localhost:8080/video/delete-video/${videoId}`, 
+      httpOption
+    );
+  }
+
+  updateVideo(
+    videoId: string,
+    title: string,
+    description: string
+  ): Observable<any> {
+    let httpOption = {
+      headers: new HttpHeaders({
+        'Content-type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+    };
+
+    const body = {
+      title: title,
+      description: description
+    };
+
+    return this._http.put(
+      `http://localhost:8080/video/update-video/${videoId}`,
+      body,
       httpOption
     );
   }

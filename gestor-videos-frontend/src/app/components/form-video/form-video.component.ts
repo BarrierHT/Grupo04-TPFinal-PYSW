@@ -24,6 +24,7 @@ export class FormVideoComponent implements OnInit {
   msgVideoValidation!: string;
   myGroups: Array<any> = [];
   action = false;
+  id: string = ''
 
   constructor(
     private videoApiService: VideoApiService,
@@ -40,7 +41,8 @@ export class FormVideoComponent implements OnInit {
         this.action = false;
       } else {
         this.action = true;
-        // this.getTicket(params['id']);
+        this.id += params['videoId'];
+        this.getVideo(params['videoId']);
       }
     });
   }
@@ -88,6 +90,30 @@ export class FormVideoComponent implements OnInit {
       console.log('Invalid video');
     }
   }
+
+  getVideo(videoId: string) {
+    this.videoApiService.getVideo(videoId).subscribe(res => {
+      try {
+        console.log(res);
+        this.video.title = res.video.title;
+        this.video.description = res.video.description;
+      } catch (err) {
+        console.log(err);
+      }
+    })
+  }
+
+  updateVideo() {
+    this.videoApiService.updateVideo(this.id, this.video.title, this.video.description).subscribe(res => {
+      try {
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    })
+    this.router.navigate(['videos']);
+  }
+
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (this.isValidVideo(file)) {

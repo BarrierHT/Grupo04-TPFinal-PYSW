@@ -63,9 +63,9 @@ export class ListVideoComponent implements OnInit {
       try {
         console.log("GET PLAYLIST LIST-VIDEO")
         console.log(res);
-        this.router.navigate(['watch', res.videos[0].videoId._id, 'playlist', res._id]);
-        //this.router.navigate(['watch', res.videos[0].videoId], { queryParams: { playlist: res._id } });
         if (res.videos.length < 1) alert('La playlist no tiene videos aún!');
+        else this.router.navigate(['watch', res.videos[0].videoId._id, 'playlist', res._id]);
+        //this.router.navigate(['watch', res.videos[0].videoId], { queryParams: { playlist: res._id } });
       } catch (err) {
         console.log(err);
       }
