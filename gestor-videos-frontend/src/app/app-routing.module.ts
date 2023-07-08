@@ -12,18 +12,23 @@ import { GroupComponent } from './components/group/group.component';
 import { ReportComponent } from './components/report/report.component';
 import { ExploreGroupsComponent } from './components/explore-groups/explore-groups.component';
 import { VideosComponent } from './components/videos/videos.component';
+import { StatsPanelComponent } from './components/stats-panel/stats-panel.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'playlist', component: ListVideoComponent },
   { path: 'watch/:videoId', component: ShowVideoComponent },
-  { path: 'watch/:videoId/playlist/:playlistId', component: ShowVideoComponent },
+  {
+    path: 'watch/:videoId/playlist/:playlistId',
+    component: ShowVideoComponent,
+  },
   { path: 'form-video/:videoId', component: FormVideoComponent },
   { path: 'channel', component: ChannelComponent },
   { path: 'groups', component: GroupComponent },
   { path: 'reports', component: ReportComponent },
   { path: 'explore-groups', component: ExploreGroupsComponent },
   { path: 'videos', component: VideosComponent },
+  { path: 'stats-panel', component: StatsPanelComponent },
 
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
@@ -36,4 +41,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -22,6 +22,8 @@ import { ReportComponent } from './components/report/report.component';
 import { ExploreGroupsComponent } from './components/explore-groups/explore-groups.component';
 import { DataTablesModule } from 'angular-datatables';
 import { VideosComponent } from './components/videos/videos.component';
+import { StatsPanelComponent } from './components/stats-panel/stats-panel.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,7 @@ import { VideosComponent } from './components/videos/videos.component';
     ReportComponent,
     ExploreGroupsComponent,
     VideosComponent,
+    StatsPanelComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +52,7 @@ import { VideosComponent } from './components/videos/videos.component';
     FormsModule,
     HttpClientModule,
     DataTablesModule,
+    NgApexchartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
