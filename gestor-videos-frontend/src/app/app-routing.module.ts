@@ -11,16 +11,18 @@ import { ChannelComponent } from './components/channel/channel.component';
 import { GroupComponent } from './components/group/group.component';
 import { ReportComponent } from './components/report/report.component';
 import { ExploreGroupsComponent } from './components/explore-groups/explore-groups.component';
+import { VideosComponent } from './components/videos/videos.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'playlist', component: ListVideoComponent },
   { path: 'watch/:videoId', component: ShowVideoComponent },
-  { path: 'form-video', component: FormVideoComponent },
+  { path: 'form-video/:videoId', component: FormVideoComponent },
   { path: 'channel', component: ChannelComponent },
   { path: 'groups', component: GroupComponent },
   { path: 'reports', component: ReportComponent },
   { path: 'explore-groups', component: ExploreGroupsComponent },
+  { path: 'videos', component: VideosComponent },
 
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },

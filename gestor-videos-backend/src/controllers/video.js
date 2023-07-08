@@ -1,5 +1,6 @@
 import videoSchema from '../models/Video.js';
 import groupSchema from '../models/Group.js';
+import playlistSchema from '../models/Playlist.js';
 
 import notificationController from '../controllers/notification.js';
 
@@ -145,12 +146,34 @@ const postVideo = async (req, res, next) => {
 	}
 };
 
+const deleteVideo = async (req, res, next) => {
+	try {
+		const { videoId } = req.params;
+
+		//ToDo eliminar de amazon
+
+		await playlistSchema.updateMany(
+			{ videos: videoId },
+			{ $pull: { videos: videoId } }
+		);
+
+		const foundVideo = await videoSchema.findByIdAndDelete(videoId);
+
+		if (!foundVideo) throw errorHandler('Video does not exist', 404, {});
+
+		res.status(200).json({ message: 'Video deleted' });
+	} catch (err) {
+		next(err);
+	}
+};
+
 const videoController = {
 	getVideos,
 	getVideo,
 	postVideo,
 	getVideosByUser,
 	getVideosByGroup,
+	deleteVideo,
 };
 
 export default videoController;

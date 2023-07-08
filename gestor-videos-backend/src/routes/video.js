@@ -56,6 +56,8 @@ router.post(
 	upload.single('file'),
 	videoController.postVideo
 );
+
+router.delete('/delete-video/:videoId', isAuth, videoController.deleteVideo);
 // router.post('/add-video', , videoController.postVideo);
 
 //Exportamos el modulo de rutas
