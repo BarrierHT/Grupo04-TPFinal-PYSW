@@ -51,9 +51,16 @@
           </li>
 
           <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged">
-            <a class="nav-link" [routerLink]="['/form-video']">
+            <a class="nav-link" [routerLink]="['/form-video/0']">
               <i class="bi bi-camera-reels fs-4"></i>
               Subir Video
+            </a>
+          </li>
+
+          <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged">
+            <a class="nav-link" [routerLink]="['/videos']">
+              <i class="bi bi-camera-reels fs-4"></i>
+              Videos
             </a>
           </li>
         </ul>

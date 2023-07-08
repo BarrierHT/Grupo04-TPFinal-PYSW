@@ -21,6 +21,7 @@ import { GroupComponent } from './components/group/group.component';
 import { ReportComponent } from './components/report/report.component';
 import { ExploreGroupsComponent } from './components/explore-groups/explore-groups.component';
 import { DataTablesModule } from 'angular-datatables';
+import { VideosComponent } from './components/videos/videos.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { DataTablesModule } from 'angular-datatables';
     GroupComponent,
     ReportComponent,
     ExploreGroupsComponent,
+    VideosComponent,
   ],
   imports: [
     BrowserModule,
