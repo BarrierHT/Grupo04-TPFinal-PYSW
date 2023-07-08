@@ -1,66 +1,117 @@
-import { Component } from '@angular/core';
-import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexPlotOptions, ApexXAxis } from 'ng-apexcharts';
-
-export type ChartOptions = {
-  series: ApexAxisChartSeries;
-  chart: ApexChart;
-  dataLabels: ApexDataLabels;
-  plotOptions: ApexPlotOptions;
-  xaxis: ApexXAxis;
-};
+import { Component, OnInit } from '@angular/core';
+import { error } from 'jquery';
+import { ApexAxisChartSeries, ApexChart, ApexDataLabels, ApexLegend, ApexNonAxisChartSeries, ApexPlotOptions, ApexResponsive, ApexXAxis, ApexYAxis } from 'ng-apexcharts';
+import { GroupApiService } from 'src/app/services/group-api.service';
+import { VideoApiService } from 'src/app/services/video-api.service';
 
 @Component({
   selector: 'app-stats-panel',
   templateUrl: './stats-panel.component.html',
   styleUrls: ['./stats-panel.component.css']
 })
-export class StatsPanelComponent {
+export class StatsPanelComponent implements OnInit {
 
-  stats1: ChartOptions = {
-    series: [
-      {
-        name: 'Videos',
-        data: [
-          { x: 'grupo1', y: 3 },
-          { x: 'grupo2', y: 2 },
-          { x: 'grupo3', y: 2 }
-        ]
-      }
-    ],
-    chart: {
-      type: 'bar',
-      height: 150
-    },
-    plotOptions: {
-      bar: {
-        horizontal: true
-      }
-    },
-    dataLabels: {
-      enabled: false
-    },
-    xaxis: {
-      categories: ['grupo1', 'grupo2', 'grupo3']
-    }
+  stats1!: {
+    series: ApexAxisChartSeries;
+    chart: ApexChart;
+    plotOptions: ApexPlotOptions;
+    xaxis: ApexXAxis;
+    yaxis: ApexYAxis;
+  };
+  stats2!: {
+    series: ApexNonAxisChartSeries;
+    chart: ApexChart;
+    responsive: ApexResponsive[];
+    labels: any;
   };
 
-  stats2:ChartOptions = {
-    series : [{
-      name: 'Series 1',
-      data: [30, 40, 35, 50, 49, 60, 70, 91, 125]
-    }],
-    chart: {
-      type: 'line'
-    },
-    plotOptions: {
-    },
-    dataLabels: {
-    },
-    xaxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
-    }
-  };
+  constructor(private videoService: VideoApiService, private groupService: GroupApiService) { }
 
-  constructor() {
+  ngOnInit() {
+    this.getVideos();
   }
+
+  getVideos() {
+    this.videoService.getVideos('').subscribe(
+      (result: any) => {
+        const ownerMap = new Map<string, number>();
+        const totalVideos = result.videos.length;
+        const videosWithGroup = result.videos.filter((video: any) => video.groupId);
+        const videosWithoutGroup = result.videos.filter((video: any) => !video.groupId);
+        const percentWithGroup = (videosWithGroup.length / totalVideos) * 100;
+        const percentWithoutGroup = (videosWithoutGroup.length / totalVideos) * 100;
+
+        result.videos.forEach((video: any) => {
+          if (video.owner && video.owner.name) {
+            const ownerName = video.owner.name;
+
+            if (ownerMap.has(ownerName)) {
+              ownerMap.set(ownerName, (ownerMap.get(ownerName) as number) + 1);
+            } else {
+              ownerMap.set(ownerName, 1);
+            }
+          }
+        });
+
+        let charData: any[] = Array.from(ownerMap.entries()).map(([owner, count]) => ({
+          x: owner,
+          y: count,
+        }));
+
+        console.log(charData);
+
+        this.stats1 = {
+          series: [
+            {
+              data: charData,
+            },
+          ],
+          chart: {
+            type: 'bar',
+            height: 400,
+          },
+          plotOptions: {
+            bar: {
+              horizontal: true
+            }
+          },
+          xaxis: {
+            type: 'category',
+          },
+          yaxis: {
+            title: {
+              text: 'Number of Videos',
+            }
+          }
+        };
+
+        this.stats2 = {
+          series: [percentWithGroup, percentWithoutGroup],
+          chart: {
+            width: 380,
+            type: "pie"
+          },
+          labels: ['Con Grupo', 'Sin Grupo'],
+          responsive: [
+            {
+              breakpoint: 480,
+              options: {
+                chart: {
+                  width: 200
+                },
+                legend: {
+                  position: "bottom"
+                }
+              }
+            }
+          ]
+        };
+
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+
 }
