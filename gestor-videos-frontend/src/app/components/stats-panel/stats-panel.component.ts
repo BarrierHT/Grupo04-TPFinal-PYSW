@@ -16,35 +16,51 @@ export type ChartOptions = {
 })
 export class StatsPanelComponent {
 
-  chartOptions1: ChartOptions;
+  stats1: ChartOptions = {
+    series: [
+      {
+        name: 'Videos',
+        data: [
+          { x: 'grupo1', y: 3 },
+          { x: 'grupo2', y: 2 },
+          { x: 'grupo3', y: 2 }
+        ]
+      }
+    ],
+    chart: {
+      type: 'bar',
+      height: 150
+    },
+    plotOptions: {
+      bar: {
+        horizontal: true
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    xaxis: {
+      categories: ['grupo1', 'grupo2', 'grupo3']
+    }
+  };
+
+  stats2:ChartOptions = {
+    series : [{
+      name: 'Series 1',
+      data: [30, 40, 35, 50, 49, 60, 70, 91, 125]
+    }],
+    chart: {
+      type: 'line'
+    },
+    plotOptions: {
+    },
+    dataLabels: {
+    },
+    xaxis: {
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
+    }
+  };
 
   constructor() {
-    this.chartOptions1 = {
-      series: [
-        {
-          name: 'Videos',
-          data: [
-            { x: 'grupo1', y: 3 },
-            { x: 'grupo2', y: 2 },
-            { x: 'grupo3', y: 2 }
-          ]
-        }
-      ],
-      chart: {
-        type: 'bar',
-        height: 150
-      },
-      plotOptions: {
-        bar: {
-          horizontal: true
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      xaxis: {
-        categories: ['grupo1', 'grupo2', 'grupo3']
-      }
-    };
   }
 }

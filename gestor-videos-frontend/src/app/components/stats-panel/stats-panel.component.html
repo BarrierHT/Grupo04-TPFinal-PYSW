@@ -1,6 +1,11 @@
 <div class="container">
-    <div id="chart1">
-        <apx-chart [series]="chartOptions1.series" [chart]="chartOptions1.chart" [dataLabels]="chartOptions1.dataLabels"
-            [plotOptions]="chartOptions1.plotOptions" [xaxis]="chartOptions1.xaxis"></apx-chart>
+    <div class="row">
+        <div class="col-6">
+            <apx-chart [series]="stats1.series" [chart]="stats1.chart" [dataLabels]="stats1.dataLabels"
+                [plotOptions]="stats1.plotOptions" [xaxis]="stats1.xaxis"></apx-chart>
+        </div>
+        <div class="col-6">
+            <apx-chart [series]="stats2.series" [chart]="stats2.chart"></apx-chart>
+        </div>
     </div>
 </div>
