@@ -11,7 +11,6 @@ import { ChannelComponent } from './components/channel/channel.component';
 import { GroupComponent } from './components/group/group.component';
 import { ReportComponent } from './components/report/report.component';
 import { ExploreGroupsComponent } from './components/explore-groups/explore-groups.component';
-import { StatsPanelComponent } from './components/stats-panel/stats-panel.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -22,7 +21,6 @@ const routes: Routes = [
   { path: 'groups', component: GroupComponent },
   { path: 'reports', component: ReportComponent },
   { path: 'explore-groups', component: ExploreGroupsComponent },
-  { path: 'stats-panel', component: StatsPanelComponent },
 
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
