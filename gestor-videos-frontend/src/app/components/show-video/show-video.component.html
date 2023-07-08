@@ -1,4 +1,8 @@
 <div class="row py-5 px-5 d-flex justify-content-center container-custom-1">
+  <div class="col-lg-12 d-flex justify-content-center align-items-center" *ngIf="video.title == ''">
+    <div class="cargando"></div>
+  </div>
+
   <div class="col-lg-12" *ngIf="video.title != ''">
     <div class="video-container">
       <video controls>
@@ -159,58 +163,44 @@
         </div>
       </div>
     </div>
-  </div>
-  <!-- <div class="col-lg-4">
-    <div class="recommended-videos">
-      <h3 class="text-white">Recommended videos</h3>
-      <hr class="hr-custom-1" />
+
+    <div class="main">
+      <div class="currentplaying text-center">
+        <p class="heading">VIDEOS DE LA PLAYLIST</p>
+      </div>
+      <!-- Video reproduciendose -->
+      <!-- <div class="loader">
+        <div class="song">
+          <p class="name">Time in a Bottle</p>
+          <p class="artist">Jim Corce</p>
+        </div>
+        <div class="albumcover"></div>
+        <!-- Animacion 
+        <div class="loading">
+          <div class="load"></div>
+          <div class="load"></div>
+          <div class="load"></div>
+          <div class="load"></div>
+        </div>
+         Animacion 
+      </div> -->
+      <!-- Video reproduciendose -->
+
+      <!-- Videos de la playlist -->
       <div class="row">
-        <div class="col-12">
-          <div class="video-card rounded-4" *ngFor="let video of videos" (mouseenter)="onMouseEnter(video)"
-            (mouseleave)="onMouseLeave()">
-            <div class="video-thumbnail rounded-4">
-              <div class="thumbnail-overlay">
-                <div class="overlay-content">
-                  <div class="views p-1 rounded-2">
-                    <i class="bi bi-eye-fill"></i>
-                    {{ video.views | abbreviateNumber }}
-                  </div>
-                  <div class="duration p-1 rounded-2">
-                    {{ video.duration }}
-                  </div>
-                </div>
-              </div>
-              <img src="{{ video.thumbnail }}" alt="{{ video.title }}" (mouseenter)="zoomInThumbnail($event)"
-                (mouseleave)="zoomOutThumbnail($event)" />
-              <div class="playlist-icon rounded-2" *ngIf="showOptions && video === selectedVideo">
-                <i class="bi bi-plus-circle-fill"></i>
-              </div>
+        <div class="container-fluid col-12 col-lg-6" *ngFor="let video of playlist.videos">
+          <div class="loader p-2 m-2" (click)="watchPlaylistVideo(video)">
+            <div class="song">
+              <p class="name mt-4 mb-0">{{video.videoId.title}}</p>
+              <p class="artist">{{video.videoId.description}}</p>
             </div>
-            <div class="video-details">
-              <h2 class="video-title">{{ video.title }}</h2>
-              <div class="channel-name">
-                {{ video.channelName }}
-              </div>
-              <div class="video-options" *ngIf="showOptions && video === selectedVideo">
-                <div class="dropdown">
-                  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-three-dots-vertical"></i>
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li>
-                      <a class="dropdown-item" href="#">Another action</a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+            <div class="albumcover"></div>
+            <div class="play"></div>
           </div>
         </div>
       </div>
+      <!-- Videos de la playlist -->
     </div>
-  </div> -->
+
+  </div>
 </div>

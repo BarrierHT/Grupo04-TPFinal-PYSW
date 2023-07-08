@@ -43,6 +43,9 @@ export class ShowVideoComponent implements OnInit {
   showFullDescription: boolean = false;
   logged: boolean = false;
   userId: any = '';
+  showPlaylistVideos: boolean = false;
+  playlist: any;
+  playlistVideos: any;
 
   stringTest: string =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam condimentum feugiat mi aconvallis.' +
@@ -62,11 +65,12 @@ export class ShowVideoComponent implements OnInit {
     private playlistApiService: PlaylistApiService,
     private router: Router,
     private videoService: VideoApiService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
       console.log(params['videoId']);
+      this.showPlaylistVideos = false;
       //console.log(this.ticketService.getTickets());
       if (params['videoId'] != '') {
         const videoId = params['videoId'];
@@ -94,6 +98,12 @@ export class ShowVideoComponent implements OnInit {
         // if (updateAllowed) {
 
         // } else this.router.navigate(['home']);
+      }
+      if (params.hasOwnProperty('playlistId')) {
+        console.log("MOSTRAR VIDEOS DE LA PLAYLIST" + " - " + params['playlistId']);
+        const playlistId = params['playlistId'];
+        this.showPlaylistVideos = true;
+        this.getPlaylist(playlistId);
       }
     });
 
@@ -189,6 +199,25 @@ export class ShowVideoComponent implements OnInit {
         } catch (err) {
           console.log(err);
         }
+      });
+  }
+
+  getPlaylist(playlistId: string) {
+    this.playlistApiService.getPlaylist(playlistId).subscribe((res) => {
+      try {
+        console.log(res);
+        this.playlist = res;
+        if (res.videos.length < 1) alert('La playlist no tiene videos aún!');
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  }
+
+  watchPlaylistVideo(playlist: any) {
+    this.router.navigate(['watch', playlist.videoId._id, 'playlist', this.playlist._id])
+      .then(() => {
+        window.location.reload();
       });
   }
 
