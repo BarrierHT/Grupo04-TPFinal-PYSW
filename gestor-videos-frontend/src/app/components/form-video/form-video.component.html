@@ -5,13 +5,13 @@
             <hr class="hr-custom-1">
         </div>
         <form (submit)="postVideo()" #videoForm="ngForm">
-            <div class="input-group mt-3">
+            <div class="input-group mt-3" *ngIf="!action">
                 <input type="file" class="form-control" id="videoFile" name="videoFile" required accept="video/*"
                     (change)="onFileSelected($event)">
                 <label class="input-group-text" for="videoFile">Upload</label>
             </div>
 
-            <div class="text-center mt-3 ">
+            <div class="text-center mt-3 " *ngIf="!action">
 
                 <select class="btn btn-secondary btn-sm dropdown-toggle pe-5 text-center" name="groupId" required
                     [(ngModel)]="video.groupId">
@@ -55,7 +55,8 @@
 
             <div class="row mt-3 button-video-upload">
                 <input type="hidden" name="_csrf" value="">
-                <button type="submit" [disabled]="videoForm.invalid || !isValidVideo(video.file)">Upload Video</button>
+                <button type="submit" *ngIf="!action" [disabled]="videoForm.invalid || !isValidVideo(video.file)">Upload Video</button>
+                <button type="submit" *ngIf="action" [disabled]="videoForm.invalid || !isValidVideo(video.file)">Edit Video</button>
             </div>
         </form>
     </div>
