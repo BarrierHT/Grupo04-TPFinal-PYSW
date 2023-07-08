@@ -4,7 +4,7 @@
             <h3 class="text-white">Subir Video</h3>
             <hr class="hr-custom-1">
         </div>
-        <form (submit)="postVideo()" #videoForm="ngForm">
+        <form #videoForm="ngForm">
             <div class="input-group mt-3" *ngIf="!action">
                 <input type="file" class="form-control" id="videoFile" name="videoFile" required accept="video/*"
                     (change)="onFileSelected($event)">
@@ -55,8 +55,8 @@
 
             <div class="row mt-3 button-video-upload">
                 <input type="hidden" name="_csrf" value="">
-                <button type="submit" *ngIf="!action" [disabled]="videoForm.invalid || !isValidVideo(video.file)">Upload Video</button>
-                <button type="submit" *ngIf="action" [disabled]="videoForm.invalid || !isValidVideo(video.file)">Edit Video</button>
+                <button type="submit" *ngIf="!action" [disabled]="videoForm.invalid || !isValidVideo(video.file)" (click)="postVideo()">Upload Video</button>
+                <button type="submit" *ngIf="action" [disabled]="videoForm.invalid" (click)="updateVideo()">Edit Video</button>
             </div>
         </form>
     </div>

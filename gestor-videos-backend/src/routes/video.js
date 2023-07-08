@@ -58,6 +58,8 @@ router.post(
 );
 
 router.delete('/delete-video/:videoId', isAuth, videoController.deleteVideo);
+router.put('/update-video/:videoId', isAuth, videoController.updateVideo);
+
 // router.post('/add-video', , videoController.postVideo);
 
 //Exportamos el modulo de rutas

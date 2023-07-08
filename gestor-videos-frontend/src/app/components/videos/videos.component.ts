@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { VideoApiService } from 'src/app/services/video-api.service';
 import { Subject } from 'rxjs';
 import { ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-videos',
@@ -46,9 +46,22 @@ export class VideosComponent implements OnInit, OnDestroy {
         console.log(err);
       }
     });
+    this.videos = [];
   }
 
   updateVideo(videoId: string) {
     this.router.navigate(['form-video', videoId])
+  }
+
+  deleteVideo(videoId: string) {
+    this.videoService.deleteVideo(videoId).subscribe(res => {
+      try {
+        console.log(res);
+      } catch (err) {
+        console.log(err)
+      }
+    })
+    alert('Video eliminado correctamente');
+    this.getVideos();
   }
 }
