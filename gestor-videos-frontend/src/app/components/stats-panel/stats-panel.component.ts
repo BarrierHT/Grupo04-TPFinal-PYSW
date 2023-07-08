@@ -15,8 +15,6 @@ export class StatsPanelComponent implements OnInit {
     series: ApexAxisChartSeries;
     chart: ApexChart;
     plotOptions: ApexPlotOptions;
-    xaxis: ApexXAxis;
-    yaxis: ApexYAxis;
   };
   stats2!: {
     series: ApexNonAxisChartSeries;
@@ -68,19 +66,11 @@ export class StatsPanelComponent implements OnInit {
           ],
           chart: {
             type: 'bar',
-            height: 400,
+            height: 300,
           },
           plotOptions: {
             bar: {
               horizontal: true
-            }
-          },
-          xaxis: {
-            type: 'category',
-          },
-          yaxis: {
-            title: {
-              text: 'Number of Videos',
             }
           }
         };
@@ -88,8 +78,8 @@ export class StatsPanelComponent implements OnInit {
         this.stats2 = {
           series: [percentWithGroup, percentWithoutGroup],
           chart: {
-            width: 380,
-            type: "pie"
+            height: 320,
+            type: "pie",
           },
           labels: ['Con Grupo', 'Sin Grupo'],
           responsive: [
