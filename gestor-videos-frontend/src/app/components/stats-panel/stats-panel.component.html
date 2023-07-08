@@ -1,11 +1,26 @@
-<div class="container">
+<div class="container mt-5">
     <div class="row">
-        <div class="col-6">
-            <apx-chart [series]="stats1.series" [chart]="stats1.chart" [dataLabels]="stats1.dataLabels"
-                [plotOptions]="stats1.plotOptions" [xaxis]="stats1.xaxis"></apx-chart>
+      <div class="col-6" *ngIf="stats1">
+        <div class="row">
+            <h2 class="text-center">Videos por Usuario</h2>
         </div>
-        <div class="col-6">
-            <apx-chart [series]="stats2.series" [chart]="stats2.chart"></apx-chart>
+        <apx-chart
+          [series]="stats1.series"
+          [chart]="stats1.chart"
+          [plotOptions]="stats1.plotOptions"
+        ></apx-chart>
+      </div>
+      <div class="col-6" *ngIf="stats2">
+        <div class="row">
+            <h2 class="text-center">Videos con Grupo</h2>
         </div>
+        <apx-chart
+          [series]="stats2.series"
+          [chart]="stats2.chart"
+          [labels]="stats2.labels"
+          [responsive]="stats2.responsive"
+        ></apx-chart>
+      </div>
     </div>
-</div>
+  </div>
+  
