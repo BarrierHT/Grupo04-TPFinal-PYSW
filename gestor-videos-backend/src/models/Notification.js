@@ -4,7 +4,8 @@ let notificationSchema = new Schema(
 	{
 		content: { type: String, required: true },
 		receiver: { type: Schema.Types.ObjectId, ref: 'User', required: false },
-		owner: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+		sender: { type: Schema.Types.ObjectId, ref: 'User', required: false },
+		viewed: { type: Boolean, default: false },
 	},
 	{
 		timestamps: true,

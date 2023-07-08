@@ -125,26 +125,23 @@
         <hr class="m-0" />
         <table class="table">
           <tbody>
-            <tr>
-              <td class="notification-cell">
+
+            <tr *ngFor="let notification of myNotifications">
+              <td class="notification-cell" *ngIf="!notification.viewed">
 
                 <div class="notification-content">
-                  <small>Notificación de: </small>
+                  <small>{{notification.content}}</small>
                   <br />
-                  <a href="enlace_al_video_1">Título del video 1</a>
+
+                  <a href="{{notification.linkUrl}}"><i><small> Ir al video </small></i></a>
+
+                  <br>
+                  <i><small> Fecha: {{notification.createdAt}} </small></i>
+
                 </div>
               </td>
             </tr>
-            <tr>
-              <td class="notification-cell">
 
-                <div class="notification-content">
-                  <small>Notificación de: </small>
-                  <br />
-                  <a href="enlace_al_video_2">Título del video 2</a>
-                </div>
-              </td>
-            </tr>
 
           </tbody>
         </table>
@@ -152,26 +149,24 @@
         <hr class="m-0" />
         <table class="table">
           <tbody>
-            <tr>
+
+            <tr *ngFor="let notification of myNotifications ">
               <td class="notification-cell">
 
                 <div class="notification-content">
-                  <small>Notificación de: </small>
+                  <small>{{notification.content}}</small>
                   <br />
-                  <a href="enlace_al_video_1">Título del video 1</a>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="notification-cell">
 
-                <div class="notification-content">
-                  <small>Notificación de: </small>
-                  <br />
-                  <a href="enlace_al_video_2">Título del video 2</a>
+
+                  <a href="{{notification.linkUrl}}"><i><small> Ir al video </small></i></a>
+
+                  <br>
+                  <i><small> Fecha: {{notification.createdAt}} </small></i>
+
                 </div>
               </td>
             </tr>
+
 
           </tbody>
         </table>

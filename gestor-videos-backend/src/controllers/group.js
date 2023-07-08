@@ -97,7 +97,6 @@ const postGroup = async (req, res, next) => {
 		newGroup.users.push({
 			dateOfJoining: Date.now(),
 			sendNotification: false,
-			sendEmailNotification: false,
 			userId: owner,
 		});
 
@@ -130,7 +129,6 @@ const postAddUserToGroup = async (req, res, next) => {
 		group.users.push({
 			dateOfJoining: Date.now(),
 			sendNotification: false,
-			sendEmailNotification: false,
 			userId,
 		});
 

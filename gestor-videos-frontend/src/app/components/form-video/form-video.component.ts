@@ -75,7 +75,9 @@ export class FormVideoComponent implements OnInit {
           };
           if (result.message == 'Video uploaded') {
             alert('VIDEO SUBIDO CORRECTAMENTE');
-            this.router.navigate(['watch', result.videoId]);
+            window.location.href =
+              'http://localhost:4200/watch/' + result.videoId;
+            //Update header
           }
         },
         (error) => {
