@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Video } from 'src/app/models/video';
 import { GroupApiService } from 'src/app/services/group-api.service';
 import { VideoApiService } from 'src/app/services/video-api.service';
@@ -23,15 +23,26 @@ export class FormVideoComponent implements OnInit {
   };
   msgVideoValidation!: string;
   myGroups: Array<any> = [];
+  action = false;
 
   constructor(
     private videoApiService: VideoApiService,
     private groupService: GroupApiService,
+    private activatedRoute: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.getMyGroups();
+
+    this.activatedRoute.params.subscribe((params) => {
+      if (params['videoId'] == 0) {
+        this.action = false;
+      } else {
+        this.action = true;
+        // this.getTicket(params['id']);
+      }
+    });
   }
 
   getMyGroups() {
@@ -64,7 +75,9 @@ export class FormVideoComponent implements OnInit {
           };
           if (result.message == 'Video uploaded') {
             alert('VIDEO SUBIDO CORRECTAMENTE');
-            this.router.navigate(['watch', result.videoId]);
+            window.location.href =
+              'http://localhost:4200/watch/' + result.videoId;
+            //Update header
           }
         },
         (error) => {
