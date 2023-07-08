@@ -22,7 +22,7 @@ export class ListVideoComponent implements OnInit {
   constructor(
     private router: Router,
     private playlistApiService: PlaylistApiService
-  ) {}
+  ) { }
 
   async ngOnInit(): Promise<void> {
     this.searchPlaylists();
@@ -61,7 +61,10 @@ export class ListVideoComponent implements OnInit {
   getPlaylist(playlistId: string) {
     this.playlistApiService.getPlaylist(playlistId).subscribe((res) => {
       try {
+        console.log("GET PLAYLIST LIST-VIDEO")
         console.log(res);
+        this.router.navigate(['watch', res.videos[0].videoId._id, 'playlist', res._id]);
+        //this.router.navigate(['watch', res.videos[0].videoId], { queryParams: { playlist: res._id } });
         if (res.videos.length < 1) alert('La playlist no tiene videos aún!');
       } catch (err) {
         console.log(err);

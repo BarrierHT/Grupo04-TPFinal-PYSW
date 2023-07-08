@@ -7,7 +7,7 @@ const getPlaylist = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const playlistFound = await playlistSchema.findById({ _id: id });
+    const playlistFound = await playlistSchema.findById({ _id: id }).populate('videos.videoId');
 
     if (!playlistFound)
       throw errorHandler("The playlist does not exist", 404, {});

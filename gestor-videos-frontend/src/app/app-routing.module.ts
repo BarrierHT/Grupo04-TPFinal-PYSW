@@ -17,6 +17,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'playlist', component: ListVideoComponent },
   { path: 'watch/:videoId', component: ShowVideoComponent },
+  { path: 'watch/:videoId/playlist/:playlistId', component: ShowVideoComponent },
   { path: 'form-video/:videoId', component: FormVideoComponent },
   { path: 'channel', component: ChannelComponent },
   { path: 'groups', component: GroupComponent },
@@ -35,4 +36,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
