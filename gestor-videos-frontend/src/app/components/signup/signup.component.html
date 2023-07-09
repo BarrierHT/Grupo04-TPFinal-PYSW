@@ -134,11 +134,17 @@
 
         <div class="rolbox">
           <label for="selectCountry">Select Country</label>
-          <select id="selectCountry" name="selectCountry" [(ngModel)]="selectedCountry">
+          <select id="selectCountry" name="selectCountry" [(ngModel)]="selectedCountry" #country="ngModel"
+          required>
             <option *ngFor="let c of countries" [value]="c.iso2 + '-' + c.name">
               {{ c.name }}
             </option>
           </select>
+          <div *ngIf="country.invalid && (country.dirty || country.touched)">
+            <div *ngIf="country.errors?.['required']" class="alerta text-center">
+              Please, choose a country!
+            </div>
+          </div>
         </div>
 
         <div class="rolbox" style="display: none;">
