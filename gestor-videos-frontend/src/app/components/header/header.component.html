@@ -23,13 +23,6 @@
           </li>
 
           <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged">
-            <a class="nav-link" [routerLink]="['/playlist']">
-              <i class="bi bi-fast-forward-circle fs-4"></i>
-              Playlists
-            </a>
-          </li>
-
-          <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged">
             <a class="nav-link" [routerLink]="['/channel']">
               <i class="bi bi-person-video2 fs-4"></i>
               Canal
@@ -37,16 +30,17 @@
           </li>
 
           <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged">
-            <a class="nav-link" [routerLink]="['/explore-groups']">
-              <i class="bi bi-collection-play fs-4"></i>
-              Buscar grupos
+            <a class="nav-link" [routerLink]="['/playlist']">
+              <i class="bi bi-fast-forward-circle fs-4"></i>
+              Playlists
             </a>
           </li>
 
-          <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged && (isGestor || isAdmin)">
-            <a class="nav-link" [routerLink]="['/reports']">
-              <i class="bi bi-flag fs-4"></i>
-              Reportes
+
+          <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged">
+            <a class="nav-link" [routerLink]="['/explore-groups']">
+              <i class="bi bi-collection-play fs-4"></i>
+              Buscar grupos
             </a>
           </li>
 
@@ -57,10 +51,10 @@
             </a>
           </li>
 
-          <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged && (isAdmin)">
-            <a class="nav-link" [routerLink]="['/videos']">
-              <i class="bi bi-camera-reels fs-4"></i>
-              Gestion de Videos
+          <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged && (isGestor || isAdmin)">
+            <a class="nav-link" [routerLink]="['/reports']">
+              <i class="bi bi-flag fs-4"></i>
+              Reportes
             </a>
           </li>
 
@@ -68,6 +62,21 @@
             <a class="nav-link" [routerLink]="['/stats-panel']">
               <i class="bi bi-bar-chart-line fs-4"></i>
               Estadisticas
+            </a>
+          </li>
+
+
+          <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged && (isAdmin)">
+            <a class="nav-link" [routerLink]="['/videos']">
+              <i class="bi bi-film fs-4"></i>
+              Gestion Videos
+            </a>
+          </li>
+
+          <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged && (isAdmin)">
+            <a class="nav-link" [routerLink]="['/users']">
+              <i class="bi bi-person-gear fs-4"></i>
+              Gestion Usuarios
             </a>
           </li>
 
