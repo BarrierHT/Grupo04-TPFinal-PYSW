@@ -43,7 +43,7 @@
             </a>
           </li>
 
-          <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged">
+          <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged && (isGestor || isAdmin)">
             <a class="nav-link" [routerLink]="['/reports']">
               <i class="bi bi-flag fs-4"></i>
               Reportes
@@ -57,14 +57,14 @@
             </a>
           </li>
 
-          <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged">
+          <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged && (isAdmin)">
             <a class="nav-link" [routerLink]="['/videos']">
               <i class="bi bi-camera-reels fs-4"></i>
               Gestion de Videos
             </a>
           </li>
 
-          <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged">
+          <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged && (isGestor || isAdmin)">
             <a class="nav-link" [routerLink]="['/stats-panel']">
               <i class="bi bi-bar-chart-line fs-4"></i>
               Estadisticas
@@ -77,9 +77,8 @@
       <div class="btn-group ms-auto user">
         <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="bi bi-person-circle fs-4"></i>
-          <span class="icon-button__badge">{{badgeNotification}}</span>
+          <span class="icon-button__badge" *ngIf="logged">{{badgeNotification}}</span>
         </a>
-
         <ul class="dropdown-menu dropdown-menu-end mb-2 mb-lg-0 ps-2 pe-2">
           <li class="nav-item" [routerLinkActive]="['active']" *ngIf="!logged">
             <a class="nav-link" [routerLink]="['/login']">

@@ -36,6 +36,7 @@ export class LoginComponent {
 
           localStorage.setItem('token', result.token);
           localStorage.setItem('userId', result.userId);
+          localStorage.setItem('userRole', result.userRole);
 
           const remainingMilliseconds = 60 * 60 * 1000;
           const expiryDate = new Date(
@@ -43,7 +44,7 @@ export class LoginComponent {
           );
           localStorage.setItem('expiryDate', expiryDate.toISOString());
           if (result) {
-            location.href = "http://localhost:4200/home";
+            location.href = 'http://localhost:4200/home';
           }
         } catch (err) {
           console.log(err);
