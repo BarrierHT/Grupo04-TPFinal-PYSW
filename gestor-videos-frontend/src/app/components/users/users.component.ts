@@ -8,11 +8,13 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
-export class UsersComponent implements OnInit, OnDestroy{
+export class UsersComponent implements OnInit, OnDestroy {
 
   users: any = [];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
+  editingUser: any = null;
+  isEditModalOpen: boolean = false;
 
   constructor(
     private userService: UserService,
@@ -31,8 +33,20 @@ export class UsersComponent implements OnInit, OnDestroy{
     this.dtTrigger.unsubscribe();
   }
 
-  updateUser(idUser: string) {
-    alert('Falta hacer el formulario para actualizarlo, pero en el back esta hecho');
+  saveUser() {
+    this.userService.updateUser(this.editingUser._id, this.editingUser).subscribe(
+      res => {
+        console.log(res);
+        alert('Usuario actualizado correctamente');
+        this.getUsers();
+        this.editingUser = null;
+        this.closeEdit();
+      },
+      err => {
+        console.log(err);
+        alert('Error al actualizar el usuario');
+      }
+    );
   }
 
   deleteUser(idUser: string) {
@@ -47,18 +61,30 @@ export class UsersComponent implements OnInit, OnDestroy{
     this.getUsers();
   }
 
-  getUsers(){
-      this.userService.getUsers().subscribe(res => {
-        try {
-          console.log(res);
-          this.users = res;
-          this.dtTrigger.next(this.users); // Trigger the DataTables re-rendering
-          this.cdr.detectChanges();
-        } catch (err) {
-          console.log(err);
-        }
-      });
-      this.users = [];
+  getUsers() {
+    this.userService.getUsers().subscribe(res => {
+      try {
+        console.log(res);
+        this.users = res;
+        this.dtTrigger.next(this.users);
+        this.cdr.detectChanges();
+      } catch (err) {
+        console.log(err);
+      }
+    });
+    this.users = [];
+  }
+
+  editUser(user: any) {
+    this.editingUser = { ...user };
+    this.isEditModalOpen = true;
+    console.log(this.editingUser);
+  }
+
+
+  closeEdit() {
+    this.isEditModalOpen = false;
+    this.editingUser = null;
   }
 }
 

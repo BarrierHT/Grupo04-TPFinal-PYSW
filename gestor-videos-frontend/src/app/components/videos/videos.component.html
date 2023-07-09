@@ -29,18 +29,14 @@
         <tr *ngFor="let video of videos">
           <th scope="row" class="text-center">{{ video._id }}</th>
           <td class="text-center">{{ video.title }}</td>
-          <<<<<<< HEAD <td class="text-center">{{ video.description }}</td>
-
-            <td class="text-center">{{ video.owner._id }}</td>
-            <td class="text-center">{{ video.owner.email }}</td>
-
-            =======
-            <td class="text-center">{{ video.owner.name }}</td>
-            >>>>>>> virreyraBranch
-            <td class="text-center align-middle">
-              <button type="button" class="btn btn-warning btn-sm mx-3" (click)="updateVideo(video._id)">Editar</button>
-              <button type="button" class="btn btn-danger btn-sm" (click)="deleteVideo(video._id)">Eliminar</button>
-            </td>
+          <td class="text-center">{{ video.description }}</td>
+          <td class="text-center">{{ video.owner._id }}</td>
+          <td class="text-center">{{ video.owner.email }}</td>
+          <td class="text-center">{{ video.owner.name }}</td>
+          <td class="text-center align-middle">
+            <button type="button" class="btn btn-warning btn-sm mx-3" (click)="updateVideo(video._id)">Editar</button>
+            <button type="button" class="btn btn-danger btn-sm" (click)="deleteVideo(video._id)">Eliminar</button>
+          </td>
         </tr>
       </tbody>
     </table>
