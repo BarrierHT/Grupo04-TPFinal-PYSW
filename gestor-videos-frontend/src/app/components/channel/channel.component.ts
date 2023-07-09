@@ -4,6 +4,7 @@ import { GroupApiService } from 'src/app/services/group-api.service';
 import { VideoApiService } from 'src/app/services/video-api.service';
 import { PlaylistApiService } from 'src/app/services/playlist-api.service';
 import { Router } from '@angular/router';
+import { CountryApiService } from 'src/app/services/country-api.service';
 
 @Component({
   selector: 'app-channel',
@@ -16,12 +17,18 @@ export class ChannelComponent implements OnInit {
   myChannel: any;
   myVideos: any = [];
   myPlaylists: any = [];
+  country = {
+    iso2: '',
+    name: '',
+    flag: ''
+  }
 
   constructor(
     private groupService: GroupApiService,
     private channelService: ChannelApiService,
     private videoService: VideoApiService,
     private playlistService: PlaylistApiService,
+    private countryService: CountryApiService,
     private router: Router
   ) {}
 
@@ -34,8 +41,17 @@ export class ChannelComponent implements OnInit {
   getMyChannel() {
     this.channelService.getChannel().subscribe((res) => {
       try {
-        this.myChannel = res;
         console.log(res);
+        this.myChannel = res;
+        this.country.name = res.owner.country.name;
+        this.country.iso2 = res.owner.country.iso2;
+        this.countryService.getFlag(this.country.iso2).subscribe(res => {
+          try {
+            this.country.flag = res.data.flag;
+          } catch (err) {
+            console.log(err);
+          }
+        })
       } catch (err) {
         console.log(err);
       }

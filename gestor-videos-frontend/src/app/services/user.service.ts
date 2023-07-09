@@ -45,14 +45,14 @@ export class UserService {
     return this._http.delete(`http://localhost:8080/user/delete-user/${idUser}`, httpOption);
   }
   
-  getUser(idUser:string): Observable<any> {
+  getUser(): Observable<any> {
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       }),
     };
-    return this._http.get(`http://localhost:8080/user/get-user/${idUser}`, httpOption);
+    return this._http.get(`http://localhost:8080/user/get-user`, httpOption);
   }
   
 }

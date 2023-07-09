@@ -16,4 +16,17 @@ export class CountryApiService {
     };
     return this._http.get(`https://countriesnow.space/api/v0.1/countries/flag/images`, httpOption);
   }
+
+  getFlag(iso2: string): Observable<any> {
+    let httpOption = {
+      headers: new HttpHeaders({
+      }),
+    };
+
+    const body = {
+      "iso2": iso2
+    }
+
+    return this._http.post(`https://countriesnow.space/api/v0.1/countries/flag/images`, body, httpOption);
+  }
 }
