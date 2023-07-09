@@ -50,6 +50,29 @@ const putToggleNotification = async (req, res, next) => {
 	}
 };
 
+const putUpdateNewNotification = async (req, res, next) => {
+	try {
+		const { newNotifications } = req.body;
+
+		console.log('new notifications: ', newNotifications);
+
+		const notificationIds = newNotifications.map(
+			notification => notification._id
+		);
+
+		await notificationSchema.updateMany(
+			{ _id: { $in: notificationIds } },
+			{ $set: { viewed: true } }
+		);
+
+		res.status(200).json({
+			message: 'Notifications updated',
+		});
+	} catch (err) {
+		next(err);
+	}
+};
+
 const saveNotification = async (content, receiver, sender) => {
 	try {
 		const notificationData = {
@@ -74,6 +97,7 @@ const notificationController = {
 	getNotificationsByUser,
 	putToggleNotification,
 	saveNotification,
+	putUpdateNewNotification,
 };
 
 export default notificationController;

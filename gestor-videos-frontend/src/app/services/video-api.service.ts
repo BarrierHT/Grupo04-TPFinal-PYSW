@@ -100,7 +100,7 @@ export class VideoApiService {
       }),
     };
     return this._http.delete(
-      `http://localhost:8080/video/delete-video/${videoId}`, 
+      `http://localhost:8080/video/delete-video/${videoId}`,
       httpOption
     );
   }
@@ -119,7 +119,7 @@ export class VideoApiService {
 
     const body = {
       title: title,
-      description: description
+      description: description,
     };
 
     return this._http.put(

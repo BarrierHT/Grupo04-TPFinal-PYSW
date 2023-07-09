@@ -16,6 +16,12 @@ router.put(
 	notificationController.putToggleNotification
 );
 
+router.put(
+	'/update-new-notification',
+	isAuth,
+	notificationController.putUpdateNewNotification
+);
+
 // router.post('/add-notification', notificationController.sendNotification);
 
 //exportamos el modulo de rutas

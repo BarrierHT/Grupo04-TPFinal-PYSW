@@ -48,7 +48,7 @@ export class GroupComponent implements OnInit {
     console.log(sendNotificationGroup, groupId);
 
     this.notificationService
-      .toggleNotification(sendNotificationGroup, groupId)
+      .putToggleNotification(sendNotificationGroup, groupId)
       .pipe(
         catchError((error) => {
           //console.log('Error en el observable: ', error);

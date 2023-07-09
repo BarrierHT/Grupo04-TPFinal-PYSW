@@ -60,15 +60,24 @@
           <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged">
             <a class="nav-link" [routerLink]="['/videos']">
               <i class="bi bi-camera-reels fs-4"></i>
-              Videos
+              Gestion de Videos
             </a>
           </li>
+
+          <li class="nav-item" [routerLinkActive]="['active']" *ngIf="logged">
+            <a class="nav-link" [routerLink]="['/stats-panel']">
+              <i class="bi bi-bar-chart-line fs-4"></i>
+              Estadisticas
+            </a>
+          </li>
+
         </ul>
       </div>
 
       <div class="btn-group ms-auto user">
         <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="bi bi-person-circle fs-4"></i>
+          <span class="icon-button__badge">{{badgeNotification}}</span>
         </a>
 
         <ul class="dropdown-menu dropdown-menu-end mb-2 mb-lg-0 ps-2 pe-2">
@@ -98,12 +107,13 @@
           </li>
 
           <li class="nav-item" *ngIf="logged">
-            <i class="nav-link bi bi-bell fs-4" data-bs-toggle="modal" data-bs-target="#notificacionModal">
-              <span class="fs-6">
-                Notificaciones
-              </span>
+            <i class="nav-link bi bi-bell fs-4 notification-link" data-bs-toggle="modal"
+              data-bs-target="#notificacionModal" (click)="viewNotifications()">
+              <span class="fs-6">Notificaciones</span>
+              <span class="badge rounded-pill badge-notification bg-danger fs-6">{{badgeNotification}}</span>
             </i>
           </li>
+
         </ul>
       </div>
 
@@ -112,22 +122,27 @@
 </div>
 
 
-<div class="modal fade" id="notificacionModal" tabindex="-1" aria-labelledby="detalleModalLabel" aria-hidden="true">
+<div class="modal fade" id="notificacionModal" tabindex="-1" aria-labelledby="detalleModalLabel" aria-hidden="true"
+  (hidden.bs.modal)="onNotificationModalHidden()">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header text-center">
         <h1 class="modal-title fs-5" id="detalleModalLabel" style="color: green">
           Notificaciones
         </h1>
+
       </div>
       <div class="modal-body pb-0">
         <strong>Nuevas notificaciones</strong>
         <hr class="m-0" />
         <table class="table">
           <tbody>
+            <tr *ngIf="newNotifications.length < 1">
+              No hay nuevas notificaciones
+            </tr>
 
-            <tr *ngFor="let notification of myNotifications">
-              <td class="notification-cell" *ngIf="!notification.viewed">
+            <tr *ngFor="let notification of newNotifications">
+              <td class="notification-cell">
 
                 <div class="notification-content">
                   <small>{{notification.content}}</small>
@@ -149,8 +164,11 @@
         <hr class="m-0" />
         <table class="table">
           <tbody>
+            <tr *ngIf="oldNotifications.length < 1">
+              No hay notificaciones viejas
+            </tr>
 
-            <tr *ngFor="let notification of myNotifications ">
+            <tr *ngFor="let notification of oldNotifications ">
               <td class="notification-cell">
 
                 <div class="notification-content">

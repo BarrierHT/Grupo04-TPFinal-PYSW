@@ -9,7 +9,11 @@ import { NotificationApiService } from 'src/app/services/notification-api.servic
 })
 export class HeaderComponent implements OnInit {
   logged: boolean = false;
-  myNotifications: any = [];
+  myNotifications: any[] = [];
+  newNotifications: any[] = [];
+  oldNotifications: any[] = [];
+  badgeNotification: string = '0';
+
   constructor(private notificationService: NotificationApiService) {}
 
   ngOnInit(): void {
@@ -33,42 +37,81 @@ export class HeaderComponent implements OnInit {
         localStorage.getItem('token') != null
       ) {
         this.logged = true;
-
-        this.notificationService
-          .getNotifications()
-          .pipe(
-            catchError((error) => {
-              //console.log('Error en el observable: ', error);
-              if (error.status !== 200 && error.status !== 201) {
-                console.log('Error en el observable: ', error.error.message);
-                // throw new Error('');
-              }
-              return [];
-            }),
-            delay(500) // Agrega un retraso de 1 segundo
-          )
-          .subscribe((result) => {
-            try {
-              console.log(result);
-              this.myNotifications = result.notifications;
-              for (const notification of this.myNotifications) {
-                const message = notification.content;
-
-                const linkIndex = message.lastIndexOf('link: ');
-                const link = message.substring(linkIndex + 6);
-
-                notification.content = message.substring(0, linkIndex);
-                notification.linkUrl = link;
-
-                // console.log("Antes del enlace:", beforeLink);
-                // console.log('Enlace:', link);
-              }
-            } catch (err) {
-              console.log(err);
-            }
-          });
+        this.getNotifications();
       }
     }
+  }
+
+  getNotifications() {
+    this.notificationService
+      .getNotifications()
+      .pipe(
+        catchError((error) => {
+          //console.log('Error en el observable: ', error);
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            // throw new Error('');
+          }
+          return [];
+        }),
+        delay(500) // Agrega un retraso de 1 segundo
+      )
+      .subscribe((result) => {
+        try {
+          console.log(result);
+          this.myNotifications = result.notifications;
+          for (const notification of this.myNotifications) {
+            const message = notification.content;
+
+            const linkIndex = message.lastIndexOf('link: ');
+            const link = message.substring(linkIndex + 6);
+
+            notification.content = message.substring(0, linkIndex);
+            notification.linkUrl = link;
+          }
+
+          this.newNotifications = this.myNotifications.filter(
+            (notification) => !notification.viewed
+          );
+
+          this.badgeNotification = this.newNotifications.length.toString();
+
+          this.oldNotifications = this.myNotifications.filter(
+            (notification) => notification.viewed
+          );
+        } catch (err) {
+          console.log(err);
+        }
+      });
+  }
+
+  viewNotifications() {
+    this.notificationService
+      .putNewNotifications(this.newNotifications)
+      .pipe(
+        catchError((error) => {
+          //console.log('Error en el observable: ', error);
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            // throw new Error('');
+          }
+          return [];
+        })
+      )
+      .subscribe((result) => {
+        try {
+          console.log(result);
+        } catch (err) {
+          console.log(err);
+        }
+      });
+  }
+
+  onNotificationModalHidden() {
+    this.newNotifications = [];
+    this.badgeNotification = '0';
+
+    this.oldNotifications = this.myNotifications;
   }
 
   logout() {
