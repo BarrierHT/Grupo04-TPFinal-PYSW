@@ -47,9 +47,9 @@ const postLogin = async (req, res, next) => {
 
 const postSignup = async (req, res, next) => {
 	try {
-		const { username, email, password, phoneNumber, name } = req.body;
+		console.log(req.body);
+		const { username, email, password, phoneNumber, name, country } = req.body;
 
-		// console.log(username, email, password, telefono, name);
 
 		const user = await userSchema.findOne({ email });
 
@@ -63,6 +63,10 @@ const postSignup = async (req, res, next) => {
 			email: email,
 			phoneNumber: phoneNumber,
 			username: username,
+			country: {
+				iso2: country.iso2,
+				name: country.name
+			}
 		});
 
 		await newUser.save();

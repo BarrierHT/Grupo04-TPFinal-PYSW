@@ -1,9 +1,13 @@
 export class Usuario {
     _id!: string;
-    nombre!: string;
+    name!: string;
     password!: string;
-    correo!: string;
-    telefono!: string;
+    email!: string;
+    phoneNumber!: string;
     username!: string;
-    rol!: string;
+    role: string = 'user';
+    country!: {
+        iso2: string,
+        name: string
+    }
 }
