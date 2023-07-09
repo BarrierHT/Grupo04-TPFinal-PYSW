@@ -1,0 +1,46 @@
+.alerta {
+    color: #fff;
+    font-size: 12px;
+    margin-top: 2px;
+    background-color: red;
+    border-radius: 0 0 20px 20px;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  
+  }
+
+.button-user-upload button {
+    width: 30%;
+    height: 40px;
+    border-radius: 40px;
+    background: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    margin-right:2px ;
+  }
+  
+  .button-user-upload button[disabled]:hover {
+    cursor: default;
+  }
+
+  .button-user-upload button[disabled]:hover {
+    cursor: default;
+  }
+  
+  .button-user-upload button:not([disabled]):hover {
+    background-color: orange;
+  }
+
+  .hr-custom-1 {
+    background-color: rgb(72, 235, 72);
+    height: 3px;
+    opacity: 80%;
+  }
+  .form-box {
+    background: black;
+    border: 2px solid orange;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+  }

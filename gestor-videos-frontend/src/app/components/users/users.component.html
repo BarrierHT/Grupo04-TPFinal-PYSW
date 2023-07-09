@@ -1,30 +1,106 @@
 <div class="container mt-5 justify-content-center">
-    <div class="row p-2 justify-content-center">
-      <table class="table table-hover table-sm table-bordered">
-        <thead>
-          <tr>
-            <th scope="col" class="text-center">Id</th>
-            <th scope="col" class="text-center">Nombre</th>
-            <th scope="col" class="text-center">Email</th>
-            <th scope="col" class="text-center">Telefono</th>
-            <th scope="col" class="text-center">Usuario</th>
-            <th scope="col" class="text-center">Rol</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let user of users">
-            <th scope="row" class="text-center">{{ user._id }}</th>
-            <td class="text-center">{{ user.name }}</td>
-            <td class="text-center">{{ user.email }}</td>
-            <td class="text-center">{{ user.phoneNumber }}</td>
-            <td class="text-center">{{ user.username }}</td>
-            <td class="text-center">{{ user.role }}</td>
-            <td class="text-center align-middle">
-              <button type="button" class="btn btn-warning btn-sm mx-3" (click)="updateUser(user._id)"><i class="bi bi-pencil-square"></i></button>
-              <button type="button" class="btn btn-danger btn-sm" (click)="deleteUser(user._id)"><i class="bi bi-trash"></i></button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+  <!-- <div class="row justify-content-center mb-5">
+  </div> -->
+  <div class="row p-2 justify-content-center">
+    <table class="table table-hover table-sm table-bordered">
+      <thead>
+        <tr>
+          <th scope="col" class="text-center">Id</th>
+          <th scope="col" class="text-center">Nombre</th>
+          <th scope="col" class="text-center">Email</th>
+          <th scope="col" class="text-center">Telefono</th>
+          <th scope="col" class="text-center">Usuario</th>
+          <th scope="col" class="text-center">Rol</th>
+          <th scope="col" class="text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <th scope="row" class="text-center">{{ user._id }}</th>
+          <td class="text-center">{{ user.name }}</td>
+          <td class="text-center">{{ user.email }}</td>
+          <td class="text-center">{{ user.phoneNumber }}</td>
+          <td class="text-center">{{ user.username }}</td>
+          <td class="text-center">{{ user.role }}</td>
+          <td class="text-center align-middle">
+            <button type="button" class="btn btn-warning btn-sm mx-3" (click)="editUser(user)"><i
+                class="bi bi-pencil-square"></i></button>
+            <button type="button" class="btn btn-danger btn-sm" (click)="deleteUser(user._id)"><i
+                class="bi bi-trash"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="modal" tabindex="-1" role="dialog" *ngIf="isEditModalOpen" [ngClass]="{'d-block': isEditModalOpen}">
+    <div class="modal-dialog modal-dialog-centered modal-dark" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modificar Usuario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="closeEdit()"></button>
+        </div>
+        <form #userForm="ngForm" *ngIf="editingUser">
+          <div class="modal-body">
+
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="nameInput" placeholder="email" [(ngModel)]="editingUser.name" #name="ngModel"
+                name="name" required>
+              <label class="text-black-50" for="nameInput">Nombre</label>
+              <div
+                *ngIf="name.invalid && (name.dirty || name.touched)">
+                <div class="alerta text-center" *ngIf="name.errors?.['required']">Por favor,
+                  ingresa un nombre</div>
+              </div>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="emailInput" placeholder="email" #email="ngModel"
+                [(ngModel)]="editingUser.email" name="email" required>
+              <label class="text-black-50" for="emailInput">Email</label>
+              <div
+                *ngIf="email.invalid && (email.dirty || email.touched)">
+                <div class="alerta text-center" *ngIf="email.errors?.['required']">Por favor,
+                  ingresa un
+                  email</div>
+                <div class="alerta text-center" *ngIf="email.errors?.['email']">Por favor, ingresa
+                  un
+                  email válido</div>
+              </div>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input type="tel" class="form-control" id="phoneInput" placeholder="phoneNumber" #phoneNumber="ngModel"
+                [(ngModel)]="editingUser.phoneNumber" name="phoneNumber" required>
+              <label class="text-black-50" for="phoneInput">Teléfono</label>
+              <div class=""
+                *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)">
+                <div class="alerta text-center" *ngIf="phoneNumber.errors?.['required']">Por favor,
+                  ingresa un número de teléfono</div>
+              </div>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="usernameInput" placeholder="username" #username="ngModel"
+                [(ngModel)]="editingUser.username" name="username" required>
+              <label class="text-black-50" for="usernameInput">Usuario</label>
+              <div class=""
+                *ngIf="username.invalid && (username.dirty || username.touched)">
+                <div class="alerta text-center" *ngIf="username.errors?.['required']">Por favor,
+                  ingresa
+                  un nombre de usuario</div>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer button-user-upload justify-content-center">
+            <button type="submit" [disabled]="userForm.invalid" (click)="saveUser()">Modificar</button>
+            <button type="button" (click)="closeEdit()">Cerrar</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
+  
+</div>

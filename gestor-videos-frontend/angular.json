@@ -20,7 +20,7 @@
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
-            "allowedCommonJsDependencies":["apexcharts"],
+            "allowedCommonJsDependencies":["apexcharts","print-js"],
             "assets": [
               "src/favicon.ico",
               "src/assets"

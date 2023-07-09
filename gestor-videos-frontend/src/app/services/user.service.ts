@@ -18,14 +18,21 @@ export class UserService {
     return this._http.get(`http://localhost:8080/user/get-users`, httpOption);
   }
 
-  updateUser(idUser:string): Observable<any> {
+  updateUser(idUser:string,dataUser:any): Observable<any> {
+    const body = {
+      name: dataUser.name,
+      email: dataUser.email,
+      phoneNumber: dataUser.phoneNumber,
+      username: dataUser.username
+    };
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       }),
     };
-    return this._http.put(`http://localhost:8080/user/update-user/${idUser}`, httpOption);
+    return this._http.put(`http://localhost:8080/user/update-user/${idUser}`,
+    body, httpOption);
   }
 
   deleteUser(idUser:string): Observable<any> {
