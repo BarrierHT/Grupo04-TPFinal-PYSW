@@ -26,6 +26,7 @@
     "datatables.net-dt": "^1.13.4",
     "jquery": "^3.7.0",
     "ng-apexcharts": "^1.7.7",
+    "ngx-toastr": "^17.0.2",
     "print-js": "^1.6.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

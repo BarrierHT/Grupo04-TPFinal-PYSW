@@ -23,7 +23,8 @@
                             (click)="reviewReport(report._id)">
                             Revisar
                         </button>
-                        <p class="btn btn-warning btn-sm" *ngIf="report.reviewed == true">
+                        <p class="btn btn-info btn-sm" *ngIf="report.reviewed == true"
+                            (click)="reviewedReport(report._id)">
                             Revisado
                         </p>
                     </td>

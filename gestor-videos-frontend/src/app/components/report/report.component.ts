@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { Subject, catchError, delay } from 'rxjs';
 import { ReportApiService } from 'src/app/services/report-api.service';
 
@@ -15,7 +16,8 @@ export class ReportComponent implements OnInit, OnDestroy {
 
   constructor(
     private reportService: ReportApiService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -64,6 +66,7 @@ export class ReportComponent implements OnInit, OnDestroy {
           //console.log('Error en el observable: ', error);
           if (error.status !== 200 && error.status !== 201) {
             console.log('Error en el observable: ', error.error.message);
+            this.toastrService.error('Error al revisar el reporte', 'Revision Incorrecta');
             // throw new Error('');
           }
           return [];
@@ -74,9 +77,14 @@ export class ReportComponent implements OnInit, OnDestroy {
         try {
           console.log(result);
           this.getReports();
+          this.toastrService.success('Se ha revisado el reporte correctamente', 'Revision Correcta');
         } catch (err) {
           console.log(err);
         }
       });
+  }
+
+  reviewedReport(reportId: string){
+    this.toastrService.info('Este reporte ya esta revisado', 'Información Revision');
   }
 }

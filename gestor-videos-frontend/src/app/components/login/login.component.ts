@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { catchError, pipe } from 'rxjs';
 import { Usuario } from 'src/app/models/usuario';
 import { AuthService } from 'src/app/services/auth.service';
@@ -11,7 +12,10 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent {
   usuario: Usuario;
 
-  constructor(private authService: AuthService) {
+  constructor(
+    private authService: AuthService,
+    private toastrService: ToastrService
+    ) {
     this.usuario = new Usuario();
   }
 
@@ -25,6 +29,10 @@ export class LoginComponent {
           //console.log('Error en el observable: ', error);
           if (error.status !== 200 && error.status !== 201) {
             console.log('Error en el observable: ', error.error.message);
+            if(error.error.message == 'A user with this email was not found')
+              this.toastrService.error('El email ' + email + ' no esta registrado', 'Ingreso Incorrecto');
+            if(error.error.message == 'A user with this password was not found')
+              this.toastrService.error('Contraseña incorrecta', 'Ingreso Incorrecto');
             // throw new Error('');
           }
           return [];
@@ -33,6 +41,7 @@ export class LoginComponent {
       .subscribe((result) => {
         try {
           console.log(result);
+          this.toastrService.success('Se ha logueado correctamente', 'Ingreso Correcto');
 
           localStorage.setItem('token', result.token);
           localStorage.setItem('userId', result.userId);
@@ -48,6 +57,7 @@ export class LoginComponent {
           }
         } catch (err) {
           console.log(err);
+          this.toastrService.error('Error al intentar loguearse', 'Error de Login');
         }
       });
   }

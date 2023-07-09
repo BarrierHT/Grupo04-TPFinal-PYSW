@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { catchError, delay } from 'rxjs';
 import { PlaylistApiService } from 'src/app/services/playlist-api.service';
 import { ReportApiService } from 'src/app/services/report-api.service';
@@ -36,7 +37,8 @@ export class ShowVideoComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private playlistApiService: PlaylistApiService,
     private router: Router,
-    private videoService: VideoApiService
+    private videoService: VideoApiService,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -96,6 +98,7 @@ export class ShowVideoComponent implements OnInit {
     }
     btn1.classList.toggle('green');
     console.log({ videoId: this.video._id, rating: 1 });
+    this.toastrService.info('Te ha gustado el video');
   }
 
   addNegativeRating() {
@@ -105,6 +108,7 @@ export class ShowVideoComponent implements OnInit {
 
     btn2.classList.toggle('red');
     console.log({ videoId: this.video._id, rating: -1 });
+    this.toastrService.info('No te ha gustado el video');
   }
 
   onMouseEnter(video: any) {
@@ -139,6 +143,7 @@ export class ShowVideoComponent implements OnInit {
           //console.log('Error en el observable: ', error);
           if (error.status !== 200 && error.status !== 201) {
             console.log('Error en el observable: ', error.error.message);
+            this.toastrService.error('No se ha podido generar el reporte', 'Error');
             // throw new Error('');
           }
           return [];
@@ -147,8 +152,10 @@ export class ShowVideoComponent implements OnInit {
       .subscribe((result) => {
         try {
           console.log(result);
+          this.toastrService.success('Se ha generado el reporte correctamente', 'Reporte Enviado');
         } catch (err) {
           console.log(err);
+          this.toastrService.success('No se ha pudo generar el reporte correctamente', 'Error Reporte');
         }
       });
   }
@@ -170,8 +177,10 @@ export class ShowVideoComponent implements OnInit {
       .subscribe((res) => {
         try {
           console.log(res);
+          this.toastrService.success('Se ha añadido el video correctamente a la playlist', "Añadido");
         } catch (err) {
           console.log(err);
+          this.toastrService.error('No se pudo añadir el video a la playlist', "Error de Playlist");
         }
       });
   }
@@ -181,7 +190,9 @@ export class ShowVideoComponent implements OnInit {
       try {
         console.log(res);
         this.playlist = res;
-        if (res.videos.length < 1) alert('La playlist no tiene videos aún!');
+        if (res.videos.length < 1) 
+          this.toastrService.warning('La playlist no tiene videos aún!', 'Información Playlist');
+        //alert('La playlist no tiene videos aún!');
       } catch (err) {
         console.log(err);
       }

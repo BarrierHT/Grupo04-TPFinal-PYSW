@@ -1,6 +1,6 @@
 <div class="container mt-5 justify-content-center">
     <div class="row g-5 justify-content-center">
-        <div class="col-4">
+        <div class="col-10 col-sm-8 col-md-6 col-lg-4">
             <form class="form form-box p-3" method="POST" #groupForm="ngForm" (submit)="postGroup()">
                 <h2 class="row h2 d-flex justify-content-center">Registrar Grupo</h2>
                 <div class="form-floating mt-3">
@@ -8,7 +8,7 @@
                         [(ngModel)]="group.name" #groupName="ngModel">
                     <label class="text-black-50" for="name">Group Name</label>
                 </div>
-                <!-- <div class="" *ngIf="name.invalid && (name.dirty || name.touched)">
+                <!-- <div *ngIf="name.invalid && (name.dirty || name.touched)">
                     <div *ngIf="name.errors?.['required']" class="alerta text-center">
                         Please enter a name!
                     </div>
@@ -20,7 +20,7 @@
                         required>
                     <label class="text-black-50" for="description">Group Description</label>
                 </div>
-                <!-- <div class="" *ngIf="description.invalid && (description.dirty || description.touched)">
+                <!-- <div *ngIf="description.invalid && (description.dirty || description.touched)">
                     <div *ngIf="description.errors?.['required']" class="alerta text-center">
                         Please enter a description!
                     </div>

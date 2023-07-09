@@ -4,6 +4,7 @@ import { Subject, catchError } from 'rxjs';
 import { ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import * as printJS from 'print-js';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-videos',
@@ -19,7 +20,8 @@ export class VideosComponent implements OnInit, OnDestroy {
   constructor(
     private videoService: VideoApiService,
     private cdr: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -68,13 +70,15 @@ export class VideosComponent implements OnInit, OnDestroy {
       .pipe(
         catchError((error) => {
           console.log('Error en el observable: ', error);
+          this.toastrService.error('No se pudo eliminar correctamente el video', 'Error al Eliminar');
           return [];
         })
       )
       .subscribe((res) => {
         try {
           console.log(res);
-          alert('Video eliminado correctamente');
+          //alert('Video eliminado correctamente');
+          this.toastrService.success('Se elimino correctamente el video', 'Eliminación Correcta');
           this.getVideos();
         } catch (err) {
           console.log(err);
@@ -92,6 +96,7 @@ export class VideosComponent implements OnInit, OnDestroy {
       header: '<h3 class="" style="text-align: center;">Todos los Videos</h3>',
       gridStyle: 'border: 2px solid #3971A5;',
     });
+    this.toastrService.info('Se genero un PDF', 'Generación PDF');
   }
 
   procesarListado(videos: Array<any>): Array<any> {

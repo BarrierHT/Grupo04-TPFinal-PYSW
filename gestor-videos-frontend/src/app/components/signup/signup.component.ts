@@ -4,6 +4,7 @@ import { Usuario } from 'src/app/models/usuario';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { CountryApiService } from 'src/app/services/country-api.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signup',
@@ -16,7 +17,12 @@ export class SignupComponent implements OnInit{
   countries: any = [];
   selectedCountry = '';
 
-  constructor(private authService: AuthService, private router: Router, private countryService: CountryApiService) {
+  constructor(
+    private authService: AuthService, 
+    private router: Router, 
+    private countryService: CountryApiService,
+    private toastrService: ToastrService
+    ) {
     this.usuario = new Usuario();
     this.newPassword = '';
   }
@@ -38,6 +44,8 @@ export class SignupComponent implements OnInit{
         catchError((error) => {
           if (error.status !== 200 && error.status !== 201) {
             console.log('Error en el observable: ', error.error.message);
+            if(error.error.message = 'The email is registered')
+              this.toastrService.error('El email ' + this.usuario.email + ' ya ha sido registrado', 'Ingreso Incorrecto');
           }
           return [];
         })
@@ -45,12 +53,14 @@ export class SignupComponent implements OnInit{
       .subscribe((result) => {
         try {
           console.log(result);
+          this.toastrService.success('Se ha registrado correctamente', 'Ingreso Correcto');
   
           if (result) {
             this.router.navigate(['login']);
           }
         } catch (err) {
           console.log(err);
+          this.toastrService.error('Error al intentar registrarse', 'Error de Signup');
         }
       });
   }

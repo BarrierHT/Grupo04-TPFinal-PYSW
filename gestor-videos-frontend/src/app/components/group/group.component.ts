@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { catchError } from 'rxjs';
 import { GroupApiService } from 'src/app/services/group-api.service';
 import { NotificationApiService } from 'src/app/services/notification-api.service';
@@ -25,7 +26,8 @@ export class GroupComponent implements OnInit {
     private videoService: VideoApiService,
     private notificationService: NotificationApiService,
 
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -33,15 +35,24 @@ export class GroupComponent implements OnInit {
   }
 
   postGroup() {
-    this.group.owner = localStorage.getItem('userId');
-    this.groupService.postGroup(this.group).subscribe((res) => {
-      try {
-        console.log(res);
-        this.getMyGroups();
-      } catch (err) {
-        console.log(err);
-      }
-    });
+    if(this.group.name != '' && this.group.description != ''){
+      this.group.owner = localStorage.getItem('userId');
+      this.groupService.postGroup(this.group).subscribe((res) => {
+        try {
+          console.log(res);
+          this.toastrService.success('Se ha creado el grupo exitosamente', 'Creación Correcta');
+          this.getMyGroups();
+        } catch (err) {
+          console.log(err);
+          this.toastrService.success('No se ha podido crear el grupo correctamente', 'Creación Incorrecta');
+        }
+      });
+    }else{
+      if(this.group.name == '')
+        this.toastrService.warning('Ingrese un nombre para el grupo');
+      if(this.group.description == '')
+        this.toastrService.warning('Ingrese una descripción para el grupo');
+    }
   }
 
   toggleSendNotifications(sendNotificationGroup: any, groupId: string) {
@@ -54,6 +65,7 @@ export class GroupComponent implements OnInit {
           //console.log('Error en el observable: ', error);
           if (error.status !== 200 && error.status !== 201) {
             console.log('Error en el observable: ', error.error.message);
+            this.toastrService.error('No se ha podido encontrar el grupo', 'Grupo Inexistente');
             // throw new Error('');
           }
           return [];
@@ -62,8 +74,13 @@ export class GroupComponent implements OnInit {
       .subscribe((result) => {
         try {
           console.log(result);
+          if(sendNotificationGroup)
+            this.toastrService.success('Recibirá notificaciones del grupo','Notificaciones Actualizadas');
+          else
+            this.toastrService.error('No recibirá notificaciones del grupo','Notificaciones Actualizadas');
         } catch (err) {
           console.log(err);
+          this.toastrService.error('Error al intentar recibir notificaciones', 'Error de Notificaciones');
         }
       });
   }
@@ -77,6 +94,7 @@ export class GroupComponent implements OnInit {
       },
       (error) => {
         console.log(error);
+        this.toastrService.error('Error al intentar obtener grupos', 'Error de Grupos');
       }
     );
   }
