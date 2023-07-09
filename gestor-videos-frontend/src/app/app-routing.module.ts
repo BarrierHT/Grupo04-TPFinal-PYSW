@@ -13,6 +13,7 @@ import { ReportComponent } from './components/report/report.component';
 import { ExploreGroupsComponent } from './components/explore-groups/explore-groups.component';
 import { VideosComponent } from './components/videos/videos.component';
 import { StatsPanelComponent } from './components/stats-panel/stats-panel.component';
+import { UsersComponent } from './components/users/users.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'reports', component: ReportComponent },
   { path: 'explore-groups', component: ExploreGroupsComponent },
   { path: 'videos', component: VideosComponent },
+  { path: 'users', component: UsersComponent },
   { path: 'stats-panel', component: StatsPanelComponent },
 
   { path: 'login', component: LoginComponent },
