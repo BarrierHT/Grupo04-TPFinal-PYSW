@@ -2,7 +2,18 @@
   <!-- <div class="row justify-content-center mb-5">
   </div> -->
   <div class="row p-2 justify-content-center">
-    <table class="table table-hover table-sm table-bordered">
+
+    <h2 class="text-center user-header">
+      <span class="user-title">Gestionar Usuarios</span>
+
+      <div class="container-btn">
+        <button class="custom-btn-generate text-white" (click)="generatePDF()">
+          Generar PDF <i class="bi bi-filetype-pdf fs-2"></i>
+        </button>
+      </div>
+    </h2>
+
+    <table class="table table-hover table-sm table-bordered" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
       <thead>
         <tr>
           <th scope="col" class="text-center">Id</th>
@@ -11,6 +22,7 @@
           <th scope="col" class="text-center">Telefono</th>
           <th scope="col" class="text-center">Usuario</th>
           <th scope="col" class="text-center">Rol</th>
+          <th scope="col" class="text-center">Pais</th>
           <th scope="col" class="text-center">Acciones</th>
         </tr>
       </thead>
@@ -22,6 +34,7 @@
           <td class="text-center">{{ user.phoneNumber }}</td>
           <td class="text-center">{{ user.username }}</td>
           <td class="text-center">{{ user.role }}</td>
+          <td class="text-center">{{ user.country.name }}</td>
           <td class="text-center align-middle">
             <button type="button" class="btn btn-warning btn-sm mx-3" (click)="editUser(user)"><i
                 class="bi bi-pencil-square"></i></button>
@@ -45,11 +58,10 @@
           <div class="modal-body">
 
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="nameInput" placeholder="email" [(ngModel)]="editingUser.name" #name="ngModel"
-                name="name" required>
+              <input type="text" class="form-control" id="nameInput" placeholder="email" [(ngModel)]="editingUser.name"
+                #name="ngModel" name="name" required>
               <label class="text-black-50" for="nameInput">Nombre</label>
-              <div
-                *ngIf="name.invalid && (name.dirty || name.touched)">
+              <div *ngIf="name.invalid && (name.dirty || name.touched)">
                 <div class="alerta text-center" *ngIf="name.errors?.['required']">Por favor,
                   ingresa un nombre</div>
               </div>
@@ -59,8 +71,7 @@
               <input type="email" class="form-control" id="emailInput" placeholder="email" #email="ngModel"
                 [(ngModel)]="editingUser.email" name="email" required>
               <label class="text-black-50" for="emailInput">Email</label>
-              <div
-                *ngIf="email.invalid && (email.dirty || email.touched)">
+              <div *ngIf="email.invalid && (email.dirty || email.touched)">
                 <div class="alerta text-center" *ngIf="email.errors?.['required']">Por favor,
                   ingresa un
                   email</div>
@@ -74,8 +85,7 @@
               <input type="tel" class="form-control" id="phoneInput" placeholder="phoneNumber" #phoneNumber="ngModel"
                 [(ngModel)]="editingUser.phoneNumber" name="phoneNumber" required>
               <label class="text-black-50" for="phoneInput">Teléfono</label>
-              <div class=""
-                *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)">
+              <div class="" *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)">
                 <div class="alerta text-center" *ngIf="phoneNumber.errors?.['required']">Por favor,
                   ingresa un número de teléfono</div>
               </div>
@@ -85,8 +95,7 @@
               <input type="text" class="form-control" id="usernameInput" placeholder="username" #username="ngModel"
                 [(ngModel)]="editingUser.username" name="username" required>
               <label class="text-black-50" for="usernameInput">Usuario</label>
-              <div class=""
-                *ngIf="username.invalid && (username.dirty || username.touched)">
+              <div class="" *ngIf="username.invalid && (username.dirty || username.touched)">
                 <div class="alerta text-center" *ngIf="username.errors?.['required']">Por favor,
                   ingresa
                   un nombre de usuario</div>
@@ -102,5 +111,5 @@
       </div>
     </div>
   </div>
-  
+
 </div>

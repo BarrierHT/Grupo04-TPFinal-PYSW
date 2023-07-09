@@ -15,30 +15,40 @@ import { VideosComponent } from './components/videos/videos.component';
 import { StatsPanelComponent } from './components/stats-panel/stats-panel.component';
 import { UsersComponent } from './components/users/users.component';
 import { AuthGuard } from './guards/auth.guard';
+import { AuthRoleGuard } from './guards/auth-role.guard';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'playlist', component: ListVideoComponent },
+  { path: 'playlist', component: ListVideoComponent, canActivate: [AuthGuard] },
   { path: 'watch/:videoId', component: ShowVideoComponent },
   {
     path: 'watch/:videoId/playlist/:playlistId',
     component: ShowVideoComponent,
+    canActivate: [AuthGuard],
   },
-  { path: 'form-video/:videoId', component: FormVideoComponent },
-  { path: 'channel', component: ChannelComponent },
-  { path: 'groups', component: GroupComponent },
-  { path: 'reports', component: ReportComponent },
-  { path: 'explore-groups', component: ExploreGroupsComponent },
-  { path: 'videos', component: VideosComponent },
-  { path: 'users', component: UsersComponent },
+  {
+    path: 'form-video/:videoId',
+    component: FormVideoComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'channel', component: ChannelComponent, canActivate: [AuthGuard] },
+  { path: 'groups', component: GroupComponent, canActivate: [AuthGuard] },
+  { path: 'reports', component: ReportComponent, canActivate: [AuthRoleGuard] },
+  {
+    path: 'explore-groups',
+    component: ExploreGroupsComponent,
+    canActivate: [AuthGuard],
+  },
+  { path: 'videos', component: VideosComponent, canActivate: [AuthRoleGuard] },
+  { path: 'users', component: UsersComponent, canActivate: [AuthRoleGuard] },
   {
     path: 'stats-panel',
     component: StatsPanelComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthRoleGuard],
   },
 
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent },
+  { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
+  { path: 'signup', component: SignupComponent, canActivate: [AuthGuard] },
 
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home', pathMatch: 'full' },

@@ -124,20 +124,35 @@
                     <div class="mb-3">
                       <label for="title" class="form-label">Titulo:</label>
                       <input name="reportTitle" type="text" class="form-control" id="reportTitle"
-                        [(ngModel)]="report.title" #title="ngModel" />
+                        [(ngModel)]="report.title" #title="ngModel" required />
                     </div>
+
+
+                    <div *ngIf="title.invalid && (title.dirty || title.touched)">
+                      <div *ngIf="title.errors?.['required']" class="alerta text-center">
+                        Please, enter a title!
+                      </div>
+                    </div>
+
 
                     <div class="mb-3">
                       <label for="reason" class="form-label">Motivo:</label>
                       <textarea name="reportReason" class="form-control" id="reportReason" rows="3"
-                        [(ngModel)]="report.reason" #reason="ngModel"></textarea>
+                        [(ngModel)]="report.reason" #reason="ngModel" required></textarea>
+                    </div>
+
+                    <div *ngIf="reason.invalid && (reason.dirty || reason.touched)">
+                      <div *ngIf="reason.errors?.['required']" class="alerta text-center">
+                        Please, enter a reason!
+                      </div>
                     </div>
 
                     <div class="modal-footer">
                       <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
                         Cancelar
                       </button>
-                      <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">
+                      <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal"
+                        [disabled]="reportForm.invalid">
                         Enviar
                       </button>
                     </div>

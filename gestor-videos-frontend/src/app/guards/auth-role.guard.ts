@@ -12,7 +12,7 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class AuthRoleGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(
@@ -22,23 +22,21 @@ export class AuthGuard implements CanActivate {
     return this.authService.getLoggedUser().pipe(
       map((res: any) => {
         // console.log(res);
-        if (res) {
-          if (state.url == '/login' || state.url == '/signup') {
-            console.log('already logged');
-            this.router.navigate(['/home']);
-            return false;
-          } else return true;
-        } else throw new Error('Not Authenticated');
+        // console.log(state.url);
+        if (state.url == '/videos' || state.url == '/users')
+          if (res.user.role == 'admin') return true;
+
+        if (state.url == '/reports' || state.url == '/stats-panel')
+          if (res.user.role == 'gestor' || res.user.role == 'admin')
+            return true;
+
+        throw new Error('Not Authorized');
       }),
       catchError((err) => {
         console.log(err);
-        console.log(state.url);
-        if (state.url == '/login' || state.url == '/signup') return of(true);
-        else {
-          // Aquí puedes realizar alguna lógica de redirección o manejo de errores
-          this.router.navigate(['/home']);
-          return of(false);
-        }
+        // Aquí puedes realizar alguna lógica de redirección o manejo de errores
+        this.router.navigate(['/home']);
+        return of(false);
       })
     );
   }

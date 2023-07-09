@@ -8,6 +8,11 @@
                         [(ngModel)]="group.name" #groupName="ngModel">
                     <label class="text-black-50" for="name">Group Name</label>
                 </div>
+                <div *ngIf="groupName.invalid && (groupName.dirty || groupName.touched)">
+                    <div *ngIf="groupName.errors?.['required']" class="alerta text-center">
+                        Please, enter a name!
+                    </div>
+                </div>
                 <!-- <div *ngIf="name.invalid && (name.dirty || name.touched)">
                     <div *ngIf="name.errors?.['required']" class="alerta text-center">
                         Please enter a name!
@@ -20,6 +25,11 @@
                         required>
                     <label class="text-black-50" for="description">Group Description</label>
                 </div>
+                <div *ngIf="groupDescription.invalid && (groupDescription.dirty || groupDescription.touched)">
+                    <div *ngIf="groupDescription.errors?.['required']" class="alerta text-center">
+                        Please, enter a description!
+                    </div>
+                </div>
                 <!-- <div *ngIf="description.invalid && (description.dirty || description.touched)">
                     <div *ngIf="description.errors?.['required']" class="alerta text-center">
                         Please enter a description!
@@ -28,7 +38,7 @@
 
                 <div class="row mt-3 button-group-upload">
                     <input type="hidden" name="_csrf" value="">
-                    <button type="submit">Registrar</button>
+                    <button type="submit" [disabled]="groupForm.invalid">Registrar</button>
                 </div>
             </form>
         </div>
