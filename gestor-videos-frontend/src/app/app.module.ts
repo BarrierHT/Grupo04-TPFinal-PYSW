@@ -24,6 +24,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { VideosComponent } from './components/videos/videos.component';
 import { StatsPanelComponent } from './components/stats-panel/stats-panel.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { UsersComponent } from './components/users/users.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     ExploreGroupsComponent,
     VideosComponent,
     StatsPanelComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,

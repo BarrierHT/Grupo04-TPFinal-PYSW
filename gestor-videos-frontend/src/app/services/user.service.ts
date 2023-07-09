@@ -17,4 +17,35 @@ export class UserService {
     };
     return this._http.get(`http://localhost:8080/user/get-users`, httpOption);
   }
+
+  updateUser(idUser:string): Observable<any> {
+    let httpOption = {
+      headers: new HttpHeaders({
+        'Content-type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+    };
+    return this._http.put(`http://localhost:8080/user/update-user/${idUser}`, httpOption);
+  }
+
+  deleteUser(idUser:string): Observable<any> {
+    let httpOption = {
+      headers: new HttpHeaders({
+        'Content-type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+    };
+    return this._http.delete(`http://localhost:8080/user/delete-user/${idUser}`, httpOption);
+  }
+  
+  getUser(idUser:string): Observable<any> {
+    let httpOption = {
+      headers: new HttpHeaders({
+        'Content-type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+    };
+    return this._http.get(`http://localhost:8080/user/get-user/${idUser}`, httpOption);
+  }
+  
 }
