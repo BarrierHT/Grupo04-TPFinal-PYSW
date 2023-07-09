@@ -25,7 +25,25 @@ export class NotificationApiService {
     );
   }
 
-  toggleNotification(toggledValue: boolean, groupId: string): Observable<any> {
+  putNewNotifications(newNotifications: any[]) {
+    let httpOption = {
+      headers: new HttpHeaders({
+        'Content-type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+    };
+
+    return this._http.put(
+      `http://localhost:8080/notification/update-new-notification`,
+      { newNotifications },
+      httpOption
+    );
+  }
+
+  putToggleNotification(
+    toggledValue: boolean,
+    groupId: string
+  ): Observable<any> {
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',

@@ -1,26 +1,45 @@
 <div class="container mt-5 justify-content-center">
-    <div class="row p-2 justify-content-center">
-      <table class="table table-hover table-sm table-bordered">
-        <thead>
-          <tr>
-            <th scope="col" class="text-center">Id video</th>
-            <th scope="col" class="text-center">Title video</th>
-            <th scope="col" class="text-center">Owner</th>
-            <th scope="col" class="text-center">Options</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let video of videos">
-            <th scope="row" class="text-center">{{ video._id }}</th>
-            <td class="text-center">{{ video.title }}</td>
-            <td class="text-center">{{ video.owner.name }}</td>
-            <td class="text-center align-middle">
-              <button type="button" class="btn btn-warning btn-sm mx-3" (click)="updateVideo(video._id)">Editar</button>
-              <button type="button" class="btn btn-danger btn-sm" (click)="deleteVideo(video._id)">Eliminar</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div class="row p-2 justify-content-center">
+    <h2 class="text-center video-header">
+      <span class="video-title">Gestionar Videos</span>
+
+      <div class="container-btn">
+        <button class="custom-btn-generate text-white" (click)="generatePDF()">
+          Generar PDF <i class="bi bi-filetype-pdf fs-2"></i>
+        </button>
+      </div>
+    </h2>
+
+
+    <table class="table table-hover table-sm table-bordered text-white" datatable [dtOptions]="dtOptions"
+      [dtTrigger]="dtTrigger">
+      <thead>
+        <tr>
+          <th scope="col" class="text-center">Id</th>
+          <th scope="col" class="text-center">Titulo</th>
+          <th scope="col" class="text-center">Descripcion</th>
+
+          <th scope="col" class="text-center">Id Owner</th>
+          <th scope="col" class="text-center">Id Email</th>
+
+          <th scope="col" class="text-center">Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let video of videos">
+          <th scope="row" class="text-center">{{ video._id }}</th>
+          <td class="text-center">{{ video.title }}</td>
+          <td class="text-center">{{ video.description }}</td>
+
+          <td class="text-center">{{ video.owner._id }}</td>
+          <td class="text-center">{{ video.owner.email }}</td>
+
+          <td class="text-center align-middle">
+            <button type="button" class="btn btn-warning btn-sm mx-3" (click)="updateVideo(video._id)">Editar</button>
+            <button type="button" class="btn btn-danger btn-sm" (click)="deleteVideo(video._id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  
+</div>
