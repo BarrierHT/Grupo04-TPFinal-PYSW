@@ -25,6 +25,9 @@ import { VideosComponent } from './components/videos/videos.component';
 import { StatsPanelComponent } from './components/stats-panel/stats-panel.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { UsersComponent } from './components/users/users.component';
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -55,6 +58,13 @@ import { UsersComponent } from './components/users/users.component';
     HttpClientModule,
     DataTablesModule,
     NgApexchartsModule,
+    CommonModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(({
+      closeButton: true,
+      progressBar: true,
+      preventDuplicates: true,
+    })), // ToastrModule added
   ],
   providers: [],
   bootstrap: [AppComponent],

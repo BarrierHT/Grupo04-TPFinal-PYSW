@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Video } from 'src/app/models/video';
 import { GroupApiService } from 'src/app/services/group-api.service';
 import { VideoApiService } from 'src/app/services/video-api.service';
@@ -30,7 +31,8 @@ export class FormVideoComponent implements OnInit {
     private videoApiService: VideoApiService,
     private groupService: GroupApiService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -76,14 +78,18 @@ export class FormVideoComponent implements OnInit {
             groupId: '',
           };
           if (result.message == 'Video uploaded') {
-            alert('VIDEO SUBIDO CORRECTAMENTE');
+            //alert('VIDEO SUBIDO CORRECTAMENTE');
+            this.toastrService.success('Se ha subido correctamente el video', 'Subida Correcta');
             window.location.href =
               'http://localhost:4200/watch/' + result.videoId;
             //Update header
+          }else{
+            this.toastrService.error('No se ha podido subir el video', 'Subida Incorrecta');
           }
         },
         (error) => {
           console.log(error);
+          this.toastrService.error('Error al intentar subir video', 'Error de Videos');
         }
       );
     } else {

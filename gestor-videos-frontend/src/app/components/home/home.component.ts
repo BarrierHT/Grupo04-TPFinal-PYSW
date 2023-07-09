@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { catchError, delay } from 'rxjs';
 import { PlaylistApiService } from 'src/app/services/playlist-api.service';
 import { VideoApiService } from 'src/app/services/video-api.service';
@@ -49,13 +50,15 @@ export class HomeComponent implements OnInit {
     private videoApiService: VideoApiService,
     private playlistApiService: PlaylistApiService,
     private cdr: ChangeDetectorRef,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
+    private toastrService: ToastrService
   ) {}
 
   async ngOnInit() {
     if (localStorage.getItem('userId')) {
       this.logged = true;
       this.showPlaylists();
+      //this.toastrService.success('Bienvenido');
     }
     this.searchVideos();
   }
@@ -118,6 +121,7 @@ export class HomeComponent implements OnInit {
           //console.log('Error en el observable: ', error);
           if (error.status !== 200 && error.status !== 201) {
             console.log('Error en el observable: ', error.error.message);
+            this.toastrService.error('Error al buscar videos', 'Error de Búsqueda');
             // throw new Error('');
           }
           return [];
@@ -128,8 +132,13 @@ export class HomeComponent implements OnInit {
         try {
           console.log(result);
           this.videos = result.videos;
+          if(this.pattern != ''){
+            if(this.videos.length == 0)
+              this.toastrService.info('No se encontraron videos', 'Búsqueda de Videos');
+          }
         } catch (err) {
           console.log(err);
+          this.toastrService.error('Error al intentar buscar videos', 'Error de Videos');
         }
       });
   }
@@ -166,8 +175,10 @@ export class HomeComponent implements OnInit {
       .subscribe((res) => {
         try {
           console.log(res);
+          this.toastrService.success('Se ha añadido el video correctamente a la playlist', "Añadido");
         } catch (err) {
           console.log(err);
+          this.toastrService.error('No se pudo añadir el video a la playlist', "Error de Playlist");
         }
       });
   }

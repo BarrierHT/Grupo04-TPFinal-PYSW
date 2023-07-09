@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { catchError, delay } from 'rxjs';
 import { PlaylistApiService } from 'src/app/services/playlist-api.service';
 
@@ -21,7 +22,8 @@ export class ListVideoComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private playlistApiService: PlaylistApiService
+    private playlistApiService: PlaylistApiService,
+    private toastrService: ToastrService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -63,8 +65,11 @@ export class ListVideoComponent implements OnInit {
       try {
         console.log("GET PLAYLIST LIST-VIDEO")
         console.log(res);
-        if (res.videos.length < 1) alert('La playlist no tiene videos aún!');
-        else this.router.navigate(['watch', res.videos[0].videoId._id, 'playlist', res._id]);
+        if (res.videos.length < 1) 
+          this.toastrService.warning('La playlist no tiene videos aún!', 'Información Playlist');
+          //alert('La playlist no tiene videos aún!');
+        else 
+          this.router.navigate(['watch', res.videos[0].videoId._id, 'playlist', res._id]);
         //this.router.navigate(['watch', res.videos[0].videoId], { queryParams: { playlist: res._id } });
       } catch (err) {
         console.log(err);
@@ -78,9 +83,11 @@ export class ListVideoComponent implements OnInit {
     this.playlistApiService.postPlaylist(this.newPlaylist).subscribe((res) => {
       try {
         console.log(res);
+        this.toastrService.success('Se ha creado la playlist exitosamente', 'Creación Correcta');
         this.searchPlaylists();
       } catch (err) {
         console.log(err);
+        this.toastrService.error('No se ha podido crear la playlist correctamente', 'Creación Incorrecta');
       }
     });
   }
