@@ -34,4 +34,14 @@ export class AuthService {
       httpOption
     );
   }
+
+  getLoggedUser() {
+    let httpOption = {
+      headers: new HttpHeaders({
+        'Content-type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      }),
+    };
+    return this._http.get(`http://localhost:8080/auth/loggedUser`, httpOption);
+  }
 }

@@ -9,8 +9,8 @@ router.get('/get-groups', isAuth, groupController.getGroups);
 
 router.post('/add-group', isAuth, groupController.postGroup);
 
-router.get('/get-groups-owner-user', isAuth, groupController.getGroupsByOwner);
-// LLamar cuando se solicite unirse
+// router.get('/get-groups-owner-user', isAuth, groupController.getGroupsByOwner);
+// LLamar si se necesita ver todos mis grupos donde soy dueño
 
 router.get('/get-groups-user', isAuth, groupController.getGroupsByUser);
 router.put('/add-user-to-group', isAuth, groupController.postAddUserToGroup);

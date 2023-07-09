@@ -1,6 +1,7 @@
 import express from 'express';
 import videoController from '../controllers/video.js';
 import { isAuth } from '../middlewares/is-Auth.js';
+import { isAdmin } from '../middlewares/is-Admin.js';
 
 import multer from 'multer';
 import multerS3 from 'multer-s3';
@@ -57,8 +58,18 @@ router.post(
 	videoController.postVideo
 );
 
-router.delete('/delete-video/:videoId', isAuth, videoController.deleteVideo);
-router.put('/update-video/:videoId', isAuth, videoController.updateVideo);
+router.delete(
+	'/delete-video/:videoId',
+	isAuth,
+	isAdmin,
+	videoController.deleteVideo
+);
+router.put(
+	'/update-video/:videoId',
+	isAuth,
+	isAdmin,
+	videoController.updateVideo
+);
 
 // router.post('/add-video', , videoController.postVideo);
 

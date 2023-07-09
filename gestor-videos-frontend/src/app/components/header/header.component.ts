@@ -9,6 +9,8 @@ import { NotificationApiService } from 'src/app/services/notification-api.servic
 })
 export class HeaderComponent implements OnInit {
   logged: boolean = false;
+  isGestor: boolean = false;
+  isAdmin: boolean = false;
   myNotifications: any[] = [];
   newNotifications: any[] = [];
   oldNotifications: any[] = [];
@@ -23,7 +25,9 @@ export class HeaderComponent implements OnInit {
       '\ntoken: ',
       localStorage.getItem('token'),
       '\nexpiryDate: ',
-      localStorage.getItem('expiryDate')
+      localStorage.getItem('expiryDate'),
+      '\nuserRole: ',
+      localStorage.getItem('userRole')
     );
 
     const expiryDate = localStorage.getItem('expiryDate');
@@ -34,9 +38,13 @@ export class HeaderComponent implements OnInit {
         this.logout();
       } else if (
         localStorage.getItem('userId') != null &&
-        localStorage.getItem('token') != null
+        localStorage.getItem('token') != null &&
+        localStorage.getItem('userRole') != null
       ) {
         this.logged = true;
+        if (localStorage.getItem('userRole') == 'gestor') this.isGestor = true;
+        else if (localStorage.getItem('userRole') == 'admin')
+          this.isAdmin = true;
         this.getNotifications();
       }
     }
@@ -119,6 +127,7 @@ export class HeaderComponent implements OnInit {
     localStorage.removeItem('userId');
     localStorage.removeItem('token');
     localStorage.removeItem('expiryDate');
+    localStorage.removeItem('userRole');
     // Actualizar el valor de logged
     this.logged = false;
   }

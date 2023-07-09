@@ -13,14 +13,10 @@ const postLogin = async (req, res, next) => {
 
 		console.log(email, password);
 
-		let loadedUser = null;
-
 		const user = await userSchema.findOne({ email });
 
 		if (!user)
 			throw errorHandler('A user with this email was not found', 401, {});
-
-		loadedUser = user;
 
 		const hasMatch = await bcrypt.compare(password, user.password);
 
@@ -32,7 +28,7 @@ const postLogin = async (req, res, next) => {
 			);
 
 		const token = jwt.sign(
-			{ userId: loadedUser._id.toString() },
+			{ userId: user._id.toString() },
 			process.env.SECRET_JWT_AUTHENTICATION,
 			{ expiresIn: '2h' }
 			//Should reactivate every 2 hours
@@ -41,7 +37,8 @@ const postLogin = async (req, res, next) => {
 		return res.status(200).json({
 			message: 'User logged correctly!',
 			token,
-			userId: loadedUser._id.toString(),
+			userId: user._id.toString(),
+			userRole: user.role,
 		});
 	} catch (error) {
 		next(error);
@@ -82,9 +79,22 @@ const postSignup = async (req, res, next) => {
 	}
 };
 
+const getLoggedUser = async (req, res, next) => {
+	try {
+		const user = await userSchema.findById(req.userId);
+
+		if (!user) throw errorHandler('User not found', 404, {});
+
+		res.status(200).json({ message: 'User found', user });
+	} catch (error) {
+		next(error);
+	}
+};
+
 const authController = {
 	postLogin,
 	postSignup,
+	getLoggedUser,
 };
 
 export default authController;
