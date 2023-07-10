@@ -24,7 +24,8 @@ export class UserService {
       email: dataUser.email,
       phoneNumber: dataUser.phoneNumber,
       username: dataUser.username,
-      country: dataUser.country
+      country: dataUser.country,
+      role: dataUser.role
     };
     let httpOption = {
       headers: new HttpHeaders({
