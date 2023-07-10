@@ -8,12 +8,17 @@ import {
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthRoleGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService, 
+    private router: Router,
+    private toastrService: ToastrService
+    ) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -35,6 +40,7 @@ export class AuthRoleGuard implements CanActivate {
       catchError((err) => {
         console.log(err);
         // Aquí puedes realizar alguna lógica de redirección o manejo de errores
+        this.toastrService.error('No se cuenta con el rol adecuado', 'Ruta No Accesible Para Tu Rol');
         this.router.navigate(['/home']);
         return of(false);
       })

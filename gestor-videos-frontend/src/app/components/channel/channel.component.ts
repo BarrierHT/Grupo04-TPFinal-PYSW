@@ -5,6 +5,7 @@ import { VideoApiService } from 'src/app/services/video-api.service';
 import { PlaylistApiService } from 'src/app/services/playlist-api.service';
 import { Router } from '@angular/router';
 import { CountryApiService } from 'src/app/services/country-api.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-channel',
@@ -29,7 +30,8 @@ export class ChannelComponent implements OnInit {
     private videoService: VideoApiService,
     private playlistService: PlaylistApiService,
     private countryService: CountryApiService,
-    private router: Router
+    private router: Router,
+    private toastrService: ToastrService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -91,7 +93,8 @@ export class ChannelComponent implements OnInit {
           },
         });
       } else {
-        alert('playlists sin videos');
+        //alert('playlists sin videos');
+        this.toastrService.warning('La playlist no tiene videos aún!', 'Información Playlist');
       }
     } else if (type == 'video') {
       this.router.navigate(['watch/' + redirectSource]);
