@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ReportApiService {
-  constructor(private _http: HttpClient) {}
+  private urlHost: string;
+  constructor(private _http: HttpClient) {
+    this.urlHost = environment.ANGULAR_ENV == 'development' ? environment.urlDevelopment : environment.urlProduction;
+  }
 
   postReport(title: string, reason: string, videoId: string): Observable<any> {
     let httpOption = {
@@ -16,7 +20,7 @@ export class ReportApiService {
       }),
     };
     return this._http.post(
-      `http://localhost:8080/report/add-report`,
+      `${this.urlHost}report/add-report`,
       { title, reason, videoId },
       httpOption
     );
@@ -30,7 +34,7 @@ export class ReportApiService {
       }),
     };
     return this._http.put(
-      `http://localhost:8080/report/review-report`,
+      `${this.urlHost}report/review-report`,
       { reportId },
       httpOption
     );
@@ -48,7 +52,7 @@ export class ReportApiService {
       // },
     };
     return this._http.get(
-      `http://localhost:8080/report/get-report/${reportId}`,
+      `${this.urlHost}report/get-report/${reportId}`,
       httpOption
     );
   }
@@ -61,7 +65,7 @@ export class ReportApiService {
       }),
     };
     return this._http.get(
-      `http://localhost:8080/report/get-reports`,
+      `${this.urlHost}report/get-reports`,
       httpOption
     );
   }

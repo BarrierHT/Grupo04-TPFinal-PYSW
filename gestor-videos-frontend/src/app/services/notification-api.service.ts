@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NotificationApiService {
-  constructor(private _http: HttpClient) {}
+  private urlHost: string;
+  constructor(private _http: HttpClient) {
+    this.urlHost = environment.ANGULAR_ENV == 'development' ? environment.urlDevelopment : environment.urlProduction;
+  }
 
   getNotifications(): Observable<any> {
     let httpOption = {
@@ -20,7 +24,7 @@ export class NotificationApiService {
       // },
     };
     return this._http.get(
-      `http://localhost:8080/notification/get-notifications`,
+      `${this.urlHost}notification/get-notifications`,
       httpOption
     );
   }
@@ -34,7 +38,7 @@ export class NotificationApiService {
     };
 
     return this._http.put(
-      `http://localhost:8080/notification/update-new-notification`,
+      `${this.urlHost}notification/update-new-notification`,
       { newNotifications },
       httpOption
     );
@@ -52,7 +56,7 @@ export class NotificationApiService {
     };
 
     return this._http.put(
-      `http://localhost:8080/notification/toogle-notification`,
+      `${this.urlHost}notification/toogle-notification`,
       { toggledValue, groupId },
       httpOption
     );

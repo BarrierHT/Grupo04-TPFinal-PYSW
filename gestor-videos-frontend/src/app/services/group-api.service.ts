@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GroupApiService {
-  constructor(private _http: HttpClient) {}
+  private urlHost: string;
+  constructor(private _http: HttpClient) {
+    this.urlHost = environment.ANGULAR_ENV == 'development' ? environment.urlDevelopment : environment.urlProduction;
+  }
 
   postGroup(group: any): Observable<any> {
     let httpOption = {
@@ -19,7 +23,7 @@ export class GroupApiService {
     const { name, description } = group;
 
     return this._http.post(
-      'http://localhost:8080/group/add-group',
+      `${this.urlHost}group/add-group`,
       { name, description },
       httpOption
     );
@@ -37,7 +41,7 @@ export class GroupApiService {
       // },
     };
     return this._http.get(
-      `http://localhost:8080/group/get-group/${groupId}`,
+      `${this.urlHost}group/get-group/${groupId}`,
       httpOption
     );
   }
@@ -53,7 +57,7 @@ export class GroupApiService {
       },
     };
 
-    return this._http.get(`http://localhost:8080/group/get-groups`, httpOption);
+    return this._http.get(`${this.urlHost}group/get-groups`, httpOption);
   }
 
   joinGroup(groupId: string): Observable<any> {
@@ -70,7 +74,7 @@ export class GroupApiService {
       // },
     };
     return this._http.put(
-      `http://localhost:8080/group/add-user-to-group`,
+      `${this.urlHost}group/add-user-to-group`,
       { groupId },
       httpOption
     );
@@ -88,7 +92,7 @@ export class GroupApiService {
       // },
     };
     return this._http.get(
-      `http://localhost:8080/group/get-groups-user`,
+      `${this.urlHost}group/get-groups-user`,
       httpOption
     );
   }

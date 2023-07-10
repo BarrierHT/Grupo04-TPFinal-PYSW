@@ -1,5 +1,13 @@
-body {
-  background-color: #f8f9fa;
+.container-fluid{
+  min-height: 100vh;
+  background-color: black;
+  padding: 5% 10% 5% 10%;
+}
+
+.hr-custom-1 {
+  background-color: rgb(72, 235, 72);
+  height: 3px;
+  opacity: 80%;
 }
 
 .navbar {

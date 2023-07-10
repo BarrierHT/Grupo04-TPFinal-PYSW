@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid contenido">
   <div class="row py-5 px-5 d-flex justify-content-center container-custom-1">
     <div class="row d-flex justify-content-center">
       <div class="container-fluid col-8 mb-4">
@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="row d-flex justify-content-center">
-      <div class="col-8">
+      <div class="col-8 container-videos">
         <div class="video-card rounded-4" *ngFor="let video of videos" (mouseenter)="onMouseEnter(video)"
           (mouseleave)="onMouseLeave()">
           <div class="video-thumbnail rounded-4" (click)="watchVideo(video._id)">
@@ -65,7 +65,7 @@
                       Agregar a playlist
                     </button>
                   </li>
-                  <li>
+                  <!-- <li>
                     <button class="dropdown-item" href="#">
                       Another action
                     </button>
@@ -74,7 +74,7 @@
                     <button class="dropdown-item" href="#">
                       Something else here
                     </button>
-                  </li>
+                  </li> -->
                 </ul>
 
               </div>

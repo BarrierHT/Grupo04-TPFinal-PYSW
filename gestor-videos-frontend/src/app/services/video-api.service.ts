@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class VideoApiService {
-  constructor(private _http: HttpClient) {}
+  private urlHost: string;
+  constructor(private _http: HttpClient) {
+    this.urlHost = environment.ANGULAR_ENV == 'development' ? environment.urlDevelopment : environment.urlProduction;
+  }
 
   getVideos(pattern: string): Observable<any> {
     let httpOption = {
@@ -18,7 +22,7 @@ export class VideoApiService {
       },
     };
 
-    return this._http.get(`http://localhost:8080/video/get-videos`, httpOption);
+    return this._http.get(`${this.urlHost}video/get-videos`, httpOption);
   }
 
   postVideo(video: any): Observable<any> {
@@ -36,7 +40,7 @@ export class VideoApiService {
     };
 
     return this._http.post(
-      'http://localhost:8080/video/add-video',
+      '${this.urlHost}video/add-video',
       formData,
       httpOptions
     );
@@ -53,7 +57,7 @@ export class VideoApiService {
       // },
     };
     return this._http.get(
-      `http://localhost:8080/video/get-video/${videoId}`,
+      `${this.urlHost}video/get-video/${videoId}`,
       httpOption
     );
   }
@@ -70,7 +74,7 @@ export class VideoApiService {
       // },
     };
     return this._http.get(
-      `http://localhost:8080/video/get-videos-user`,
+      `${this.urlHost}video/get-videos-user`,
       httpOption
     );
   }
@@ -87,7 +91,7 @@ export class VideoApiService {
       },
     };
     return this._http.get(
-      `http://localhost:8080/video/get-videos-group`,
+      `${this.urlHost}video/get-videos-group`,
       httpOption
     );
   }
@@ -100,7 +104,7 @@ export class VideoApiService {
       }),
     };
     return this._http.delete(
-      `http://localhost:8080/video/delete-video/${videoId}`,
+      `${this.urlHost}video/delete-video/${videoId}`,
       httpOption
     );
   }
@@ -123,7 +127,7 @@ export class VideoApiService {
     };
 
     return this._http.put(
-      `http://localhost:8080/video/update-video/${videoId}`,
+      `${this.urlHost}video/update-video/${videoId}`,
       body,
       httpOption
     );

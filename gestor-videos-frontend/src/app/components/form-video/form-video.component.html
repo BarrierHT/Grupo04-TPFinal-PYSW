@@ -1,63 +1,68 @@
-<div class="container mt-5 d-flex justify-content-center">
-    <div class="row p-2 d-flex justify-content-center form-box">
-        <div class="row p-3 pb-0">
-            <h3 class="text-white">Subir Video</h3>
-            <hr class="hr-custom-1">
+<div class="container-fluid contenido d-flex justify-content-center align-items-center">
+    <div class="container p-4 col-12 col-md-8 col-lg-6">
+        <div class="row p-2 d-flex justify-content-center form-box">
+            <div class="row p-3 pb-0">
+                <h3 class="text-white">Subir Video</h3>
+                <hr class="hr-custom-1">
+            </div>
+            <form #videoForm="ngForm">
+                <div class="input-group mt-3" *ngIf="!action">
+                    <input type="file" class="form-control" id="videoFile" name="videoFile" required accept="video/*"
+                        (change)="onFileSelected($event)">
+                    <label class="input-group-text" for="videoFile">Upload</label>
+                </div>
+
+                <div class="text-center mt-3 " *ngIf="!action">
+
+                    <select class="btn btn-secondary btn-sm dropdown-toggle pe-5 text-center" name="groupId"
+                        [(ngModel)]="video.groupId">
+                        <option class="dropdown-item text-center" selected disabled value="">
+                            Subir como grupo
+                        </option>
+                        <option class="dropdown-item text-center" value="{{group._id}}" *ngFor="let group of myGroups">
+                            {{group.name}}</option>
+
+                    </select>
+
+                </div>
+
+
+                <div *ngIf="msgVideoValidation">
+                    <div class="alerta text-center">
+                        {{ msgVideoValidation }}
+                    </div>
+                </div>
+                <div class="inputbox">
+                    <input type="text" id="title" name="title" placeholder="" [(ngModel)]="video.title" #title="ngModel"
+                        required>
+                    <label for="title">Título <i class="bi bi-music-note-beamed"></i> </label>
+                </div>
+                <div class="" *ngIf="title.invalid && (title.dirty || title.touched)">
+                    <div *ngIf="title.errors?.['required']" class="alerta text-center">
+                        Por favor, ingresa un título!
+                    </div>
+                </div>
+
+                <div class="form-floating mt-3">
+                    <textarea class="form-control" name="description" placeholder="Leave a comment here"
+                        id="description" [(ngModel)]="video.description" #description="ngModel" required></textarea>
+                    <label class="text-black-50" for="description">Descripción</label>
+                </div>
+                <div class="" *ngIf="description.invalid && (description.dirty || description.touched)">
+                    <div *ngIf="description.errors?.['required']" class="alerta text-center">
+                        Por favor, ingresa una descripción!
+                    </div>
+                </div>
+
+                <div class="row mt-1 p-2 button-video-upload">
+                    <input type="hidden" name="_csrf" value="">
+                    <button class="mb-4" type="submit" *ngIf="!action"
+                        [disabled]="videoForm.invalid || !isValidVideo(video.file)" (click)="postVideo()">Subir
+                        video</button>
+                    <button type="submit" *ngIf="action" [disabled]="videoForm.invalid" (click)="updateVideo()">Editar
+                        video</button>
+                </div>
+            </form>
         </div>
-        <form #videoForm="ngForm">
-            <div class="input-group mt-3" *ngIf="!action">
-                <input type="file" class="form-control" id="videoFile" name="videoFile" required accept="video/*"
-                    (change)="onFileSelected($event)">
-                <label class="input-group-text" for="videoFile">Upload</label>
-            </div>
-
-            <div class="text-center mt-3 " *ngIf="!action">
-
-                <select class="btn btn-secondary btn-sm dropdown-toggle pe-5 text-center" name="groupId"
-                    [(ngModel)]="video.groupId">
-                    <option class="dropdown-item text-center" selected disabled value="">
-                        Subir como grupo
-                    </option>
-                    <option class="dropdown-item text-center" value="{{group._id}}" *ngFor="let group of myGroups">
-                        {{group.name}}</option>
-
-                </select>
-
-            </div>
-
-
-            <div *ngIf="msgVideoValidation">
-                <div class="alerta text-center">
-                    {{ msgVideoValidation }}
-                </div>
-            </div>
-            <div class="inputbox">
-                <input type="text" id="title" name="title" placeholder="" [(ngModel)]="video.title" #title="ngModel"
-                    required>
-                <label for="title">Title <i class="bi bi-music-note-beamed"></i> </label>
-            </div>
-            <div class="" *ngIf="title.invalid && (title.dirty || title.touched)">
-                <div *ngIf="title.errors?.['required']" class="alerta text-center">
-                    Please enter a title!
-                </div>
-            </div>
-
-            <div class="form-floating mt-3">
-                <textarea class="form-control" name="description" placeholder="Leave a comment here" id="description"
-                    [(ngModel)]="video.description" #description="ngModel" required></textarea>
-                <label class="text-black-50" for="description">Description</label>
-            </div>
-            <div class="" *ngIf="description.invalid && (description.dirty || description.touched)">
-                <div *ngIf="description.errors?.['required']" class="alerta text-center">
-                    Please enter a description!
-                </div>
-            </div>
-
-            <div class="row mt-3 button-video-upload">
-                <input type="hidden" name="_csrf" value="">
-                <button type="submit" *ngIf="!action" [disabled]="videoForm.invalid || !isValidVideo(video.file)" (click)="postVideo()">Upload Video</button>
-                <button type="submit" *ngIf="action" [disabled]="videoForm.invalid" (click)="updateVideo()">Edit Video</button>
-            </div>
-        </form>
     </div>
 </div>

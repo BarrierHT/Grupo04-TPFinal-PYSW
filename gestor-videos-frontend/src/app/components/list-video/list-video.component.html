@@ -9,8 +9,7 @@
                         class="image">
                 </div>
                 <div class="text">
-                    <h2>Add a new playlist!</h2>
-                    <p>Click on this card to add a new playlist</p>
+                    <h2>Crea una nueva playlist!</h2>
                 </div>
             </div>
         </div>
@@ -22,7 +21,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content p-2">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">New Playlist</h1>
+                        <h1 class="modal-title fs-5 " id="exampleModalLabel">Crear nueva playlist</h1>
                     </div>
                     <div class="modal-body">
                         <form #playlistForm="ngForm" method="POST" (submit)="addPlaylist()">
@@ -33,25 +32,24 @@
                             </div>
                             <div *ngIf="name.invalid && (name.dirty || name.touched)">
                                 <div *ngIf="name.errors?.['required']" class="alerta text-center">
-                                    Please, enter a playlist name!
+                                    Por favor, ingresa un nombre!
                                 </div>
                             </div>
-                            <div class="inputbox ">
+                            <div class="inputbox">
                                 <input type="text" name="description" placeholder=" " id="description"
                                     [(ngModel)]="newPlaylist.description" #description="ngModel" required>
-                                <label for="description">Descripcion <i class="bi bi-music-note-beamed"></i></label>
+                                <label for="description">Descripción <i class="bi bi-music-note-beamed"></i></label>
                             </div>
                             <div *ngIf="description.invalid && (description.dirty || description.touched)">
                                 <div *ngIf="description.errors?.['required']" class="alerta text-center">
-                                    Please, enter a playlist description!
+                                    Por favor, ingresa una descripción!
                                 </div>
                             </div>
                             <div class="row text-center mt-4">
                                 <div class="col-12 col-sm-6 mb-2"><button type="submit"
-                                        [disabled]="playlistForm.invalid" data-bs-dismiss="modal">Add
-                                        playlist</button></div>
+                                        [disabled]="playlistForm.invalid" data-bs-dismiss="modal">Crear</button></div>
                                 <div class="col-12 col-sm-6"><button type="button"
-                                        data-bs-dismiss="modal">Close</button></div>
+                                        data-bs-dismiss="modal">Cerrar</button></div>
                             </div>
                         </form>
                     </div>

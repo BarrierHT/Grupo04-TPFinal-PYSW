@@ -86,11 +86,9 @@
 }
 
 
-/* .modal {  
-    background-image: url("https://lgbtotaku.files.wordpress.com/2020/08/7da8b16b-c3ad-4f70-966a-e7cf369313b6.jpeg?w=1568");
-    background-repeat: no-repeat;
-    background-size: cover; 
-  } */
+.modal {  
+    backdrop-filter: blur(2px);
+  } 
 
 .modal-content{
     background-color: #111;

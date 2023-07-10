@@ -1,3 +1,8 @@
+.contenido{
+  background: black;
+  min-height: 100vh;
+}
+
 .form-box {
   background: black;
   border: 2px solid orange;

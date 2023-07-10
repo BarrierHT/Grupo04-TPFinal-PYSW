@@ -1,6 +1,10 @@
 .container-custom-1 {
   font-family: sans-serif;
-  background-color: black;
+  background: black;
+}
+
+.contenido{
+  overflow: hidden;
 }
 
 .form-control {
@@ -217,4 +221,8 @@
   padding: 2rem 2.5rem;
   width: 30em;
   border-radius: 0.5rem;
+}
+
+.container-videos{
+  min-height: 100vh;
 }
