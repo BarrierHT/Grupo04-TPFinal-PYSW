@@ -32,7 +32,7 @@ export class ChannelComponent implements OnInit {
     private countryService: CountryApiService,
     private router: Router,
     private toastrService: ToastrService
-  ) {}
+  ) { }
 
   async ngOnInit(): Promise<void> {
     await this.getMyChannel();
@@ -85,13 +85,14 @@ export class ChannelComponent implements OnInit {
     if (type == 'playlist') {
       console.log('playlist: ', redirectSource);
       if (redirectSource.videos.length != 0) {
-        const videoId = redirectSource.videos[0]._id;
-        this.router.navigate(['watch/' + videoId], {
-          queryParams: {
-            playlist: redirectSource.name,
-            index: redirectSource.index,
-          },
-        });
+        const videoId = redirectSource.videos[0].videoId._id;
+        this.router.navigate(['watch', videoId, 'playlist', redirectSource._id]);
+        // this.router.navigate(['watch/' + videoId], {
+        //   queryParams: {
+        //     playlist: redirectSource.name,
+        //     index: redirectSource.index,
+        //   },
+        // });
       } else {
         //alert('playlists sin videos');
         this.toastrService.warning('La playlist no tiene videos aún!', 'Información Playlist');

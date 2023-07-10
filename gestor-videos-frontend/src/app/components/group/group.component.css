@@ -1,6 +1,19 @@
+.contenido{
+  background-color: black;
+  min-height: 70vh;
+  overflow: hidden;
+}
+
+.hr-custom-1 {
+  background-color: rgb(72, 235, 72);
+  height: 3px;
+  opacity: 80%;
+}
+
 .form-box {
-  background: transparent;
-  border: 2px solid rgba(0, 0, 0, 0.5);
+  margin-top: 10%;
+  background: black;
+  border: 2px solid orange;
   border-radius: 20px;
   backdrop-filter: blur(15px);
 }
@@ -10,8 +23,8 @@
   font-size: 12px;
   margin-top: 2px;
   background-color: red;
-  border-radius: 0 0 20px 20px;
-  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  border-radius: 20px 20px 20px 20px;
+  
 }
 
 .form-check {

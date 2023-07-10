@@ -172,7 +172,7 @@
                 : video.description.substring(0, 320) + "..."
                 }}
               </div>
-              <div class="px-3 pt-0 pb-3">
+              <div class="px-3 pt-0 pb-3 mb-3">
                 <button class="btn btn-dark btn-sm" (click)="showFullDescription = !showFullDescription">
                   {{ !showFullDescription ? "Read More" : "Minimize" }}
                 </button>
@@ -183,9 +183,10 @@
 
         <div class="col-12 col-lg-4" *ngIf="showPlaylistVideos">
           <div class="main w-100">
-            <div class="currentplaying text-center">
-              <p class="heading">VIDEOS DE LA PLAYLIST</p>
+            <div class="text-center">
+              <strong>PLAYLIST</strong>
             </div>
+            <hr class="m-1 p-1">
             <!-- Video reproduciendose -->
             <!-- <div class="loader">
               <div class="song">

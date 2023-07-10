@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RatingApiService {
-  constructor(private _http: HttpClient) {}
+  private urlHost: string;
+  constructor(private _http: HttpClient) {
+    this.urlHost = environment.ANGULAR_ENV == 'development' ? environment.urlDevelopment : environment.urlProduction;
+  }
 
   postRating(videoId: string): Observable<any> {
     let httpOption = {
@@ -16,7 +20,7 @@ export class RatingApiService {
       }),
     };
     return this._http.put(
-      `http://localhost:8080/rating/add-rating/${videoId}`, {},
+      `${this.urlHost}rating/add-rating/${videoId}`, {},
       httpOption
     );
   }
@@ -33,7 +37,7 @@ export class RatingApiService {
       // },
     };
     return this._http.get(
-      `http://localhost:8080/rating/get-rating/${videoId}`,
+      `${this.urlHost}rating/get-rating/${videoId}`,
       httpOption
     );
   }

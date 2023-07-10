@@ -1,16 +1,17 @@
-<div class="container mt-5 justify-content-center">
-    <div class="row g-5 justify-content-center">
-        <div class="col-10 col-sm-8 col-md-6 col-lg-4">
+<div class="container-fluid contenido">
+    <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-10 col-md-6 col-lg-6 mb-4">
             <form class="form form-box p-3" method="POST" #groupForm="ngForm" (submit)="postGroup()">
-                <h2 class="row h2 d-flex justify-content-center">Registrar Grupo</h2>
+                <h2 class="row h2 d-flex justify-content-center text-white">Registrar Grupo</h2>
+                <hr class="hr-custom-1 mb-5">
                 <div class="form-floating mt-3">
                     <input type="text" class="form-control" id="name" name="name" placeholder="example123" required
                         [(ngModel)]="group.name" #groupName="ngModel">
-                    <label class="text-black-50" for="name">Group Name</label>
+                    <label class="text-black-50" for="name">Nombre del grupo</label>
                 </div>
                 <div *ngIf="groupName.invalid && (groupName.dirty || groupName.touched)">
                     <div *ngIf="groupName.errors?.['required']" class="alerta text-center">
-                        Please, enter a name!
+                        Por favor, ingresa un nombre para el grupo!
                     </div>
                 </div>
                 <!-- <div *ngIf="name.invalid && (name.dirty || name.touched)">
@@ -23,11 +24,11 @@
                     <input type="text" class="form-control" id="description" name="description"
                         placeholder="Leave a comment here" [(ngModel)]="group.description" #groupDescription="ngModel"
                         required>
-                    <label class="text-black-50" for="description">Group Description</label>
+                    <label class="text-black-50" for="description">Descripción del grupo</label>
                 </div>
                 <div *ngIf="groupDescription.invalid && (groupDescription.dirty || groupDescription.touched)">
                     <div *ngIf="groupDescription.errors?.['required']" class="alerta text-center">
-                        Please, enter a description!
+                        Por favor, ingresa una descripción!
                     </div>
                 </div>
                 <!-- <div *ngIf="description.invalid && (description.dirty || description.touched)">
@@ -36,7 +37,7 @@
                     </div>
                 </div> -->
 
-                <div class="row mt-3 button-group-upload">
+                <div class="row p-4 button-group-upload">
                     <input type="hidden" name="_csrf" value="">
                     <button type="submit" [disabled]="groupForm.invalid">Registrar</button>
                 </div>
@@ -116,8 +117,11 @@
             </table>
         </div> -->
 
-        <div class="container-fluid col-12">
-            <h2>MIS GRUPOS</h2>
+
+        <div class="container-fluid col-11" *ngIf="myGroups.length > 0 ">
+            <hr class="hr-custom-1 mb-5 mt-5">
+            <h2 class="text-white text-center">MIS GRUPOS</h2>
+            <hr class="hr-custom-1 mb-2 mt-5">
             <div class="row">
                 <div class="grupos col-12">
                     <div class="row">

@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PlaylistApiService {
-  constructor(private _http: HttpClient) {}
+  private urlHost: string;
+  constructor(private _http: HttpClient) {
+    this.urlHost = environment.ANGULAR_ENV == 'development' ? environment.urlDevelopment : environment.urlProduction;
+  }
 
   postPlaylist(playlist: any): Observable<any> {
     let httpOption = {
@@ -19,7 +23,7 @@ export class PlaylistApiService {
     const { name, description } = playlist;
 
     return this._http.post(
-      `http://localhost:8080/playlist/add-playlist`,
+      `${this.urlHost}playlist/add-playlist`,
       { name, description },
       httpOption
     );
@@ -37,7 +41,7 @@ export class PlaylistApiService {
       // },
     };
     return this._http.get(
-      `http://localhost:8080/playlist/get-playlist/${playlistId}`,
+      `${this.urlHost}playlist/get-playlist/${playlistId}`,
       httpOption
     );
   }
@@ -50,7 +54,7 @@ export class PlaylistApiService {
       }),
     };
     return this._http.get(
-      `http://localhost:8080/playlist/get-playlists`,
+      `${this.urlHost}playlist/get-playlists`,
       httpOption
     );
   }
@@ -64,7 +68,7 @@ export class PlaylistApiService {
     };
 
     return this._http.put(
-      `http://localhost:8080/playlist/add-video-to-playlist/${playlistId}/${videoId}`,
+      `${this.urlHost}add-video-to-playlist/${playlistId}/${videoId}`,
       {},
       httpOption
     );
