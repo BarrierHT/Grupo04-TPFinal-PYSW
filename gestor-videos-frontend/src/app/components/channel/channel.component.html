@@ -3,7 +3,7 @@
     <div class="col-12">
       <div class="row">
         <div class="col-12 col-md-4 col-lg-2 mb-2 d-flex justify-content-center">
-          <img src="assets/img/profile-picture.png" class="profile-picture" alt="Imagen de perfil" />
+          <img src="assets/img/user-default-image-1.jpg" class="profile-picture" alt="Imagen de perfil" />
         </div>
         <div class="col-12 col-md-4 col-lg-6">
           <div *ngIf="myChannel">
@@ -25,7 +25,7 @@
     <h3 class="text-white">MIS VIDEOS</h3>
     <div class="col-md-4 btn" *ngFor="let v of myVideos" (click)="redirectVideo(v._id, 'video')">
       <div class="card video-card">
-        <img src="assets/img/miniatura.jpeg" alt="Miniatura video" />
+        <img src="assets/img/video-default-image-3.jpg" alt="Miniatura video" />
         <div class="card-body">
           <h5 class="card-title">{{ v.title }}</h5>
           <p class="card-text">{{ v.description }}</p>
@@ -39,7 +39,7 @@
     <h3 class="text-white">MIS PLAYLISTS</h3>
     <div class="col-md-4 btn" *ngFor="let p of myPlaylists" (click)="redirectVideo(p, 'playlist')">
       <div class="card video-card">
-        <img src="assets/img/miniatura.jpeg" alt="Miniatura video" />
+        <img src="assets/img/playlist-default-image.png" alt="Miniatura video" />
         <div class="card-body">
           <h5 class="card-title">{{ p.name }}</h5>
           <p class="card-text">{{ p.description }}</p>
