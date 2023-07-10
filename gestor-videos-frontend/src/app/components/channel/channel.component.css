@@ -20,12 +20,6 @@ body {
   object-fit: cover;
 }
 
-.username {
-  font-size: 24px;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
 .video-card {
   margin-bottom: 20px;
 }
@@ -37,4 +31,21 @@ body {
 
 .video-card .card-body {
   padding: 10px;
+}
+
+.username {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-right: 10px; /* Añadimos un margen derecho para separar el nombre de la imagen */
+}
+
+.userFlag {
+  width: 75px;
+  height: auto;
+  margin-left: 10px; /* Añadimos un margen izquierdo para separar la bandera del nombre */
+}
+
+.ms-auto {
+  margin-left: auto; /* Mueve el botón "Administrar mis grupos" a la derecha */
 }

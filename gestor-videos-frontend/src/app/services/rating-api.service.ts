@@ -8,16 +8,15 @@ import { Observable } from 'rxjs';
 export class RatingApiService {
   constructor(private _http: HttpClient) {}
 
-  postRating(rating: any): Observable<any> {
+  postRating(videoId: string): Observable<any> {
     let httpOption = {
       headers: new HttpHeaders({
         'Content-type': 'application/json',
         Authorization: 'Bearer ' + localStorage.getItem('token'),
       }),
     };
-    return this._http.post(
-      `http://localhost:8080/rating/add-rating`,
-      rating,
+    return this._http.put(
+      `http://localhost:8080/rating/add-rating/${videoId}`, {},
       httpOption
     );
   }

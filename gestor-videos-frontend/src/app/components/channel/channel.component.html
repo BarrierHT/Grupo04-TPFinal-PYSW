@@ -6,11 +6,14 @@
       </div>
       <div class="col-md-12 col-lg-10" *ngIf="myChannel">
         <div class="d-flex justify-content-between align-items-center">
-          <h2 class="username">{{ myChannel.name }}</h2>
-          <img *ngIf="country" [src]="country.flag" alt="country.name" [ngStyle]="{ 'width': myChannel.name.length + 'ch', 'margin-right': '45%'}">
-
-          <a class="btn btn-primary btn-lg" href="http://localhost:4200/groups">
-            <i class="bi bi-people fs-3"></i> Administrar mis Grupos</a>
+          <div class="d-flex align-items-center">
+            <h2 class="username">{{ myChannel.name }}</h2>
+            <img *ngIf="country" [src]="country.flag" alt="country.name" class="userFlag img-fluid">
+          </div>
+          <div class="ms-auto">
+            <a class="btn btn-primary btn-lg" href="http://localhost:4200/groups">
+              <i class="bi bi-people fs-3"></i> Administrar mis Grupos</a>
+          </div>
         </div>
         <p>{{ myChannel.description }}</p>
       </div>

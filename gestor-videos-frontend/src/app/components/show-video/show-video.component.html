@@ -17,12 +17,13 @@
           <div class="upload-date-custom">Fecha de subida: {{video.createdAt}}</div>
         </div>
         <div class="video-options-custom" *ngIf="logged">
+          <h4 *ngIf="rating" class="m-auto mx-2"> {{ rating }} </h4>
           <button class="btn-rating" id="green-button-rating" (click)="addPositiveRating()">
             <i class="bi bi-hand-thumbs-up fs-4" aria-hidden="true"></i>
           </button>
-          <button class="btn-rating" id="red-button-rating" (click)="addNegativeRating()">
+          <!-- <button class="btn-rating" id="red-button-rating" (click)="addNegativeRating()">
             <i class="bi bi-hand-thumbs-down fs-4" aria-hidden="true"></i>
-          </button>
+          </button> -->
 
           <div class="dropdown" *ngIf="logged">
             <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
