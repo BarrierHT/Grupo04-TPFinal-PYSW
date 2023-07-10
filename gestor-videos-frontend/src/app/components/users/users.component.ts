@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import * as printJS from 'print-js';
 import { Subject } from 'rxjs';
+import { CountryApiService } from 'src/app/services/country-api.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -16,11 +17,14 @@ export class UsersComponent implements OnInit, OnDestroy {
   dtTrigger: Subject<any> = new Subject<any>();
   editingUser: any = null;
   isEditModalOpen: boolean = false;
+  countries: any = [];
+  selectedCountry = '';
 
   constructor(
     private userService: UserService,
     private cdr: ChangeDetectorRef,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private countryService: CountryApiService
   ) {}
 
   ngOnInit(): void {
@@ -29,6 +33,16 @@ export class UsersComponent implements OnInit, OnDestroy {
       pageLength: 5,
     };
     this.getUsers();
+    this.getCountries();
+    window.alert = (function () {
+      var nativeAlert = window.alert;
+      return function (message) {
+        // window.alert = nativeAlert;
+        message.indexOf('DataTables warning') === 0
+          ? console.warn(message)
+          : nativeAlert(message);
+      };
+    })();
   }
 
   ngOnDestroy(): void {
@@ -36,19 +50,24 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   saveUser() {
+    const values = this.selectedCountry.split('-');
+    this.editingUser.country = {
+      iso2: values[0],
+      name: values[1]
+    };
     this.userService
       .updateUser(this.editingUser._id, this.editingUser)
       .subscribe(
         (res) => {
           console.log(res);
-          alert('Usuario actualizado correctamente');
+          this.toastrService.success('El usuario ha sido actualizado correctamente', 'Modificacion Exitosa');
           this.getUsers();
           this.editingUser = null;
           this.closeEdit();
         },
         (err) => {
           console.log(err);
-          alert('Error al actualizar el usuario');
+          this.toastrService.error('El usuario no ha sido actualizado correctamente', 'Modificacion Fallida');
         }
       );
   }
@@ -57,11 +76,12 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.userService.deleteUser(idUser).subscribe((res) => {
       try {
         console.log(res);
+        this.toastrService.success('El usuario  ha sido eliminado correctamente', 'Eliminacion Exitosa');
       } catch (err) {
         console.log(err);
+        this.toastrService.error('El usuario  no ha sido eliminado correctamente', 'Eliminacion Fallida');
       }
     });
-    alert('Usuario eliminado correctamente');
     this.getUsers();
   }
 
@@ -81,6 +101,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   editUser(user: any) {
     this.editingUser = { ...user };
+    this.editingUser.role = 'user';
     this.isEditModalOpen = true;
     console.log(this.editingUser);
   }
@@ -117,5 +138,16 @@ export class UsersComponent implements OnInit, OnDestroy {
       userProcess.push(userTemp);
     });
     return userProcess;
+  }
+
+  getCountries() {
+    this.countryService.getCountries().subscribe(res => {
+      try {
+        console.log(res.data);
+        this.countries = res.data;
+      } catch (err) {
+        console.log(err);
+      }
+    })
   }
 }
