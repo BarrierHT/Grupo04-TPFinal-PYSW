@@ -42,7 +42,7 @@ export class ShowVideoComponent implements OnInit {
     private router: Router,
     private videoService: VideoApiService,
     private toastrService: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
@@ -56,6 +56,8 @@ export class ShowVideoComponent implements OnInit {
           .pipe(
             catchError((error) => {
               console.log('Error en el observable: ', error);
+              this.toastrService.error('Video inexistente', 'Ruta No Accesible');
+              this.router.navigate(['/home']);
               return [];
             }),
             delay(1000) // Agrega un retraso de 1 segundo
@@ -69,7 +71,7 @@ export class ShowVideoComponent implements OnInit {
               console.log(err);
             }
           });
-          this.getRating(videoId);
+        this.getRating(videoId);
 
         // .find((ticket) => ticket._id.toString() == params['ticketId']);
 
@@ -98,10 +100,26 @@ export class ShowVideoComponent implements OnInit {
     const btn1: any = document.querySelector('#green-button-rating');
     btn1.classList.toggle('green');
 
-    this.ratingService.postRating(this.video._id).subscribe(res => {
+    this.ratingService
+    .postRating(this.video._id)
+    .pipe(
+      catchError((error) => {
+        //console.log('Error en el observable: ', error);
+        if (error.status !== 200 && error.status !== 201) {
+          console.log('Error en el observable: ', error.error.message);
+          this.toastrService.error('No se ha podido actualizar el rating del video', 'Error');
+          // throw new Error('');
+        }
+        return [];
+      })
+    )
+    .subscribe(res => {
       try {
         console.log(res);
-        this.toastrService.info('Te ha gustado el video');
+        if(res.message == "Rating updated -1")
+          this.toastrService.info('Te dejo de gustar el video');
+        else
+          this.toastrService.info('Te gusta el video');
         this.getRating(this.video._id);
       } catch (err) {
         console.log(err);
@@ -110,7 +128,20 @@ export class ShowVideoComponent implements OnInit {
   }
 
   getRating(videoId: string) {
-    this.ratingService.getRating(videoId).subscribe(res => {
+    this.ratingService
+    .getRating(videoId)
+    .pipe(
+      catchError((error) => {
+        //console.log('Error en el observable: ', error);
+        if (error.status !== 200 && error.status !== 201) {
+          console.log('Error en el observable: ', error.error.message);
+          //this.toastrService.error('No se ha podido obtener el rating', 'Error de Obtener');
+          // throw new Error('');
+        }
+        return [];
+      })
+    )
+    .subscribe(res => {
       try {
         console.log(res);
         this.rating = res.rating.rating;
@@ -180,19 +211,42 @@ export class ShowVideoComponent implements OnInit {
   }
 
   showPlaylists() {
-    this.playlistApiService.getPlaylistsByUser().subscribe((res) => {
-      try {
-        console.log(res);
-        this.userPlaylists = res.playlists;
-      } catch (err) {
-        console.log(err);
-      }
-    });
+    this.playlistApiService
+      .getPlaylistsByUser()
+      .pipe(
+        catchError((error) => {
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            this.toastrService.error('Error al obtener playlist', 'Error de Obtener');
+          }
+          return [];
+        }),
+      )
+      .subscribe((res) => {
+        try {
+          console.log(res);
+          this.userPlaylists = res.playlists;
+        } catch (err) {
+          console.log(err);
+        }
+      });
   }
 
   addVideoToPlaylist(playlistId: string, videoId: string) {
     this.playlistApiService
       .addVideoToPlaylist(playlistId, videoId)
+      .pipe(
+        catchError((error) => {
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            if (error.error.message == "Playlist not found")
+              this.toastrService.error('Error al añadir videos a una playlist', 'Error de Subir');
+            if (error.error.message == "Video already in playlist")
+              this.toastrService.info('El video ya esta en la playlist');
+          }
+          return [];
+        }),
+      )
       .subscribe((res) => {
         try {
           console.log(res);
@@ -205,17 +259,30 @@ export class ShowVideoComponent implements OnInit {
   }
 
   getPlaylist(playlistId: string) {
-    this.playlistApiService.getPlaylist(playlistId).subscribe((res) => {
-      try {
-        console.log(res);
-        this.playlist = res;
-        if (res.videos.length < 1) 
-          this.toastrService.warning('La playlist no tiene videos aún!', 'Información Playlist');
-        //alert('La playlist no tiene videos aún!');
-      } catch (err) {
-        console.log(err);
-      }
-    });
+    this.playlistApiService
+      .getPlaylist(playlistId)
+      .pipe(
+        catchError((error) => {
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            //this.toastrService.error('Error al obtener playlist', 'Error de Obtener');
+            this.toastrService.error('Playlist inexistente', 'Ruta No Accesible');
+            this.router.navigate(['/home']);
+          }
+          return [];
+        }),
+      )
+      .subscribe((res) => {
+        try {
+          console.log(res);
+          this.playlist = res;
+          if (res.videos.length < 1)
+            this.toastrService.warning('La playlist no tiene videos aún!', 'Información Playlist');
+          //alert('La playlist no tiene videos aún!');
+        } catch (err) {
+          console.log(err);
+        }
+      });
   }
 
   watchPlaylistVideo(playlist: any) {

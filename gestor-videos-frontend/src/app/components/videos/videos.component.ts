@@ -22,7 +22,7 @@ export class VideosComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private toastrService: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -48,16 +48,27 @@ export class VideosComponent implements OnInit, OnDestroy {
   }
 
   getVideos() {
-    this.videoService.getVideos('').subscribe((res) => {
-      try {
-        console.log(res.videos);
-        this.videos = res.videos;
-        this.dtTrigger.next(this.videos); // Trigger the DataTables re-rendering
-        this.cdr.detectChanges();
-      } catch (err) {
-        console.log(err);
-      }
-    });
+    this.videoService
+      .getVideos('')
+      .pipe(
+        catchError((error) => {
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            this.toastrService.error('Error al obtener videos', 'Error de Obtener');
+          }
+          return [];
+        }),
+      )
+      .subscribe((res) => {
+        try {
+          console.log(res.videos);
+          this.videos = res.videos;
+          this.dtTrigger.next(this.videos); // Trigger the DataTables re-rendering
+          this.cdr.detectChanges();
+        } catch (err) {
+          console.log(err);
+        }
+      });
   }
 
   updateVideo(videoId: string) {
@@ -69,10 +80,12 @@ export class VideosComponent implements OnInit, OnDestroy {
       .deleteVideo(videoId)
       .pipe(
         catchError((error) => {
-          console.log('Error en el observable: ', error);
-          this.toastrService.error('No se pudo eliminar correctamente el video', 'Error al Eliminar');
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            this.toastrService.error('No se pudo eliminar correctamente el video', 'Error al Eliminar');
+          }
           return [];
-        })
+        }),
       )
       .subscribe((res) => {
         try {

@@ -28,29 +28,40 @@ export class GroupComponent implements OnInit {
 
     private cdr: ChangeDetectorRef,
     private toastrService: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getMyGroups();
   }
 
   postGroup() {
-    if(this.group.name != '' && this.group.description != ''){
+    if (this.group.name != '' && this.group.description != '') {
       this.group.owner = localStorage.getItem('userId');
-      this.groupService.postGroup(this.group).subscribe((res) => {
-        try {
-          console.log(res);
-          this.toastrService.success('Se ha creado el grupo exitosamente', 'Creación Correcta');
-          this.getMyGroups();
-        } catch (err) {
-          console.log(err);
-          this.toastrService.success('No se ha podido crear el grupo correctamente', 'Creación Incorrecta');
-        }
-      });
-    }else{
-      if(this.group.name == '')
+      this.groupService
+        .postGroup(this.group)
+        .pipe(
+          catchError((error) => {
+            if (error.status !== 200 && error.status !== 201) {
+              console.log('Error en el observable: ', error.error.message);
+              this.toastrService.error('Error al subir grupo', 'Error de Subir');
+            }
+            return [];
+          }),
+        )
+        .subscribe((res) => {
+          try {
+            console.log(res);
+            this.toastrService.success('Se ha creado el grupo exitosamente', 'Creación Correcta');
+            this.getMyGroups();
+          } catch (err) {
+            console.log(err);
+            this.toastrService.success('No se ha podido crear el grupo correctamente', 'Creación Incorrecta');
+          }
+        });
+    } else {
+      if (this.group.name == '')
         this.toastrService.warning('Ingrese un nombre para el grupo');
-      if(this.group.description == '')
+      if (this.group.description == '')
         this.toastrService.warning('Ingrese una descripción para el grupo');
     }
   }
@@ -74,10 +85,10 @@ export class GroupComponent implements OnInit {
       .subscribe((result) => {
         try {
           console.log(result);
-          if(sendNotificationGroup)
-            this.toastrService.success('Recibirá notificaciones del grupo','Notificaciones Actualizadas');
+          if (sendNotificationGroup)
+            this.toastrService.success('Recibirá notificaciones del grupo', 'Notificaciones Actualizadas');
           else
-            this.toastrService.error('No recibirá notificaciones del grupo','Notificaciones Actualizadas');
+            this.toastrService.error('No recibirá notificaciones del grupo', 'Notificaciones Actualizadas');
         } catch (err) {
           console.log(err);
           this.toastrService.error('Error al intentar recibir notificaciones', 'Error de Notificaciones');
@@ -86,17 +97,28 @@ export class GroupComponent implements OnInit {
   }
 
   getMyGroups() {
-    this.groupService.getGroupsByUser().subscribe(
-      (result) => {
-        this.myGroups = result.groups;
-        console.log(result);
-        this.getVideosByGroup();
-      },
-      (error) => {
-        console.log(error);
-        this.toastrService.error('Error al intentar obtener grupos', 'Error de Grupos');
-      }
-    );
+    this.groupService
+      .getGroupsByUser()
+      .pipe(
+        catchError((error) => {
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            this.toastrService.error('Error al obtener sus grupos', 'Error de Obtener');
+          }
+          return [];
+        }),
+      )
+      .subscribe(
+        (result) => {
+          this.myGroups = result.groups;
+          console.log(result);
+          this.getVideosByGroup();
+        },
+        (error) => {
+          console.log(error);
+          this.toastrService.error('Error al intentar obtener grupos', 'Error de Grupos');
+        }
+      );
   }
 
   getVideosByGroup() {
@@ -106,13 +128,15 @@ export class GroupComponent implements OnInit {
         .getVideosByGroup(group._id)
         .pipe(
           catchError((error) => {
-            //console.log('Error en el observable: ', error);
             if (error.status !== 200 && error.status !== 201) {
               console.log('Error en el observable: ', error.error.message);
-              // throw new Error('');
+              if(error.error.message == 'An error happened')
+                this.toastrService.error('Error al obtener videos del grupo', 'Error de Obtener');
+              if(error.error.message == 'Group not found')
+                this.toastrService.warning('No existe el grupo');
             }
             return [];
-          })
+          }),
         )
         .subscribe((result) => {
           try {
