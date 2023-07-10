@@ -5,10 +5,20 @@ import playlistSchema from "../models/Playlist.js";
 import channelSchema from "../models/Channel.js";
 import notificationSchema from "../models/Notification.js";
 import ratingSchema from "../models/Rating.js";
+import reportSchema from "../models/Report.js";
 
 import { errorHandler } from '../utils/errorHandler.js';
+/* import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
 
-//Controller para gestionar usuarios, gestores y administradores(distinto de auth)
+let s3 = new S3Client({
+	region: process.env.REGION_AWS,
+	credentials: {
+	  accessKeyId: process.env.ACCESS_KEY_AWS,
+	  secretAccessKey: process.env.SECRET_KEY_AWS,
+	},
+  }); */
+
+  //Controller para gestionar usuarios, gestores y administradores(distinto de auth)
 
 const getUsers = async (req, res, next) => {
 	try {
@@ -37,30 +47,69 @@ const getUser = async (req, res, next) => {
 const deleteUser = async (req, res, next) => {
 	try {
 	  const userId = req.params.userId;
-
-	  await channelSchema.deleteMany({ owner: userId });
-	  await groupSchema.deleteMany({ owner: userId });
-	  await groupSchema.updateMany(
-		{ 'users.userId': userId },
-		{ $pull: { users: { userId: userId } } }
-	  );
-	  await notificationSchema.deleteMany({ $or: [{ receiver: userId }, { sender: userId }] });
-	  await playlistSchema.deleteMany({ owner: userId });
-	  await videoSchema.deleteMany({ owner: userId });
-	  await ratingSchema.deleteMany({ 'users.userId': userId });
   
-	 
+	  // Verificar si el usuario tiene videos
+	  const videos = await videoSchema.find({ owner: userId });
+	  const hasVideos = videos.length > 0;
+  
+	  if (hasVideos) {
+		// Borrar videos de Amazon, listas de reproducción, reportes y ratings
+		for (const video of videos) {
+		 /*  const paramsClient = {
+			Bucket: process.env.BUCKET_AWS,
+			Key: decodeURIComponent(video.url.split(".com/")[1]),
+		  };
+		  const command = new DeleteObjectCommand(paramsClient);
+		  await s3.send(command); */
+  
+		  await playlistSchema.updateMany(
+			{ "videos.videoId": video._id },
+			{ $pull: { videos: { videoId: video._id } } }
+		  );
+  
+		  await reportSchema.deleteMany({ videoId: video._id });
+  
+		  await ratingSchema.deleteMany({ videoId: video._id });
+		}
+  
+		// Borrar videos
+		await videoSchema.deleteMany({ owner: userId });
+	  }
+  
+	  // Borrar canal
+	  await channelSchema.deleteMany({ owner: userId });
+  
+	  // Borrar grupos propiedad
+	  await groupSchema.deleteMany({ owner: userId });
+  
+	  // Actualizar grupos vinculados
+	  await groupSchema.updateMany(
+		{ "users.userId": userId },
+		{ $pull: { users: { userId } } }
+	  );
+  
+	  // Borrar notificaciones
+	  await notificationSchema.deleteMany({ $or: [{ receiver: userId }, { sender: userId }] });
+  
+	  // Borrar listas de reproducción
+	  await playlistSchema.deleteMany({ owner: userId });
+  
+	  // Borrar ratings dados
+	  await ratingSchema.deleteMany({ "users.userId": userId });
+  
+	  // Borrar usuario
 	  const deletedUser = await userSchema.findByIdAndRemove(userId);
   
 	  if (!deletedUser) {
-		throw errorHandler('The user does not exist', 404, {});
+		throw errorHandler("The user does not exist", 404, {});
 	  }
   
-	  res.json({ message: 'User deleted successfully' });
+	  res.json({ message: "User deleted successfully" });
 	} catch (err) {
 	  next(err);
 	}
   };
+  
   
 const updateUser = async (req, res, next) => {
 	try {
