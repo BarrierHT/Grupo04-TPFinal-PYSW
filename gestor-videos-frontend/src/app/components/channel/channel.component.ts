@@ -20,8 +20,8 @@ export class ChannelComponent implements OnInit {
   country = {
     iso2: '',
     name: '',
-    flag: ''
-  }
+    flag: '',
+  };
 
   constructor(
     private groupService: GroupApiService,
@@ -32,51 +32,46 @@ export class ChannelComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    this.getMyChannel();
-    this.getMyVideos();
-    this.getMyPlaylists();
+  async ngOnInit(): Promise<void> {
+    await this.getMyChannel();
+    await this.getMyVideos();
+    await this.getMyPlaylists();
   }
 
-  getMyChannel() {
+  async getMyChannel(): Promise<void> {
     this.channelService.getChannel().subscribe((res) => {
       try {
         console.log(res);
         this.myChannel = res;
         this.country.name = res.owner.country.name;
         this.country.iso2 = res.owner.country.iso2;
-        this.countryService.getFlag(this.country.iso2).subscribe(res => {
+        this.countryService.getFlag(this.country.iso2).subscribe((res) => {
           try {
             this.country.flag = res.data.flag;
           } catch (err) {
             console.log(err);
           }
-        })
+        });
       } catch (err) {
         console.log(err);
       }
     });
   }
 
-  getMyPlaylists() {
-    this.playlistService.getPlaylistsByUser().subscribe((res) => {
+  async getMyVideos(): Promise<void> {
+    this.videoService.getVideosByUser().subscribe((res) => {
       try {
-        res.playlists.forEach((p: any) => {
-          this.myPlaylists.push(p);
-        });
+        this.myVideos = res.videos;
         console.log(res);
       } catch (err) {
         console.log(err);
       }
     });
   }
-
-  getMyVideos() {
-    this.videoService.getVideosByUser().subscribe((res) => {
+  async getMyPlaylists(): Promise<void> {
+    this.playlistService.getPlaylistsByUser().subscribe((res) => {
       try {
-        res.videos.forEach((v: any) => {
-          this.myVideos.push(v);
-        });
+        this.myPlaylists = res.playlists;
         console.log(res);
       } catch (err) {
         console.log(err);

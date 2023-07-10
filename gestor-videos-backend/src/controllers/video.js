@@ -4,6 +4,7 @@ import videoSchema from "../models/Video.js";
 import groupSchema from "../models/Group.js";
 import playlistSchema from "../models/Playlist.js";
 import reportSchema from "../models/Report.js";
+import ratingSchema from '../models/Rating.js'
 import notificationController from "../controllers/notification.js";
 
 import { errorHandler } from "../utils/errorHandler.js";
@@ -175,6 +176,9 @@ const deleteVideo = async (req, res, next) => {
 
     // Eliminar reportes del video
     await reportSchema.deleteMany({ videoId });
+
+    // Eliminar rating del video
+    await ratingSchema.deleteOne({ videoId: videoId });
 
     // Eliminar el video
     const deletedVideo = await videoSchema.findByIdAndDelete(videoId);
