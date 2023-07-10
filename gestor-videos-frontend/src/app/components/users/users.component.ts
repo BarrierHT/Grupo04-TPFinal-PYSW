@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import * as printJS from 'print-js';
-import { Subject } from 'rxjs';
+import { Subject, catchError } from 'rxjs';
 import { CountryApiService } from 'src/app/services/country-api.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -25,7 +25,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private toastrService: ToastrService,
     private countryService: CountryApiService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.dtOptions = {
@@ -57,45 +57,76 @@ export class UsersComponent implements OnInit, OnDestroy {
     };
     this.userService
       .updateUser(this.editingUser._id, this.editingUser)
+      .pipe(
+        catchError((error) => {
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            this.toastrService.error('Error al actualizar información del usuario', 'Error al Actualizar');
+          }
+          return [];
+        }),
+      )
       .subscribe(
         (res) => {
           console.log(res);
-          this.toastrService.success('El usuario ha sido actualizado correctamente', 'Modificacion Exitosa');
+          this.toastrService.success('El usuario ha sido actualizado correctamente', 'Modificación Exitosa');
           this.getUsers();
           this.editingUser = null;
           this.closeEdit();
         },
         (err) => {
           console.log(err);
-          this.toastrService.error('El usuario no ha sido actualizado correctamente', 'Modificacion Fallida');
+          this.toastrService.error('El usuario no ha sido actualizado correctamente', 'Modificación Fallida');
         }
       );
   }
 
   deleteUser(idUser: string) {
-    this.userService.deleteUser(idUser).subscribe((res) => {
-      try {
-        console.log(res);
-        this.toastrService.success('El usuario  ha sido eliminado correctamente', 'Eliminacion Exitosa');
-      } catch (err) {
-        console.log(err);
-        this.toastrService.error('El usuario  no ha sido eliminado correctamente', 'Eliminacion Fallida');
-      }
-    });
+    this.userService
+      .deleteUser(idUser)
+      .pipe(
+        catchError((error) => {
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            this.toastrService.error('Error al borrar usuario', 'Error al Eliminar');
+          }
+          return [];
+        }),
+      )
+      .subscribe((res) => {
+        try {
+          console.log(res);
+          this.toastrService.success('El usuario  ha sido eliminado correctamente', 'Eliminación Exitosa');
+        } catch (err) {
+          console.log(err);
+          this.toastrService.error('El usuario  no ha sido eliminado correctamente', 'Eliminación Fallida');
+        }
+      });
     this.getUsers();
   }
 
   getUsers() {
-    this.userService.getUsers().subscribe((res) => {
-      try {
-        console.log(res);
-        this.users = res;
-        this.dtTrigger.next(this.users);
-        this.cdr.detectChanges();
-      } catch (err) {
-        console.log(err);
-      }
-    });
+    this.userService
+      .getUsers()
+      .pipe(
+        catchError((error) => {
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            this.toastrService.error('Error al obtener usuarios', 'Error de Obtener');
+          }
+          return [];
+        }),
+      )
+      .subscribe((res) => {
+        try {
+          console.log(res);
+          this.users = res;
+          this.dtTrigger.next(this.users);
+          this.cdr.detectChanges();
+        } catch (err) {
+          console.log(err);
+        }
+      });
     this.users = [];
   }
 

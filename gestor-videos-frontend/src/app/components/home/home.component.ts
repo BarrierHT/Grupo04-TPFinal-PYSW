@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     @Inject(DOCUMENT) private document: Document,
     private toastrService: ToastrService
-  ) {}
+  ) { }
 
   async ngOnInit() {
     if (localStorage.getItem('userId')) {
@@ -132,8 +132,8 @@ export class HomeComponent implements OnInit {
         try {
           console.log(result);
           this.videos = result.videos;
-          if(this.pattern != ''){
-            if(this.videos.length == 0)
+          if (this.pattern != '') {
+            if (this.videos.length == 0)
               this.toastrService.info('No se encontraron videos', 'Búsqueda de Videos');
           }
         } catch (err) {
@@ -144,25 +144,47 @@ export class HomeComponent implements OnInit {
   }
 
   showPlaylists() {
-    this.playlistApiService.getPlaylistsByUser().subscribe((res) => {
-      try {
-        console.log(res);
-        this.userPlaylists = res.playlists;
-      } catch (err) {
-        console.log(err);
-      }
-    });
+    this.playlistApiService
+      .getPlaylistsByUser()
+      .pipe(
+        catchError((error) => {
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            this.toastrService.error('Error al obtener sus playlist', 'Error de Obtener');
+          }
+          return [];
+        }),
+      )
+      .subscribe((res) => {
+        try {
+          console.log(res);
+          this.userPlaylists = res.playlists;
+        } catch (err) {
+          console.log(err);
+        }
+      });
   }
 
   getVideo(videoId: string) {
-    this.videoApiService.getVideo(videoId).subscribe((res) => {
-      try {
-        console.log(res);
-        this.choosedVideo = res.video._id;
-      } catch (err) {
-        console.log(err);
-      }
-    });
+    this.videoApiService
+      .getVideo(videoId)
+      .pipe(
+        catchError((error) => {
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            this.toastrService.error('Error al obtener video', 'Error de Obtener');
+          }
+          return [];
+        }),
+      )
+      .subscribe((res) => {
+        try {
+          console.log(res);
+          this.choosedVideo = res.video._id;
+        } catch (err) {
+          console.log(err);
+        }
+      });
   }
 
   // addVideoToPlaylist(playlist: any) {
@@ -172,6 +194,18 @@ export class HomeComponent implements OnInit {
   addVideoToPlaylist(playlistId: string) {
     this.playlistApiService
       .addVideoToPlaylist(playlistId, this.choosedVideo)
+      .pipe(
+        catchError((error) => {
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            if (error.error.message == "Playlist not found")
+              this.toastrService.error('Error al añadir videos a una playlist', 'Error de Subir');
+            if (error.error.message == "Video already in playlist")
+              this.toastrService.info('El video ya esta en la playlist');
+          }
+          return [];
+        }),
+      )
       .subscribe((res) => {
         try {
           console.log(res);

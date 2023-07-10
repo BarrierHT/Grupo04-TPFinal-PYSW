@@ -7,7 +7,7 @@
         </div>
         <div class="col-12 col-md-4 col-lg-6">
           <div *ngIf="myChannel">
-            <img *ngIf="country" [src]="country.flag" alt="country.name" class="userFlag img-fluid">
+            <img *ngIf="country" [src]="country.flag" [alt]="country.name" class="userFlag img-fluid">
             <h2 class="username">{{ myChannel.name }}</h2>
             <p>{{ myChannel.description }}</p>
           </div>

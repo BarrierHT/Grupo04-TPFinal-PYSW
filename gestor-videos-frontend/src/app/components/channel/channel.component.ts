@@ -6,6 +6,7 @@ import { PlaylistApiService } from 'src/app/services/playlist-api.service';
 import { Router } from '@angular/router';
 import { CountryApiService } from 'src/app/services/country-api.service';
 import { ToastrService } from 'ngx-toastr';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-channel',
@@ -41,44 +42,78 @@ export class ChannelComponent implements OnInit {
   }
 
   async getMyChannel(): Promise<void> {
-    this.channelService.getChannel().subscribe((res) => {
-      try {
-        console.log(res);
-        this.myChannel = res;
-        this.country.name = res.owner.country.name;
-        this.country.iso2 = res.owner.country.iso2;
-        this.countryService.getFlag(this.country.iso2).subscribe((res) => {
-          try {
-            this.country.flag = res.data.flag;
-          } catch (err) {
-            console.log(err);
+    this.channelService
+      .getChannel()
+      .pipe(
+        catchError((error) => {
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            this.toastrService.error('Error al obtener canal', 'Error de Obtener');
           }
-        });
-      } catch (err) {
-        console.log(err);
-      }
-    });
+          return [];
+        }),
+      )
+      .subscribe((res) => {
+        try {
+          console.log(res);
+          this.myChannel = res;
+          this.country.name = res.owner.country.name;
+          this.country.iso2 = res.owner.country.iso2;
+          this.countryService.getFlag(this.country.iso2).subscribe((res) => {
+            try {
+              this.country.flag = res.data.flag;
+            } catch (err) {
+              console.log(err);
+            }
+          });
+        } catch (err) {
+          console.log(err);
+        }
+      });
   }
 
   async getMyVideos(): Promise<void> {
-    this.videoService.getVideosByUser().subscribe((res) => {
-      try {
-        this.myVideos = res.videos;
-        console.log(res);
-      } catch (err) {
-        console.log(err);
-      }
-    });
+    this.videoService
+      .getVideosByUser()
+      .pipe(
+        catchError((error) => {
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            this.toastrService.error('Error al obtener videos del canal', 'Error de Obtener');
+          }
+          return [];
+        }),
+      )
+      .subscribe((res) => {
+        try {
+          this.myVideos = res.videos;
+          console.log(res);
+        } catch (err) {
+          console.log(err);
+        }
+      });
   }
+
   async getMyPlaylists(): Promise<void> {
-    this.playlistService.getPlaylistsByUser().subscribe((res) => {
-      try {
-        this.myPlaylists = res.playlists;
-        console.log(res);
-      } catch (err) {
-        console.log(err);
-      }
-    });
+    this.playlistService
+      .getPlaylistsByUser()
+      .pipe(
+        catchError((error) => {
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            this.toastrService.error('Error al obtener playlist del canal', 'Error de Obtener');
+          }
+          return [];
+        }),
+      )
+      .subscribe((res) => {
+        try {
+          this.myPlaylists = res.playlists;
+          console.log(res);
+        } catch (err) {
+          console.log(err);
+        }
+      });
   }
 
   redirectVideo(redirectSource: any, type: string) {

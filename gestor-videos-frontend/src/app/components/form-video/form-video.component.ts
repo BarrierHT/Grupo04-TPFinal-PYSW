@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { catchError } from 'rxjs';
 import { Video } from 'src/app/models/video';
 import { GroupApiService } from 'src/app/services/group-api.service';
 import { VideoApiService } from 'src/app/services/video-api.service';
@@ -17,11 +18,11 @@ export class FormVideoComponent implements OnInit {
     description: string;
     groupId: string;
   } = {
-    file: null,
-    title: '',
-    description: '',
-    groupId: '',
-  };
+      file: null,
+      title: '',
+      description: '',
+      groupId: '',
+    };
   msgVideoValidation!: string;
   myGroups: Array<any> = [];
   action = false;
@@ -33,7 +34,7 @@ export class FormVideoComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private toastrService: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getMyGroups();
@@ -50,15 +51,26 @@ export class FormVideoComponent implements OnInit {
   }
 
   getMyGroups() {
-    this.groupService.getGroupsByUser().subscribe(
-      (result) => {
-        this.myGroups = result.groups;
-        console.log(result);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    this.groupService
+      .getGroupsByUser()
+      .pipe(
+        catchError((error) => {
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            this.toastrService.error('Error al obtener grupos', 'Error de Obtener');
+          }
+          return [];
+        }),
+      )
+      .subscribe(
+        (result) => {
+          this.myGroups = result.groups;
+          console.log(result);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
 
   postVideo() {
@@ -68,55 +80,91 @@ export class FormVideoComponent implements OnInit {
       console.log(this.video.description);
       console.log(this.video.title);
 
-      this.videoApiService.postVideo(this.video).subscribe(
-        (result) => {
-          console.log(result);
-          this.video = {
-            file: null,
-            title: '',
-            description: '',
-            groupId: '',
-          };
-          if (result.message == 'Video uploaded') {
-            //alert('VIDEO SUBIDO CORRECTAMENTE');
-            this.toastrService.success('Se ha subido correctamente el video', 'Subida Correcta');
-            window.location.href =
-              'http://localhost:4200/watch/' + result.videoId;
-            //Update header
-          }else{
-            this.toastrService.error('No se ha podido subir el video', 'Subida Incorrecta');
+      this.videoApiService
+        .postVideo(this.video)
+        .pipe(
+          catchError((error) => {
+            if (error.status !== 200 && error.status !== 201) {
+              console.log('Error en el observable: ', error.error.message);
+              if (error.error.message == 'An error ocurred')
+                this.toastrService.error('Error al subir el video', 'Error de Subir');
+              if (error.error.message == 'An image is required')
+                this.toastrService.warning('Suba un video');
+            }
+            return [];
+          }),
+        )
+        .subscribe(
+          (result) => {
+            console.log(result);
+            this.video = {
+              file: null,
+              title: '',
+              description: '',
+              groupId: '',
+            };
+            if (result.message == 'Video uploaded') {
+              //alert('VIDEO SUBIDO CORRECTAMENTE');
+              this.toastrService.success('Se ha subido correctamente el video', 'Subida Correcta');
+              window.location.href =
+                'http://localhost:4200/watch/' + result.videoId;
+              //Update header
+            } else {
+              this.toastrService.error('No se ha podido subir el video', 'Subida Incorrecta');
+            }
+          },
+          (error) => {
+            console.log(error);
+            this.toastrService.error('Error al intentar subir video', 'Error de Videos');
           }
-        },
-        (error) => {
-          console.log(error);
-          this.toastrService.error('Error al intentar subir video', 'Error de Videos');
-        }
-      );
+        );
     } else {
       console.log('Invalid video');
     }
   }
 
   getVideo(videoId: string) {
-    this.videoApiService.getVideo(videoId).subscribe(res => {
-      try {
-        console.log(res);
-        this.video.title = res.video.title;
-        this.video.description = res.video.description;
-      } catch (err) {
-        console.log(err);
-      }
-    })
+    this.videoApiService
+      .getVideo(videoId)
+      .pipe(
+        catchError((error) => {
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            this.toastrService.error('Error al obtener un video', 'Error de Obtener');
+          }
+          return [];
+        }),
+      )
+      .subscribe(res => {
+        try {
+          console.log(res);
+          this.video.title = res.video.title;
+          this.video.description = res.video.description;
+        } catch (err) {
+          console.log(err);
+        }
+      })
   }
 
   updateVideo() {
-    this.videoApiService.updateVideo(this.id, this.video.title, this.video.description).subscribe(res => {
-      try {
-        console.log(res);
-      } catch (err) {
-        console.log(err);
-      }
-    })
+    this.videoApiService
+      .updateVideo(this.id, this.video.title, this.video.description)
+      .pipe(
+        catchError((error) => {
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            this.toastrService.error('Error al actualizar video', 'Error de Actualizar');
+          }
+          return [];
+        }),
+      )
+      .subscribe(res => {
+        try {
+          console.log(res);
+        } catch (err) {
+          console.log(err);
+        }
+      })
     this.router.navigate(['videos']);
   }
 
@@ -137,12 +185,15 @@ export class FormVideoComponent implements OnInit {
         if (this.isVideoSizeValid(file)) {
           this.video.file = file;
           valid = true;
+          this.toastrService.success('Video permitido');
         } else {
           this.msgVideoValidation = 'Tamaño invalido! maximo: 50mb';
+          this.toastrService.error('Video demasiado grande, ingrese un video de máximo 50MB');
           console.log('tamaño invalido! maximo: 50mb');
         }
       } else {
         this.msgVideoValidation = 'Por favor selecciona un video';
+        this.toastrService.error('Tipo de archivo no permitido');
         console.log('Por favor selecciona un video');
       }
     }

@@ -35,10 +35,9 @@ export class ListVideoComponent implements OnInit {
       .getPlaylistsByUser()
       .pipe(
         catchError((error) => {
-          //console.log('Error en el observable: ', error);
           if (error.status !== 200 && error.status !== 201) {
             console.log('Error en el observable: ', error.error.message);
-            // throw new Error('');
+            this.toastrService.error('Error al buscar playlist', 'Error de Búsqueda');
           }
           return [];
         }),
@@ -61,35 +60,57 @@ export class ListVideoComponent implements OnInit {
   // }
 
   getPlaylist(playlistId: string) {
-    this.playlistApiService.getPlaylist(playlistId).subscribe((res) => {
-      try {
-        console.log("GET PLAYLIST LIST-VIDEO")
-        console.log(res);
-        if (res.videos.length < 1) 
-          this.toastrService.warning('La playlist no tiene videos aún!', 'Información Playlist');
+    this.playlistApiService
+      .getPlaylist(playlistId)
+      .pipe(
+        catchError((error) => {
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            this.toastrService.error('Error al obtener playlist', 'Error de Obtener');
+          }
+          return [];
+        }),
+      )
+      .subscribe((res) => {
+        try {
+          console.log("GET PLAYLIST LIST-VIDEO")
+          console.log(res);
+          if (res.videos.length < 1)
+            this.toastrService.warning('La playlist no tiene videos aún!', 'Información Playlist');
           //alert('La playlist no tiene videos aún!');
-        else 
-          this.router.navigate(['watch', res.videos[0].videoId._id, 'playlist', res._id]);
-        //this.router.navigate(['watch', res.videos[0].videoId], { queryParams: { playlist: res._id } });
-      } catch (err) {
-        console.log(err);
-      }
-    });
+          else
+            this.router.navigate(['watch', res.videos[0].videoId._id, 'playlist', res._id]);
+          //this.router.navigate(['watch', res.videos[0].videoId], { queryParams: { playlist: res._id } });
+        } catch (err) {
+          console.log(err);
+        }
+      });
   }
 
   addPlaylist() {
     this.newPlaylist.owner = localStorage.getItem('userId');
     console.log(this.newPlaylist);
-    this.playlistApiService.postPlaylist(this.newPlaylist).subscribe((res) => {
-      try {
-        console.log(res);
-        this.toastrService.success('Se ha creado la playlist exitosamente', 'Creación Correcta');
-        this.searchPlaylists();
-      } catch (err) {
-        console.log(err);
-        this.toastrService.error('No se ha podido crear la playlist correctamente', 'Creación Incorrecta');
-      }
-    });
+    this.playlistApiService
+      .postPlaylist(this.newPlaylist)
+      .pipe(
+        catchError((error) => {
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            this.toastrService.error('Error al añadir playlist', 'Error de Subir');
+          }
+          return [];
+        }),
+      )
+      .subscribe((res) => {
+        try {
+          console.log(res);
+          this.toastrService.success('Se ha creado la playlist exitosamente', 'Creación Correcta');
+          this.searchPlaylists();
+        } catch (err) {
+          console.log(err);
+          this.toastrService.error('No se ha podido crear la playlist correctamente', 'Creación Incorrecta');
+        }
+      });
   }
 
   resetModal(playlistForm: NgForm) {

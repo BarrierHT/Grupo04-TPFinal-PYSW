@@ -18,7 +18,7 @@ export class ReportComponent implements OnInit, OnDestroy {
     private reportService: ReportApiService,
     private cdr: ChangeDetectorRef,
     private toastrService: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     (this.dtOptions = {
@@ -37,10 +37,9 @@ export class ReportComponent implements OnInit, OnDestroy {
       .getReports()
       .pipe(
         catchError((error) => {
-          //console.log('Error en el observable: ', error);
           if (error.status !== 200 && error.status !== 201) {
             console.log('Error en el observable: ', error.error.message);
-            // throw new Error('');
+            this.toastrService.error('Error al obtener reportes', 'Error de Obtener');
           }
           return [];
         }),
@@ -84,7 +83,7 @@ export class ReportComponent implements OnInit, OnDestroy {
       });
   }
 
-  reviewedReport(reportId: string){
+  reviewedReport(reportId: string) {
     this.toastrService.info('Este reporte ya esta revisado', 'Información Revision');
   }
 }

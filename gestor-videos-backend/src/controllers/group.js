@@ -121,7 +121,7 @@ const postAddUserToGroup = async (req, res, next) => {
 		}
 
 		const userExists = group.users.some(
-			user => user._id.toString() == userId
+			user => user.userId.toString() == userId
 		);
 
 		if (userExists) throw errorHandler('User already in group', 400, {});

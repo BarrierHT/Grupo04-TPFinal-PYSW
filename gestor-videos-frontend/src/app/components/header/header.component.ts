@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { catchError, delay } from 'rxjs';
 import { NotificationApiService } from 'src/app/services/notification-api.service';
 
@@ -16,7 +17,10 @@ export class HeaderComponent implements OnInit {
   oldNotifications: any[] = [];
   badgeNotification: string = '0';
 
-  constructor(private notificationService: NotificationApiService) {}
+  constructor(
+    private notificationService: NotificationApiService,
+    private toastrService: ToastrService
+    ) {}
 
   ngOnInit(): void {
     console.log(
@@ -42,10 +46,12 @@ export class HeaderComponent implements OnInit {
         localStorage.getItem('userRole') != null
       ) {
         this.logged = true;
-        if (localStorage.getItem('userRole') == 'gestor') this.isGestor = true;
+        if (localStorage.getItem('userRole') == 'gestor') 
+          this.isGestor = true;
         else if (localStorage.getItem('userRole') == 'admin')
           this.isAdmin = true;
         this.getNotifications();
+        //this.toastrService.success('¡Bienvenido!');
       }
     }
   }
@@ -130,5 +136,6 @@ export class HeaderComponent implements OnInit {
     localStorage.removeItem('userRole');
     // Actualizar el valor de logged
     this.logged = false;
+    this.toastrService.error('¡La sesión ha expirado!');
   }
 }
