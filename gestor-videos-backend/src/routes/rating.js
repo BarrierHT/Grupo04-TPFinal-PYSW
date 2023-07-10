@@ -4,8 +4,8 @@ import { isAuth } from '../middlewares/is-Auth.js';
 
 const router = express.Router();
 
-router.get('/get-rating/:videoId', ratingController.getRating);
-router.post('/add-rating', isAuth, ratingController.postRating);
+router.get('/get-rating/:videoId', isAuth, ratingController.getRating);
+router.put('/add-rating/:videoId', isAuth, ratingController.postRating);
 
 //exportamos el modulo de rutas
 

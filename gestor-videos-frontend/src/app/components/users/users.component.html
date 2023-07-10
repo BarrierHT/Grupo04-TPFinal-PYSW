@@ -56,7 +56,6 @@
         </div>
         <form #userForm="ngForm" *ngIf="editingUser">
           <div class="modal-body">
-
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="nameInput" placeholder="email" [(ngModel)]="editingUser.name"
                 #name="ngModel" name="name" required>
@@ -66,7 +65,6 @@
                   ingresa un nombre</div>
               </div>
             </div>
-
             <div class="form-floating mb-3">
               <input type="email" class="form-control" id="emailInput" placeholder="email" #email="ngModel"
                 [(ngModel)]="editingUser.email" name="email" required>
@@ -80,7 +78,6 @@
                   email válido</div>
               </div>
             </div>
-
             <div class="form-floating mb-3">
               <input type="tel" class="form-control" id="phoneInput" placeholder="phoneNumber" #phoneNumber="ngModel"
                 [(ngModel)]="editingUser.phoneNumber" name="phoneNumber" required>
@@ -90,7 +87,6 @@
                   ingresa un número de teléfono</div>
               </div>
             </div>
-
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="usernameInput" placeholder="username" #username="ngModel"
                 [(ngModel)]="editingUser.username" name="username" required>
@@ -101,7 +97,34 @@
                   un nombre de usuario</div>
               </div>
             </div>
-
+            <div class="mb-3 d-flex justify-content-center">
+              <div class="form-check">
+                <label class="form-check-label me-2" for="adminRole">Admin</label>
+                <input class="form-check-input" type="radio" name="role" id="adminRole" value="admin"
+                  [(ngModel)]="editingUser.role" required>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label me-2" for="normalRole">User</label>
+                <input class="form-check-input" type="radio" name="role" id="normalRole" value="user"
+                  [(ngModel)]="editingUser.role" required>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label me-2" for="gestorRole">Gestor</label>
+                <input class="form-check-input" type="radio" name="role" id="gestorRole" value="gestor"
+                  [(ngModel)]="editingUser.role" required>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="selectCountry">Seleccionar País</label>
+              <select class="form-select" id="selectCountry" name="selectCountry" [(ngModel)]="selectedCountry" #country="ngModel" required>
+                <option value="" disabled selected>Selecciona un país</option>
+                <option *ngFor="let c of countries" [value]="c.iso2 + '-' + c.name">{{ c.name }}</option>
+              </select>
+              <div *ngIf="country.invalid && (country.dirty || country.touched)">
+                <div *ngIf="country.errors?.['required']" class="alerta text-center">Por favor, elige un país.</div>
+              </div>
+            </div>
+            
           </div>
           <div class="modal-footer button-user-upload justify-content-center">
             <button type="submit" [disabled]="userForm.invalid" (click)="saveUser()">Modificar</button>

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, delay } from 'rxjs';
 import { PlaylistApiService } from 'src/app/services/playlist-api.service';
+import { RatingApiService } from 'src/app/services/rating-api.service';
 import { ReportApiService } from 'src/app/services/report-api.service';
 import { VideoApiService } from 'src/app/services/video-api.service';
 
@@ -26,6 +27,7 @@ export class ShowVideoComponent implements OnInit {
   showPlaylistVideos: boolean = false;
   playlist: any;
   playlistVideos: any;
+  rating: any;
 
   video: any = {
     title: '',
@@ -36,6 +38,7 @@ export class ShowVideoComponent implements OnInit {
     private reportService: ReportApiService,
     private activatedRoute: ActivatedRoute,
     private playlistApiService: PlaylistApiService,
+    private ratingService: RatingApiService,
     private router: Router,
     private videoService: VideoApiService,
     private toastrService: ToastrService
@@ -66,6 +69,7 @@ export class ShowVideoComponent implements OnInit {
               console.log(err);
             }
           });
+          this.getRating(videoId);
 
         // .find((ticket) => ticket._id.toString() == params['ticketId']);
 
@@ -92,24 +96,39 @@ export class ShowVideoComponent implements OnInit {
 
   addPositiveRating() {
     const btn1: any = document.querySelector('#green-button-rating');
-    const btn2: any = document.querySelector('#red-button-rating');
-    if (btn2.classList.contains('red')) {
-      btn2.classList.remove('red');
-    }
     btn1.classList.toggle('green');
-    console.log({ videoId: this.video._id, rating: 1 });
-    this.toastrService.info('Te ha gustado el video');
+
+    this.ratingService.postRating(this.video._id).subscribe(res => {
+      try {
+        console.log(res);
+        this.toastrService.info('Te ha gustado el video');
+        this.getRating(this.video._id);
+      } catch (err) {
+        console.log(err);
+      }
+    })
   }
 
-  addNegativeRating() {
-    const btn1: any = document.querySelector('#green-button-rating');
-    const btn2: any = document.querySelector('#red-button-rating');
-    if (btn1.classList.contains('green')) btn1.classList.remove('green');
-
-    btn2.classList.toggle('red');
-    console.log({ videoId: this.video._id, rating: -1 });
-    this.toastrService.info('No te ha gustado el video');
+  getRating(videoId: string) {
+    this.ratingService.getRating(videoId).subscribe(res => {
+      try {
+        console.log(res);
+        this.rating = res.rating.rating;
+      } catch (err) {
+        console.log(err);
+      }
+    })
   }
+
+  // addNegativeRating() {
+  //   const btn1: any = document.querySelector('#green-button-rating');
+  //   const btn2: any = document.querySelector('#red-button-rating');
+  //   if (btn1.classList.contains('green')) btn1.classList.remove('green');
+
+  //   btn2.classList.toggle('red');
+  //   console.log({ videoId: this.video._id, rating: -1 });
+  //   this.toastrService.info('No te ha gustado el video');
+  // }
 
   onMouseEnter(video: any) {
     this.showOptions = true;
