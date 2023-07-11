@@ -4,6 +4,7 @@ import { catchError } from 'rxjs';
 import { GroupApiService } from 'src/app/services/group-api.service';
 import { NotificationApiService } from 'src/app/services/notification-api.service';
 import { VideoApiService } from 'src/app/services/video-api.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-group',
@@ -20,6 +21,11 @@ export class GroupComponent implements OnInit {
   };
 
   myGroups: Array<any> = [];
+
+  hostUrl: string =
+    environment.ANGULAR_ENV == 'development'
+      ? environment.urlFrontDevelopment
+      : environment.urlFrontProduction;
 
   constructor(
     private groupService: GroupApiService,
@@ -130,9 +136,9 @@ export class GroupComponent implements OnInit {
           catchError((error) => {
             if (error.status !== 200 && error.status !== 201) {
               console.log('Error en el observable: ', error.error.message);
-              if(error.error.message == 'An error happened')
+              if (error.error.message == 'An error happened')
                 this.toastrService.error('Error al obtener videos del grupo', 'Error de Obtener');
-              if(error.error.message == 'Group not found')
+              if (error.error.message == 'Group not found')
                 this.toastrService.warning('No existe el grupo');
             }
             return [];

@@ -6,6 +6,7 @@ import { PlaylistApiService } from 'src/app/services/playlist-api.service';
 import { RatingApiService } from 'src/app/services/rating-api.service';
 import { ReportApiService } from 'src/app/services/report-api.service';
 import { VideoApiService } from 'src/app/services/video-api.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-show-video',
@@ -28,6 +29,10 @@ export class ShowVideoComponent implements OnInit {
   playlist: any;
   playlistVideos: any;
   rating: any;
+  hostUrl: string =
+    environment.ANGULAR_ENV == 'development'
+      ? environment.urlFrontDevelopment
+      : environment.urlFrontProduction;
 
   video: any = {
     title: '',
@@ -101,54 +106,54 @@ export class ShowVideoComponent implements OnInit {
     btn1.classList.toggle('green');
 
     this.ratingService
-    .postRating(this.video._id)
-    .pipe(
-      catchError((error) => {
-        //console.log('Error en el observable: ', error);
-        if (error.status !== 200 && error.status !== 201) {
-          console.log('Error en el observable: ', error.error.message);
-          this.toastrService.error('No se ha podido actualizar el rating del video', 'Error');
-          // throw new Error('');
+      .postRating(this.video._id)
+      .pipe(
+        catchError((error) => {
+          //console.log('Error en el observable: ', error);
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            this.toastrService.error('No se ha podido actualizar el rating del video', 'Error');
+            // throw new Error('');
+          }
+          return [];
+        })
+      )
+      .subscribe(res => {
+        try {
+          console.log(res);
+          if (res.message == "Rating updated -1")
+            this.toastrService.info('Te dejo de gustar el video');
+          else
+            this.toastrService.info('Te gusta el video');
+          this.getRating(this.video._id);
+        } catch (err) {
+          console.log(err);
         }
-        return [];
       })
-    )
-    .subscribe(res => {
-      try {
-        console.log(res);
-        if(res.message == "Rating updated -1")
-          this.toastrService.info('Te dejo de gustar el video');
-        else
-          this.toastrService.info('Te gusta el video');
-        this.getRating(this.video._id);
-      } catch (err) {
-        console.log(err);
-      }
-    })
   }
 
   getRating(videoId: string) {
     this.ratingService
-    .getRating(videoId)
-    .pipe(
-      catchError((error) => {
-        //console.log('Error en el observable: ', error);
-        if (error.status !== 200 && error.status !== 201) {
-          console.log('Error en el observable: ', error.error.message);
-          //this.toastrService.error('No se ha podido obtener el rating', 'Error de Obtener');
-          // throw new Error('');
+      .getRating(videoId)
+      .pipe(
+        catchError((error) => {
+          //console.log('Error en el observable: ', error);
+          if (error.status !== 200 && error.status !== 201) {
+            console.log('Error en el observable: ', error.error.message);
+            //this.toastrService.error('No se ha podido obtener el rating', 'Error de Obtener');
+            // throw new Error('');
+          }
+          return [];
+        })
+      )
+      .subscribe(res => {
+        try {
+          console.log(res);
+          this.rating = res.rating.rating;
+        } catch (err) {
+          console.log(err);
         }
-        return [];
       })
-    )
-    .subscribe(res => {
-      try {
-        console.log(res);
-        this.rating = res.rating.rating;
-      } catch (err) {
-        console.log(err);
-      }
-    })
   }
 
   // addNegativeRating() {

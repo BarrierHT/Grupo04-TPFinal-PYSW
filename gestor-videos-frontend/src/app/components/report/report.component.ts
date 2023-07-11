@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, catchError, delay } from 'rxjs';
 import { ReportApiService } from 'src/app/services/report-api.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-report',
@@ -13,6 +14,10 @@ export class ReportComponent implements OnInit, OnDestroy {
 
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject<any>();
+  hostUrl: string =
+    environment.ANGULAR_ENV == 'development'
+      ? environment.urlFrontDevelopment
+      : environment.urlFrontProduction;
 
   constructor(
     private reportService: ReportApiService,

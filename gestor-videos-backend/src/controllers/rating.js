@@ -35,7 +35,7 @@ const postRating = async (req, res, next) => {
         await ratingExists.save();
         return res
           .status(200)
-          .json({ message: "Rating updated +1", rating: ratingExists });
+          .json({ message: "Rating updated -1", rating: ratingExists });
       }
 
       ratingExists.rating += 1;
@@ -45,7 +45,7 @@ const postRating = async (req, res, next) => {
 
       return res
         .status(200)
-        .json({ message: "Rating updated -1", rating: ratingExists });
+        .json({ message: "Rating updated +1", rating: ratingExists });
     }
 
     const newRating = new ratingSchema({

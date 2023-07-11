@@ -34,14 +34,14 @@
                         Agregar a playlist
                       </button>
                     </li>
-                    <li>
+                    <!-- <li>
                       <button class="dropdown-item" href="#">Another action</button>
                     </li>
                     <li>
                       <button class="dropdown-item" href="#">
                         Something else here
                       </button>
-                    </li>
+                    </li> -->
                   </ul>
                 </div>
 
@@ -88,7 +88,7 @@
                   <div class="user-name-custom">{{ video.owner.username }}</div>
                 </div>
                 <div class="user-details-custom" *ngIf="logged && video.owner._id == userId">
-                  <a href="http://localhost:4200/channel">
+                  <a href="{{hostUrl}}channel">
                     <div class="user-name-custom">{{ video.owner.username }}</div>
                   </a>
                 </div>

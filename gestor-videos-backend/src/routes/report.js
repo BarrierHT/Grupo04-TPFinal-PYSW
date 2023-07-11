@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/get-report/:id', isAuth, isGestor, reportController.getReport);
 router.get('/get-reports', isAuth, isGestor, reportController.getReports);
 
-router.post('/add-report', isAuth, isGestor, reportController.postReport);
+router.post('/add-report', isAuth, reportController.postReport);
 router.put(
 	'/review-report',
 	isAuth,

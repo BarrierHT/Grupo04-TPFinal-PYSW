@@ -15,7 +15,7 @@
                 <tr *ngFor="let report of reports">
 
                     <th scope="row">{{report.title}}</th>
-                    <td><a href="http://localhost:4200/watch/{{report.videoId._id}}">{{report.videoId._id}}</a></td>
+                    <td><a href="{{hostUrl}}watch/{{report.videoId._id}}">{{report.videoId._id}}</a></td>
                     <td>{{report.videoId.title}}</td>
                     <td>{{report.reason}}</td>
                     <td class="text-center">
