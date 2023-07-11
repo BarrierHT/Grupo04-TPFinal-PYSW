@@ -30,7 +30,7 @@
                   <ul class="dropdown-menu">
                     <li>
                       <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                        data-bs-target="#modalPlaylists">
+                        data-bs-target="#addVideoPlaylistModal">
                         Agregar a playlist
                       </button>
                     </li>
@@ -46,124 +46,115 @@
                 </div>
 
                 <!-- Modal -->
-                <div class="modal fade" id="modalPlaylists" tabindex="-1" aria-labelledby="modalPlaylistsLabel"
+                <div class="modal fade" id="addVideoPlaylistModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                   aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content p-2">
                       <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="modalPlaylistsLabel">
-                          Mis Playlists
-                        </h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Mis playlist</h1>
                       </div>
                       <div class="modal-body">
-                        <div *ngIf="userPlaylists.length > 0">
-                          <button type="button" class="btn border-dark modal-body mt-2 rounded-circle buttonPlay"
-                            *ngFor="let playlist of userPlaylists"
+                        <div *ngIf="userPlaylists.length == 0">
+                          <strong class="text-white">No tienes ninguna playlist!</strong>
+                        </div>
+                        <div class="row" *ngIf="userPlaylists.length > 0">
+                          <div class="col-12 playlists mb-2" *ngFor="let playlist of userPlaylists"
                             (click)="addVideoToPlaylist(playlist._id, video._id)">
-                            <strong>Nombre: </strong>{{ playlist.name }}
-                            <br />
-                            <strong>Descripción: </strong>{{ playlist.description }}
-                          </button>
+                            <strong class="text-dark">Nombre: </strong><span class="text-dark">{{ playlist.name
+                              }}</span><br>
+                            <strong class="text-dark">Descripción: </strong><span class="text-dark">{{
+                              playlist.description }}</span>
+                          </div>
                         </div>
                       </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                          Close
-                        </button>
-                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-12 user-info-custom">
-              <div>
-                <div class="user-image-custom">
-                  <img src="assets/img/image-not-found.jpg" alt="Imagen del usuario" />
-                </div>
 
 
-                <div class="user-details-custom" *ngIf="!logged ||  video.owner._id != userId">
-                  <div class="user-name-custom">{{ video.owner.username }}</div>
-                </div>
-                <div class="user-details-custom" *ngIf="logged && video.owner._id == userId">
-                  <a href="{{hostUrl}}channel">
-                    <div class="user-name-custom">{{ video.owner.username }}</div>
-                  </a>
-                </div>
-
-
-
+            <div class="user-info-custom">
+              <div class="user-image-custom">
+                <img src="assets/img/image-not-found.jpg" alt="Imagen del usuario" />
               </div>
-
-
-              <div class="user-actions-custom" *ngIf="logged">
+              <div class="user-details-custom" *ngIf="!logged ||  video.owner._id != userId">
+                <div class="user-name-custom">{{ video.owner.username }}</div>
+              </div>
+              <div class="user-details-custom" *ngIf="logged && video.owner._id == userId">
+                <a href="{{hostUrl}}channel">
+                  <div class="user-name-custom">{{ video.owner.username }}</div>
+                </a>
+              </div>
+              <div class="user-actions-custom  ms-auto" *ngIf="logged">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" class="btn btn-danger btnReporte" data-bs-toggle="modal"
+                  data-bs-target="#exampleModal">
                   Reportar
                 </button>
+              </div>
+              <!-- Modal -->
 
-                <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true" (hidden.bs.modal)="onModalHidden()">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">
+                        Reporte
+                      </h1>
 
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                  aria-hidden="true" (hidden.bs.modal)="onModalHidden()">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">
-                          Reporte
-                        </h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="" #reportForm="ngForm" (submit)="addReport(reportForm.value)">
+                        <input name="videoId" type="hidden" class="form-control" id="reportVideoId"
+                          [(ngModel)]="video._id" #videoId="ngModel" />
 
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <form action="" #reportForm="ngForm" (submit)="addReport(reportForm.value)">
-                          <input name="videoId" type="hidden" class="form-control" id="reportVideoId"
-                            [(ngModel)]="video._id" #videoId="ngModel" />
+                        <div class="mb-3">
+                          <label for="title" class="form-label text-white">Título:</label>
+                          <input name="reportTitle" type="text" class="form-control" id="reportTitle"
+                            [(ngModel)]="report.title" #title="ngModel" required />
+                        </div>
 
-                          <div class="mb-3">
-                            <label for="title" class="form-label">Título:</label>
-                            <input name="reportTitle" type="text" class="form-control" id="reportTitle"
-                              [(ngModel)]="report.title" #title="ngModel" required />
+
+                        <div *ngIf="title.invalid && (title.dirty || title.touched)">
+                          <div *ngIf="title.errors?.['required']" class="alerta text-center">
+                            Por favor, ingresa un título!
                           </div>
+                        </div>
 
 
-                          <div *ngIf="title.invalid && (title.dirty || title.touched)">
-                            <div *ngIf="title.errors?.['required']" class="alerta text-center">
-                              Por favor, ingresa un título!
-                            </div>
+                        <div class="mb-3">
+                          <label for="reason" class="form-label text-white">Motivo:</label>
+                          <textarea name="reportReason" class="form-control" id="reportReason" rows="3"
+                            [(ngModel)]="report.reason" #reason="ngModel" required></textarea>
+                        </div>
+
+                        <div *ngIf="reason.invalid && (reason.dirty || reason.touched)">
+                          <div *ngIf="reason.errors?.['required']" class="alerta text-center">
+                            Por favor, ingresa un motivo!
                           </div>
+                        </div>
 
-
-                          <div class="mb-3">
-                            <label for="reason" class="form-label">Motivo:</label>
-                            <textarea name="reportReason" class="form-control" id="reportReason" rows="3"
-                              [(ngModel)]="report.reason" #reason="ngModel" required></textarea>
-                          </div>
-
-                          <div *ngIf="reason.invalid && (reason.dirty || reason.touched)">
-                            <div *ngIf="reason.errors?.['required']" class="alerta text-center">
-                              Por favor, ingresa un motivo!
-                            </div>
-                          </div>
-
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                              Cancelar
-                            </button>
-                            <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal"
-                              [disabled]="reportForm.invalid">
-                              Enviar
-                            </button>
-                          </div>
-                        </form>
-                      </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                            Cancelar
+                          </button>
+                          <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal"
+                            [disabled]="reportForm.invalid">
+                            Enviar
+                          </button>
+                        </div>
+                      </form>
                     </div>
                   </div>
                 </div>
               </div>
+
             </div>
+
+
             <div class="col-12 video-info-description rounded-4 mt-2">
               <div class="p-3">
                 {{
@@ -225,3 +216,4 @@
       </div>
     </div>
   </div>
+</div>
