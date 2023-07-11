@@ -21,9 +21,9 @@
               </div>
               <div class="video-options-custom" *ngIf="logged">
                 <button class="btn-rating" id="green-button-rating" (click)="addPositiveRating()">
-                  <i class="bi bi-hand-thumbs-up fs-4" aria-hidden="true"></i>
+                  <i class="bi bi-hand-thumbs-up fs-4" aria-hidden="true"> {{rating}}</i>
                 </button>
-                <div class="dropdown" *ngIf="logged">
+                <div class="dropdown dropdown-menu-end" *ngIf="logged">
                   <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="bi bi-three-dots-vertical"></i>
                   </button>
@@ -123,7 +123,7 @@
                             [(ngModel)]="video._id" #videoId="ngModel" />
 
                           <div class="mb-3">
-                            <label for="title" class="form-label">Titulo:</label>
+                            <label for="title" class="form-label">Título:</label>
                             <input name="reportTitle" type="text" class="form-control" id="reportTitle"
                               [(ngModel)]="report.title" #title="ngModel" required />
                           </div>
@@ -131,7 +131,7 @@
 
                           <div *ngIf="title.invalid && (title.dirty || title.touched)">
                             <div *ngIf="title.errors?.['required']" class="alerta text-center">
-                              Please, enter a title!
+                              Por favor, ingresa un título!
                             </div>
                           </div>
 
@@ -144,7 +144,7 @@
 
                           <div *ngIf="reason.invalid && (reason.dirty || reason.touched)">
                             <div *ngIf="reason.errors?.['required']" class="alerta text-center">
-                              Please, enter a reason!
+                              Por favor, ingresa un motivo!
                             </div>
                           </div>
 
@@ -207,17 +207,15 @@
 
             <!-- Videos de la playlist -->
             <div class="row justify-content-start">
-              <div class="col-12 col-md-6 col-lg-12" *ngFor="let video of playlist.videos">
-
-                <div class="loader" (click)="watchPlaylistVideo(video)">
+              <div class="container col-12 col-md-6 col-lg-12">
+                <div class="loader p-2" (click)="watchPlaylistVideo(video)" *ngFor="let video of playlist.videos">
                   <div class="song">
                     <p class="name mt-4 mb-0">{{video.videoId.title}}</p>
                     <p class="artist">{{video.videoId.description}}</p>
                   </div>
-                  <div class="albumcover"></div>
+                  <!-- <div class="albumcover"></div> -->
                   <div class="play"></div>
                 </div>
-
               </div>
               <!-- Videos de la playlist -->
             </div>

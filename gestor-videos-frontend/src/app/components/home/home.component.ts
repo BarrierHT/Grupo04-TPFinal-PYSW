@@ -63,54 +63,54 @@ export class HomeComponent implements OnInit {
     this.searchVideos();
   }
 
-  windowOnClick(event: any) {
-    var modal: any = document.querySelector('#modalPlaylists');
+  // windowOnClick(event: any) {
+  //   var modal: any = document.querySelector('#modalPlaylists');
 
-    if (event.target === modal) {
-      modal.classList.remove('show-modal');
-      modal.style.display = 'none';
+  //   if (event.target === modal) {
+  //     modal.classList.remove('show-modal');
+  //     modal.style.display = 'none';
 
-      modal.style.opacity = '0';
-      modal.style.visibility = 'hidden';
-      modal.style.transform = 'scale(1.1)';
-      modal.style.transition =
-        'visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s';
-    }
-  }
+  //     modal.style.opacity = '0';
+  //     modal.style.visibility = 'hidden';
+  //     modal.style.transform = 'scale(1.1)';
+  //     modal.style.transition =
+  //       'visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s';
+  //   }
+  // }
 
-  toggleModal() {
-    var modal: any = document.querySelector('#modalPlaylists');
+  // toggleModal() {
+  //   var modal: any = document.querySelector('#modalPlaylists');
 
-    if (!modal.classList.contains('show-modal')) {
-      // console.log('already');
-      modal.classList.add('show-modal');
-      modal.style.display = 'block';
-      // Aplicar los atributos cuando NO tiene la clase "show-modal"
-      modal.style.opacity = '1';
-      modal.style.visibility = 'visible';
-      modal.style.transform = 'scale(1)';
-      modal.style.transition =
-        'visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s';
-      modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-    } else {
-      modal.classList.remove('show-modal');
-      modal.style.display = 'none';
+  //   if (!modal.classList.contains('show-modal')) {
+  //     // console.log('already');
+  //     modal.classList.add('show-modal');
+  //     modal.style.display = 'block';
+  //     // Aplicar los atributos cuando NO tiene la clase "show-modal"
+  //     modal.style.opacity = '1';
+  //     modal.style.visibility = 'visible';
+  //     modal.style.transform = 'scale(1)';
+  //     modal.style.transition =
+  //       'visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s';
+  //     modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+  //   } else {
+  //     modal.classList.remove('show-modal');
+  //     modal.style.display = 'none';
 
-      modal.style.opacity = '0';
-      modal.style.visibility = 'hidden';
-      modal.style.transform = 'scale(1.1)';
-      modal.style.transition =
-        'visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s';
-    }
-  }
+  //     modal.style.opacity = '0';
+  //     modal.style.visibility = 'hidden';
+  //     modal.style.transform = 'scale(1.1)';
+  //     modal.style.transition =
+  //       'visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s';
+  //   }
+  // }
 
-  openModal() {
-    var closeButton: any = document.querySelector('.close-button');
-    this.toggleModal();
+  // openModal() {
+  //   var closeButton: any = document.querySelector('.close-button');
+  //   this.toggleModal();
 
-    closeButton.addEventListener('click', this.toggleModal);
-    this.document.addEventListener('click', this.windowOnClick);
-  }
+  //   closeButton.addEventListener('click', this.toggleModal);
+  //   this.document.addEventListener('click', this.windowOnClick);
+  // }
 
   searchVideos() {
     console.log(this.pattern);

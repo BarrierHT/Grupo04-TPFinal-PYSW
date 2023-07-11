@@ -68,7 +68,7 @@ export class PlaylistApiService {
     };
 
     return this._http.put(
-      `${this.urlHost}add-video-to-playlist/${playlistId}/${videoId}`,
+      `${this.urlHost}playlist/add-video-to-playlist/${playlistId}/${videoId}`,
       {},
       httpOption
     );

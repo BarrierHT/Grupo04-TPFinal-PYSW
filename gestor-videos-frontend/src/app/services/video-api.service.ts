@@ -40,7 +40,7 @@ export class VideoApiService {
     };
 
     return this._http.post(
-      '${this.urlHost}video/add-video',
+      `${this.urlHost}video/add-video`,
       formData,
       httpOptions
     );

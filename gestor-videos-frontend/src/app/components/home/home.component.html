@@ -31,9 +31,8 @@
                 </div>
               </div>
             </div>
-            <img
-              src="assets/img/video-default-image-3.jpg"
-              alt="{{ video.title }}" (mouseenter)="zoomInThumbnail($event)" (mouseleave)="zoomOutThumbnail($event)" />
+            <img src="assets/img/video-default-image-3.jpg" alt="{{ video.title }}"
+              (mouseenter)="zoomInThumbnail($event)" (mouseleave)="zoomOutThumbnail($event)" />
 
             <!-- <div class="playlist-icon rounded-2" *ngIf="showOptions && video === selectedVideo"
               [routerLink]="['/playlist']">
@@ -45,9 +44,7 @@
             <div class="channel">
               <div class="channel-image">
                 <!-- <img src="{{ video.channelImage }}" alt="{{ video.channelName }}"> -->
-                <img
-                  src="assets/img/user-default-image-1.jpg"
-                  alt="" />
+                <img src="assets/img/user-default-image-1.jpg" alt="" />
               </div>
               <div class="channel-name">
                 {{ video.owner.name }}
@@ -55,13 +52,14 @@
             </div>
             <div class="video-description">{{ video.description }}</div>
             <div class="video-options" *ngIf="logged && showOptions && video === selectedVideo">
-              <div class="dropdown">
+              <div class="dropdown dropdown-menu-end">
                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <i class="bi bi-three-dots-vertical"></i>
                 </button>
                 <ul class="dropdown-menu">
                   <li>
-                    <button type="button" class="dropdown-item" (click)="openModal()" (click)="getVideo(video._id)">
+                    <button type="button" class="dropdown-item" data-bs-toggle="modal"
+                      data-bs-target="#addVideoPlaylistModal" (click)="getVideo(video._id)">
                       Agregar a playlist
                     </button>
                   </li>
@@ -86,20 +84,26 @@
   </div>
 </div>
 
-<div class="modal" id="modalPlaylists">
-  <div class="modal-content">
-    <span class="close-button">&times;</span>
-    <h2>Mis playlists</h2>
-
-    <div *ngIf="userPlaylists.length > 0">
-
-      <button type="button" class="btn border-dark modal-body mt-2 rounded-circle buttonPlay"
-        *ngFor="let playlist of userPlaylists" (click)="addVideoToPlaylist(playlist._id)">
-        <strong>Nombre: </strong>{{ playlist.name }}
-        <br />
-        <strong>Descripción: </strong>{{ playlist.description }}
-      </button>
+<div class="modal fade" id="addVideoPlaylistModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-2">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Mis playlist</h1>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="userPlaylists.length == 0">
+          <strong class="text-white">No tienes ninguna playlist!</strong>
+        </div>
+        <div class="row" *ngIf="userPlaylists.length > 0">
+          <div class="col-12 playlists mb-2" *ngFor="let playlist of userPlaylists"
+            (click)="addVideoToPlaylist(playlist._id)">
+            <strong>Nombre: </strong>{{ playlist.name }}
+            <br />
+            <strong>Descripción: </strong>{{ playlist.description }}
+          </div>
+        </div>
+      </div>
     </div>
-
   </div>
+
 </div>

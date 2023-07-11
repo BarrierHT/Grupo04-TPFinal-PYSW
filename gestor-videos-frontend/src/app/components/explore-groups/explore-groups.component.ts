@@ -29,10 +29,10 @@ export class ExploreGroupsComponent implements OnInit {
         catchError((error) => {
           if (error.status !== 200 && error.status !== 201) {
             console.log('Error en el observable: ', error.error.message);
-            if(error.error.message == 'Group not found')
+            if (error.error.message == 'Group not found')
               this.toastrService.error('Error al solicitar unirse a un grupo', 'Error al Unirse');
-            if(error.error.message == 'User already in group')
-            this.toastrService.info('Ya esta en el grupo');
+            if (error.error.message == 'User already in group')
+              this.toastrService.info('Ya esta en el grupo');
           }
           return [];
         }),
