@@ -39,6 +39,11 @@ input:not(:placeholder-shown)~label {
   top: -10px;
 }
 
+textarea:focus~label,
+textarea:not(:placeholder-shown)~label {
+  top: -10px;
+}
+
 .inputbox input,
 .inputbox textarea {
   width: 100%;
