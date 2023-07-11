@@ -5,6 +5,7 @@ import { catchError } from 'rxjs';
 import { Video } from 'src/app/models/video';
 import { GroupApiService } from 'src/app/services/group-api.service';
 import { VideoApiService } from 'src/app/services/video-api.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-form-video',
@@ -18,15 +19,15 @@ export class FormVideoComponent implements OnInit {
     description: string;
     groupId: string;
   } = {
-      file: null,
-      title: '',
-      description: '',
-      groupId: '',
-    };
+    file: null,
+    title: '',
+    description: '',
+    groupId: '',
+  };
   msgVideoValidation!: string;
   myGroups: Array<any> = [];
   action = false;
-  id: string = ''
+  id: string = '';
 
   constructor(
     private videoApiService: VideoApiService,
@@ -34,7 +35,7 @@ export class FormVideoComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private toastrService: ToastrService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getMyGroups();
@@ -57,10 +58,13 @@ export class FormVideoComponent implements OnInit {
         catchError((error) => {
           if (error.status !== 200 && error.status !== 201) {
             console.log('Error en el observable: ', error.error.message);
-            this.toastrService.error('Error al obtener grupos', 'Error de Obtener');
+            this.toastrService.error(
+              'Error al obtener grupos',
+              'Error de Obtener'
+            );
           }
           return [];
-        }),
+        })
       )
       .subscribe(
         (result) => {
@@ -87,12 +91,15 @@ export class FormVideoComponent implements OnInit {
             if (error.status !== 200 && error.status !== 201) {
               console.log('Error en el observable: ', error.error.message);
               if (error.error.message == 'An error ocurred')
-                this.toastrService.error('Error al subir el video', 'Error de Subir');
+                this.toastrService.error(
+                  'Error al subir el video',
+                  'Error de Subir'
+                );
               if (error.error.message == 'An image is required')
                 this.toastrService.warning('Suba un video');
             }
             return [];
-          }),
+          })
         )
         .subscribe(
           (result) => {
@@ -105,17 +112,28 @@ export class FormVideoComponent implements OnInit {
             };
             if (result.message == 'Video uploaded') {
               //alert('VIDEO SUBIDO CORRECTAMENTE');
-              this.toastrService.success('Se ha subido correctamente el video', 'Subida Correcta');
+              this.toastrService.success(
+                'Se ha subido correctamente el video',
+                'Subida Correcta'
+              );
               window.location.href =
-                'http://localhost:4200/watch/' + result.videoId;
+                environment.ANGULAR_ENV == 'development'
+                  ? environment.urlDevelopment
+                  : environment.urlProduction + 'watch/' + result.videoId;
               //Update header
             } else {
-              this.toastrService.error('No se ha podido subir el video', 'Subida Incorrecta');
+              this.toastrService.error(
+                'No se ha podido subir el video',
+                'Subida Incorrecta'
+              );
             }
           },
           (error) => {
             console.log(error);
-            this.toastrService.error('Error al intentar subir video', 'Error de Videos');
+            this.toastrService.error(
+              'Error al intentar subir video',
+              'Error de Videos'
+            );
           }
         );
     } else {
@@ -130,12 +148,15 @@ export class FormVideoComponent implements OnInit {
         catchError((error) => {
           if (error.status !== 200 && error.status !== 201) {
             console.log('Error en el observable: ', error.error.message);
-            this.toastrService.error('Error al obtener un video', 'Error de Obtener');
+            this.toastrService.error(
+              'Error al obtener un video',
+              'Error de Obtener'
+            );
           }
           return [];
-        }),
+        })
       )
-      .subscribe(res => {
+      .subscribe((res) => {
         try {
           console.log(res);
           this.video.title = res.video.title;
@@ -143,7 +164,7 @@ export class FormVideoComponent implements OnInit {
         } catch (err) {
           console.log(err);
         }
-      })
+      });
   }
 
   updateVideo() {
@@ -153,18 +174,21 @@ export class FormVideoComponent implements OnInit {
         catchError((error) => {
           if (error.status !== 200 && error.status !== 201) {
             console.log('Error en el observable: ', error.error.message);
-            this.toastrService.error('Error al actualizar video', 'Error de Actualizar');
+            this.toastrService.error(
+              'Error al actualizar video',
+              'Error de Actualizar'
+            );
           }
           return [];
-        }),
+        })
       )
-      .subscribe(res => {
+      .subscribe((res) => {
         try {
           console.log(res);
         } catch (err) {
           console.log(err);
         }
-      })
+      });
     this.router.navigate(['videos']);
   }
 
@@ -188,7 +212,9 @@ export class FormVideoComponent implements OnInit {
           this.toastrService.success('Video permitido');
         } else {
           this.msgVideoValidation = 'Tamaño invalido! maximo: 50mb';
-          this.toastrService.error('Video demasiado grande, ingrese un video de máximo 50MB');
+          this.toastrService.error(
+            'Video demasiado grande, ingrese un video de máximo 50MB'
+          );
           console.log('tamaño invalido! maximo: 50mb');
         }
       } else {
