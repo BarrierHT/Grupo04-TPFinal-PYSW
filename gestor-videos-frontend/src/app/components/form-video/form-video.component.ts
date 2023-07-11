@@ -19,11 +19,11 @@ export class FormVideoComponent implements OnInit {
     description: string;
     groupId: string;
   } = {
-    file: null,
-    title: '',
-    description: '',
-    groupId: '',
-  };
+      file: null,
+      title: '',
+      description: '',
+      groupId: '',
+    };
   msgVideoValidation!: string;
   myGroups: Array<any> = [];
   action = false;
@@ -35,7 +35,7 @@ export class FormVideoComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private toastrService: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getMyGroups();
@@ -118,8 +118,8 @@ export class FormVideoComponent implements OnInit {
               );
               window.location.href =
                 environment.ANGULAR_ENV == 'development'
-                  ? environment.urlDevelopment
-                  : environment.urlProduction + 'watch/' + result.videoId;
+                  ? environment.urlFrontDevelopment
+                  : environment.urlFrontProduction + 'watch/' + result.videoId;
               //Update header
             } else {
               this.toastrService.error(

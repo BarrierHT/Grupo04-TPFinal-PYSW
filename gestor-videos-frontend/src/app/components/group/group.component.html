@@ -129,8 +129,7 @@
                         <div class="col-12 col-sm-6 col-lg-4 p-4" *ngFor="let group of myGroups">
                             <div class="cards">
                                 <div class="img-holder">
-                                    <img src="assets/img/group-default-image-3.png"
-                                        class="image">
+                                    <img src="assets/img/group-default-image-3.png" class="image">
                                 </div>
                                 <div class="text text-center">
                                     <h2 class="text-white">{{group.name}}</h2>
@@ -148,7 +147,7 @@
                                             NO HAY VIDEOS DEL GRUPO
                                         </li>
                                         <li *ngFor="let videoGroup of group.videos"><a class="dropdown-item"
-                                                href="http://localhost:4200/watch/{{videoGroup._id}}">{{videoGroup.title}}</a>
+                                                href="{{hostUrl}}watch/{{videoGroup._id}}">{{videoGroup.title}}</a>
                                         </li>
 
                                     </ul>

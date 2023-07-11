@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { CountryApiService } from 'src/app/services/country-api.service';
 import { ToastrService } from 'ngx-toastr';
 import { catchError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-channel',
@@ -24,6 +25,11 @@ export class ChannelComponent implements OnInit {
     name: '',
     flag: '',
   };
+
+  hostUrl: string =
+    environment.ANGULAR_ENV == 'development'
+      ? environment.urlFrontDevelopment
+      : environment.urlFrontProduction;
 
   constructor(
     private groupService: GroupApiService,

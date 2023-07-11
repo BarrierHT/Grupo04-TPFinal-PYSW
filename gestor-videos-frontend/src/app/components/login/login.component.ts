@@ -68,8 +68,8 @@ export class LoginComponent {
           if (result) {
             window.location.href =
               environment.ANGULAR_ENV == 'development'
-                ? environment.urlDevelopment
-                : environment.urlProduction + 'home';
+                ? environment.urlFrontDevelopment
+                : environment.urlFrontProduction + 'home';
           }
         } catch (err) {
           console.log(err);
