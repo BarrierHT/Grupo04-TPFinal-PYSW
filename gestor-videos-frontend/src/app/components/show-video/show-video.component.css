@@ -363,8 +363,8 @@
   /* margin-right: 1em; */
   margin-right: 5px;
   margin-left: 5px;
-  height: 40px;
-  width: 40px;
+  height: 100%;
+  width: 30%;
   background-color: rgb(233, 184, 22);
   align-self: center;
   border-radius: 5px;
