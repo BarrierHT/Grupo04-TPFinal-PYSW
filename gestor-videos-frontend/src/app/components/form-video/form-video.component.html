@@ -9,18 +9,29 @@
                 <div class="input-group mt-3" *ngIf="!action">
                     <input type="file" class="form-control" id="videoFile" name="videoFile" required accept="video/*"
                         (change)="onFileSelected($event)">
-                    <label class="input-group-text" for="videoFile">Upload</label>
+                    <label class="input-group-text" for="videoFile">Subir</label>
                 </div>
 
                 <div class="text-center mt-3 " *ngIf="!action">
 
                     <select class="btn btn-secondary btn-sm dropdown-toggle pe-5 text-center" name="groupId"
                         [(ngModel)]="video.groupId">
-                        <option class="dropdown-item text-center" selected disabled value="">
+                        <optgroup class="dropdown-item" label="Subir en solitario">
+                            <option class="dropdown-item text-center" selected value="">
+                                Subir solo
+                            </option>
+                        </optgroup>
+                        <optgroup class="dropdown-item" label="Subir como grupo">
+                            <option class="dropdown-item text-center" value="{{group._id}}"
+                                *ngFor="let group of myGroups">
+                                {{group.name}}
+                            </option>
+                        </optgroup>
+                        <!-- <option class="dropdown-item text-center" selected disabled value="">
                             Subir como grupo
                         </option>
                         <option class="dropdown-item text-center" value="{{group._id}}" *ngFor="let group of myGroups">
-                            {{group.name}}</option>
+                            {{group.name}}</option> -->
 
                     </select>
 
@@ -32,6 +43,7 @@
                         {{ msgVideoValidation }}
                     </div>
                 </div>
+
                 <div class="inputbox">
                     <input type="text" id="title" name="title" placeholder="" [(ngModel)]="video.title" #title="ngModel"
                         required>
@@ -43,10 +55,15 @@
                     </div>
                 </div>
 
-                <div class="form-floating mt-3">
+                <!-- <div class="form-floating mt-3">
                     <textarea class="form-control" name="description" placeholder="Leave a comment here"
                         id="description" [(ngModel)]="video.description" #description="ngModel" required></textarea>
                     <label class="text-black-50" for="description">Descripción</label>
+                </div> -->
+                <div class="inputbox">
+                    <textarea name="description" id="description" [(ngModel)]="video.description" #description="ngModel"
+                        required></textarea>
+                    <label for="description">Descripción</label>
                 </div>
                 <div class="" *ngIf="description.invalid && (description.dirty || description.touched)">
                     <div *ngIf="description.errors?.['required']" class="alerta text-center">
