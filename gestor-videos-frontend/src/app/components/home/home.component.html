@@ -1,7 +1,7 @@
 <div class="container-fluid contenido">
-  <div class="row py-5 px-5 d-flex justify-content-center container-custom-1">
+  <div class="row d-flex justify-content-center container-custom-1">
     <div class="row d-flex justify-content-center">
-      <div class="container-fluid col-8 mb-4">
+      <div class="container-fluid col-11 col-md-8 mb-4">
         <form class="d-flex" method="GET" (submit)="searchVideos()">
           <input class="form-control" type="search" placeholder="Qué estas buscando?" aria-label="Search"
             [(ngModel)]="pattern" name="pattern" />
@@ -10,71 +10,59 @@
           </button>
         </form>
       </div>
-      <div class="col-8">
+      <div class="col-11 col-md-8">
         <h3 class="text-white">Resultados de búsqueda</h3>
         <hr class="hr-custom-1" />
       </div>
     </div>
     <div class="row d-flex justify-content-center">
-      <div class="col-8 container-videos">
+      <div class="col-11 col-md-8 container-videos">
         <div class="video-card rounded-4" *ngFor="let video of videos" (mouseenter)="onMouseEnter(video)"
           (mouseleave)="onMouseLeave()">
-          <div class="video-thumbnail rounded-4" (click)="watchVideo(video._id)">
-            <div class="thumbnail-overlay">
-              <div class="overlay-content">
-                <div class="views p-1 rounded-2">
-                  <!-- <i class="bi bi-eye-fill"></i> -->
-                  <!-- {{ video.views | abbreviateNumber }} -->
-                </div>
-                <div class="duration p-1 rounded-2">
-                  <!-- {{ video.duration }} -->
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <div class="m-2">
+                <div class="video-thumbnail rounded-4" (click)="watchVideo(video._id)">
+                  <img src="assets/img/video-default-image-3.jpg" alt="{{ video.title }}"
+                    style="height: 150px; object-fit: cover;" (mouseenter)="zoomInThumbnail($event)"
+                    (mouseleave)="zoomOutThumbnail($event)" />
                 </div>
               </div>
             </div>
-            <img src="assets/img/video-default-image-3.jpg" alt="{{ video.title }}"
-              (mouseenter)="zoomInThumbnail($event)" (mouseleave)="zoomOutThumbnail($event)" />
-
-            <!-- <div class="playlist-icon rounded-2" *ngIf="showOptions && video === selectedVideo"
-              [routerLink]="['/playlist']">
-              <i class="bi bi-plus-circle-fill"></i>
-            </div> -->
-          </div>
-          <div class="video-details">
-            <h2 class="video-title">{{ video.title }}</h2>
-            <div class="channel">
-              <div class="channel-image">
-                <!-- <img src="{{ video.channelImage }}" alt="{{ video.channelName }}"> -->
-                <img src="assets/img/user-default-image-1.jpg" alt="" />
-              </div>
-              <div class="channel-name">
-                {{ video.owner.name }}
-              </div>
-            </div>
-            <div class="video-description">{{ video.description }}</div>
-            <div class="video-options" *ngIf="logged && showOptions && video === selectedVideo">
-              <div class="dropdown dropdown-menu-end">
-                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="bi bi-three-dots-vertical"></i>
-                </button>
-                <ul class="dropdown-menu">
-                  <li>
-                    <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                      data-bs-target="#addVideoPlaylistModal" (click)="getVideo(video._id)">
-                      Agregar a playlist
-                    </button>
-                  </li>
-                  <!-- <li>
-                    <button class="dropdown-item" href="#">
-                      Another action
-                    </button>
-                  </li>
-                  <li>
-                    <button class="dropdown-item" href="#">
-                      Something else here
-                    </button>
-                  </li> -->
-                </ul>
-
+            <div class="col-12 col-md-8">
+              <div class="row">
+                <div class="col-10">
+                  <div class="video-details p-2">
+                    <h2 class="video-title">{{ video.title }}</h2>
+                    <div class="channel">
+                      <div class="channel-image">
+                        <!-- <img src="{{ video.channelImage }}" alt="{{ video.channelName }}"> -->
+                        <img src="assets/img/user-default-image-1.jpg" alt="" />
+                      </div>
+                      <div class="channel-name">
+                        {{ video.owner.name }}
+                      </div>
+                    </div>
+                    <div class="video-description">{{ video.description }}</div>
+                  </div>
+                </div>
+                <div class="col-2 d-flex justify-content-end">
+                  <div class="video-options ms-auto" *ngIf="logged && showOptions && video === selectedVideo">
+                    <div class="dropdown dropdown-menu-end">
+                      <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </button>
+                      <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                          <button type="button" class="dropdown-item" data-bs-toggle="modal"
+                            data-bs-target="#addVideoPlaylistModal" (click)="getVideo(video._id)">
+                            Agregar a playlist
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -105,4 +93,5 @@
       </div>
     </div>
   </div>
+
 </div>
