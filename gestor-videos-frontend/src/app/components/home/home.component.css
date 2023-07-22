@@ -1,5 +1,6 @@
 .container-custom-1 {
   font-family: sans-serif;
+  padding: 2%;
   background: black;
 }
 
@@ -31,13 +32,9 @@
 }
 
 .video-card {
-  display: flex;
   margin-bottom: 20px;
   background-color: rgb(48, 48, 48);
   color: #fff;
-  padding: 10px;
-  position: relative;
-  z-index: 1;
   transition: all 0.2s ease;
 }
 
@@ -46,34 +43,12 @@
 }
 
 .video-thumbnail {
-  width: 320px;
-  height: 200px;
-  margin-right: 10px;
-  position: relative;
   overflow: hidden;
 }
 
-.thumbnail-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  color: #fff;
-  padding: 5px;
-  z-index: 2;
-}
-
-.overlay-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-.views {
-  font-size: 10px;
-  display: flex;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.7);
+.thumbnail-container {
+  padding: 0;
+  margin: 0;
 }
 
 .views i {
@@ -157,13 +132,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.video-options {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 2;
 }
 
 .dropdown-toggle {
